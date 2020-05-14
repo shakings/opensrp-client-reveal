@@ -300,12 +300,16 @@ public class RevealJsonFormUtils {
                 formName = JsonForm.ZAMBIA_MDA_ADHERENCE_FORM;
             } else if (BuildConfig.BUILD_COUNTRY == Country.REFAPP) {
                 formName = JsonForm.REFAPP_MDA_ADHERENCE_FORM;
+            } else if (BuildConfig.BUILD_COUNTRY == Country.NIGERIA) {
+                formName = JsonForm.NIGERIA_SECOND_DOSE_OF_SPAQ;
             }
         } else if (Intervention.MDA_DISPENSE.equals(taskCode)) {
             if (BuildConfig.BUILD_COUNTRY == Country.ZAMBIA) {
                 formName = JsonForm.ZAMBIA_MDA_DISPENSE_FORM;
             } else if (BuildConfig.BUILD_COUNTRY == Country.REFAPP) {
                 formName = JsonForm.REFAPP_MDA_DISPENSE_FORM;
+            } else if (BuildConfig.BUILD_COUNTRY == Country.NIGERIA) {
+                formName = JsonForm.NIGERIA_CHILD_SMC_FORM;
             }
         } else if (IRS_VERIFICATION.equals(encounterType) || Intervention.IRS_VERIFICATION.equals(taskCode)) {
             formName = JsonForm.ZAMBIA_IRS_VERIFICATION_FORM;

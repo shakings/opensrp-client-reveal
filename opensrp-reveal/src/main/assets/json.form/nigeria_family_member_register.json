@@ -74,7 +74,7 @@
         "openmrs_entity": "person",
         "openmrs_entity_id": "first_name",
         "type": "edit_text",
-        "hint": "First name",
+        "hint": "Name of Child",
         "edit_type": "name",
         "text_size": "8sp",
         "v_required": {
@@ -146,7 +146,7 @@
         "openmrs_entity": "person",
         "openmrs_entity_id": "gender",
         "type": "native_radio",
-        "label": "Sex",
+        "label": "Gender",
         "options": [
           {
             "key": "Male",
@@ -233,6 +233,28 @@
         "v_required": {
           "value": true,
           "err": "Please enter the age"
+        }
+      },
+      {
+        "key": "childStayPerm",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person",
+        "openmrs_entity_id": "",
+        "type": "native_radio",
+        "label": "Does this child live here permanently!",
+        "options": [
+          {
+            "key": "0",
+            "text": "Yes"
+          },
+          {
+            "key": "1",
+            "text": "No"
+          }
+        ],
+        "v_required": {
+          "value": "true",
+          "err": "Please select where the child lives"
         }
       }
     ]

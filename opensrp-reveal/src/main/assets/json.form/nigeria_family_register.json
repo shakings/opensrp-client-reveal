@@ -75,7 +75,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "",
         "type": "edit_text",
-        "hint": "How many individuals live in this structure??",
+        "hint": "How many individuals live in this structure?",
         "text_size": "8sp",
         "v_numeric": {
           "value": "true",

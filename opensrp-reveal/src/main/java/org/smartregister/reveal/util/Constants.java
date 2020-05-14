@@ -370,6 +370,12 @@ public interface Constants {
          */
         String NIGERIA_ELIGIBILITY_COMPOUND = "json.form/nigeria_eligibility_compound.json";
 
+        String NIGERIA_CHILD_SMC_FORM = "json.form/nigeria_child_smc_form.json";
+
+        String NIGERIA_SECOND_DOSE_OF_SPAQ = "json.form/nigeria_second_dose_of_spaq.json";
+
+        String NIGERIA_STRUCTURE_LEVEL_DRUG_RECON = "json.form/nigeria_structure_level_drug_reconciliation_form.json";
+
         String OPERATIONAL_AREA_TAG = "operational_area";
 
         String STRUCTURES_TAG = "structures";

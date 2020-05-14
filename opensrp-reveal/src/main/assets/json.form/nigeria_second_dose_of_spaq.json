@@ -1,6 +1,6 @@
 {
   "count": "1",
-  "encounter_type": "eligibility_compound",
+  "encounter_type": "mda_adherence",
   "entity_id": "",
   "metadata": {
     "start": {
@@ -47,77 +47,47 @@
     "encounter_location": ""
   },
   "step1": {
-    "title": "Eligibility Compound & Registration",
+    "title": "MDA Adherence",
     "display_back_button": "true",
     "fields": [
       {
-        "key": "eligibleRes",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "",
-        "type": "native_radio",
-        "label": "Is this structure residential?",
-        "options": [
-          {
-            "key": "1",
-            "text": "Yes"
-          },
-          {
-            "key": "0",
-            "text": "No"
-          }
-        ],
-        "v_required": {
-          "value": true,
-          "err": "This field is required"
-        }
-      },
-      {
-        "key": "peopleLivingStr",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "",
-        "type": "edit_text",
-        "hint": "People living in structure?",
-        "v_required": {
-          "value": true,
-          "err": "This field is required"
-        },
-        "relevance": {
-          "step1:eligibleRes": {
-            "type": "string",
-            "ex": "equalTo(., \"0\")"
-          }
-        }
-      },
-      {
-        "key": "residentialType",
+        "key": "catchment_area",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
         "openmrs_entity_id": "",
         "type": "spinner",
-        "hint": "Type of non-residential structure",
-        "relevance": {
-          "step1:eligibleRes": {
-            "type": "string",
-            "ex": "equalTo(., \"0\")"
-          }
-        }
+        "hint": "Name of Catchment"
       },
       {
-        "key": "eligibleStr",
-        "label": "Is this structure eligible?",
-        "type": "native_radio",
+        "key": "coordinator_name",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
         "openmrs_entity_id": "",
+        "type": "spinner",
+        "hint": "Name of Supervisor"
+      },
+      {
+        "key": "adherence_name",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "spinner",
+        "hint": "Adherence Officer name"
+      },
+      {
+        "key": "confirm_receipt",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "native_radio",
+        "label": "Did they receive 3 doses of treatment recently?",
         "options": [
           {
-            "key": "1",
+            "key": "Yes",
             "text": "Yes"
           },
           {
-            "key": "0",
+            "key": "No",
             "text": "No"
           }
         ],
@@ -127,57 +97,19 @@
         }
       },
       {
-        "key": "reasonsEligibility",
+        "key": "day_2",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
         "openmrs_entity_id": "",
-        "type": "check_box",
-        "label": "Reasons why this structure is eligible?",
-        "combine_checkbox_option_values": "true",
-        "text_size": "8sp",
-        "options": [
-          {
-            "key": "resNoChildren",
-            "text": "Residential: No children between 3-59 months"
-          },
-          {
-            "key": "resUnoccupied",
-            "text": "Residential: Unoccupied"
-          },
-          {
-            "key": "resUnderConstruction",
-            "text": "Residential: Under construction"
-          },
-          {
-            "key": "otherReason",
-            "text": "Other Reason - specify"
-          }
-        ],
-        "v_required": {
-          "value": true,
-          "err": "Required field"
-        },
-        "relevance": {
-          "step1:eligibleStr": {
-            "type": "string",
-            "ex": "equalTo(., \"0\")"
-          }
-        }
-      },
-      {
-        "key": "isCompound",
-        "label": "Is this a compound?",
         "type": "native_radio",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "",
+        "label": "Day 2 adherence?",
         "options": [
           {
-            "key": "1",
+            "key": "Yes",
             "text": "Yes"
           },
           {
-            "key": "0",
+            "key": "No",
             "text": "No"
           }
         ],
@@ -185,8 +117,103 @@
           "value": true,
           "err": "This field is required"
         }
+      },
+      {
+        "key": "day_3",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "native_radio",
+        "label": "Day 3 adherence?",
+        "options": [
+          {
+            "key": "Yes",
+            "text": "Yes"
+          },
+          {
+            "key": "No",
+            "text": "No"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "This field is required"
+        }
+      },
+      {
+        "key": "adherent",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "native_radio",
+        "label": "Fully adherent?",
+        "options": [
+          {
+            "key": "Yes",
+            "text": "Yes"
+          },
+          {
+            "key": "No",
+            "text": "No"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "This field is required"
+        }
+      },
+      {
+        "key": "adverse",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "native_radio",
+        "label": "Any reported adverse events?",
+        "options": [
+          {
+            "key": "Yes",
+            "text": "Yes"
+          },
+          {
+            "key": "No",
+            "text": "No"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "This field is required"
+        }
+      },
+      {
+        "key": "adverse_form",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "native_radio",
+        "label": "Was this adverse event recorded in the adverse events form?",
+        "options": [
+          {
+            "key": "Yes",
+            "text": "Yes"
+          },
+          {
+            "key": "No",
+            "text": "No"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "This field is required"
+        }
+      },
+      {
+        "key": "business_status",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "hidden",
+        "value": "Complete"
       }
     ]
   }
 }
-
