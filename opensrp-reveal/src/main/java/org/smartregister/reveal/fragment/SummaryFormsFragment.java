@@ -17,9 +17,12 @@ import org.json.JSONObject;
 import org.smartregister.reveal.R;
 import org.smartregister.reveal.contract.OtherFormsfragmentContract;
 import org.smartregister.reveal.presenter.OtherFormsFragmentPresenter;
+import org.smartregister.reveal.util.Constants;
 import org.smartregister.reveal.util.LocationUtils;
 import org.smartregister.reveal.util.RevealJsonFormUtils;
 import org.smartregister.reveal.view.SummaryFormsActivity;
+
+import java.util.Objects;
 
 public class SummaryFormsFragment extends Fragment implements OtherFormsfragmentContract.View, View.OnClickListener {
     
@@ -44,6 +47,8 @@ public class SummaryFormsFragment extends Fragment implements OtherFormsfragment
     private Button btnIrsFieldOfficer;
 
     private Button btnVerificationForm;
+
+    private Button btnEligibilityCompound;
 
     public static SummaryFormsFragment newInstance(Bundle bundle) {
 
@@ -81,6 +86,7 @@ public class SummaryFormsFragment extends Fragment implements OtherFormsfragment
         btnMobilization = view.findViewById(R.id.summary_mobilization_form);
         btnIrsFieldOfficer = view.findViewById(R.id.summary_irs_field_officer);
         btnVerificationForm = view.findViewById(R.id.summary_verification_form);
+        btnEligibilityCompound = view.findViewById(R.id.eligibility_compound);
 
         setClickListeners();
     }
@@ -93,7 +99,8 @@ public class SummaryFormsFragment extends Fragment implements OtherFormsfragment
         btnMobilization.setOnClickListener(this);
         btnIrsFieldOfficer.setOnClickListener(this);
         btnVerificationForm.setOnClickListener(this);
-
+        btnDailySummary.setOnClickListener(this);
+        btnEligibilityCompound.setOnClickListener(this);
     }
 
     @Override
@@ -108,7 +115,7 @@ public class SummaryFormsFragment extends Fragment implements OtherFormsfragment
 
     @Override
     public void startForm(JSONObject formName) {
-        ((SummaryFormsActivity) getActivity()).startFormActivity(formName);
+        ((SummaryFormsActivity) Objects.requireNonNull(getActivity())).startFormActivity(formName);
     }
 
     @Override
@@ -169,6 +176,9 @@ public class SummaryFormsFragment extends Fragment implements OtherFormsfragment
                 break;
             case R.id.summary_verification_form:
                 presenter.showBasicForm(org.smartregister.reveal.util.Constants.JsonForm.VERIFICATION_FORM_ZAMBIA);
+                break;
+            case R.id.eligibility_compound:
+                presenter.showBasicForm(Constants.JsonForm.NIGERIA_ELIGIBILITY_COMPOUND);
                 break;
             default:
                 break;

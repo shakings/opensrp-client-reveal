@@ -364,6 +364,11 @@ public interface Constants {
 
         String REFAPP_CASE_CONFIRMATION_FORM = "json.form/refapp_case_confirmation.json";
 
+        /**
+         * NIGERIA
+         *
+         */
+        String NIGERIA_ELIGIBILITY_COMPOUND = "json.form/nigeria_eligibility_compound.json";
 
         String OPERATIONAL_AREA_TAG = "operational_area";
 

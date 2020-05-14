@@ -224,6 +224,8 @@ public class RevealJsonFormUtils {
                 formName = JsonForm.THAILAND_SPRAY_FORM;
             } else if (BuildConfig.BUILD_COUNTRY == Country.REFAPP) {
                 formName = JsonForm.SPRAY_FORM_REFAPP;
+//            } else if (BuildConfig.BUILD_COUNTRY == Country.NIGERIA) {
+//                formName = JsonForm.NIGERIA_SPRAY_FORM;
             } else {
                 formName = JsonForm.SPRAY_FORM;
             }

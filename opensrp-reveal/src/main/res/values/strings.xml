@@ -350,4 +350,5 @@
     <string name="tested">Tested</string>
     <string name="not_tested">Not Tested</string>
     <string name="yes">Yes</string>
+    <string name="enter_eligibility_compound">Enter Eligibility Compound</string>
 </resources>

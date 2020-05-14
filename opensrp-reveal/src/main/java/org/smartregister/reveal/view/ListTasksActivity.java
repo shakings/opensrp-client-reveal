@@ -316,7 +316,7 @@ public class ListTasksActivity extends BaseMapActivity implements ListTaskContra
 
                         RevealMapHelper.addBaseLayers(kujakuMapView, style, ListTasksActivity.this);
 
-                        if (getBuildCountry() != Country.ZAMBIA) {
+                        if (getBuildCountry() != Country.ZAMBIA || getBuildCountry() != Country.NIGERIA) {
                             layerSwitcherFab.setVisibility(View.GONE);
                         }
 
@@ -383,7 +383,7 @@ public class ListTasksActivity extends BaseMapActivity implements ListTaskContra
 
     public void positionMyLocationAndLayerSwitcher() {
         FrameLayout.LayoutParams myLocationButtonParams = (FrameLayout.LayoutParams) myLocationButton.getLayoutParams();
-        if (getBuildCountry() != Country.ZAMBIA) {
+        if (getBuildCountry() != Country.ZAMBIA || getBuildCountry() != Country.NIGERIA) {
             positionMyLocationAndLayerSwitcher(myLocationButtonParams, myLocationButtonParams.topMargin);
         } else {
             int progressHeight = getResources().getDimensionPixelSize(R.dimen.progress_height);

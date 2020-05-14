@@ -42,6 +42,10 @@ public interface FamilyConstants {
         String REFAPP_FAMILY_REGISTER = "refapp_family_register";
         String REFAPP_FAMILY_UPDATE = "refapp_family_update";
         String REFAPP_FAMILY_MEMBER_REGISTER = "refapp_family_member_register";
+
+        String NIGERIA_FAMILY_REGISTER = "nigeria_family_register";
+        String NIGERIA_FAMILY_UPDATE = "nigeria_family_update";
+        String NIGERIA_FAMILY_MEMBER_REGISTER = "nigeria_family_member_register";
     }
 
     interface RELATIONSHIP {

@@ -75,18 +75,13 @@ public class FamilyProfilePresenter extends BaseFamilyProfilePresenter implement
 
     private void getStructureId(String familyId) {
         appExecutors.diskIO().execute(() -> {
-            Cursor cursor = null;
-            try {
-                cursor = database.rawQuery(String.format("SELECT DISTINCT %s FROM %S WHERE %s = ?",
-                        STRUCTURE_ID, FAMILY, BASE_ENTITY_ID), new String[]{familyId});
+            try (Cursor cursor = database.rawQuery(String.format("SELECT DISTINCT %s FROM %S WHERE %s = ?",
+                    STRUCTURE_ID, FAMILY, BASE_ENTITY_ID), new String[]{familyId})) {
                 if (cursor.moveToNext()) {
                     structureId = cursor.getString(0);
                 }
             } catch (Exception e) {
-                Timber.e(e, "Error getting residence for" + familyId);
-            } finally {
-                if (cursor != null)
-                    cursor.close();
+                Timber.e(e, "Error getting residence for%s", familyId);
             }
             if (structureId != null) {
                 appExecutors.mainThread().execute(() -> {
@@ -191,6 +186,8 @@ public class FamilyProfilePresenter extends BaseFamilyProfilePresenter implement
             formName = JSON_FORM.THAILAND_FAMILY_UPDATE;
         } else if (BuildConfig.BUILD_COUNTRY == Country.ZAMBIA) {
             formName = JSON_FORM.ZAMBIA_FAMILY_UPDATE;
+        } else if (BuildConfig.BUILD_COUNTRY == Country.NIGERIA){
+            formName = JSON_FORM.NIGERIA_FAMILY_UPDATE;
         } else if (BuildConfig.BUILD_COUNTRY == Country.REFAPP) {
             formName = JSON_FORM.REFAPP_FAMILY_UPDATE;
         } else {
