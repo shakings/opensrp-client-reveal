@@ -1,6 +1,6 @@
 {
   "count": "1",
-  "encounter_type": "mda_adherence",
+  "encounter_type": "spaq_form",
   "entity_id": "",
   "metadata": {
     "start": {
@@ -47,163 +47,114 @@
     "encounter_location": ""
   },
   "step1": {
-    "title": "MDA Adherence",
+    "title": "2ND Dose of SPAQ",
     "display_back_button": "true",
     "fields": [
       {
-        "key": "catchment_area",
+        "key": "number_of_additional_doses",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "edit_text",
+        "hint": "How many additional doses were given?",
+        "v_numeric": {
+          "value": "true",
+          "err": "Must be a number"
+        }
+      },
+      {
+        "key": "additional_doses_reason",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "edit_text",
+        "hint": "Why was more than one additional dose given?",
+        "edit_type": "name",
+        "v_required": {
+          "value": "true",
+          "err": "Please give a reason"
+        }
+      },
+      {
+        "key": "childHfReferred",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "native_radio",
+        "label": "Was the child referred to the HF?",
+        "options": [
+          {
+            "key": "1",
+            "text": "Yes"
+          },
+          {
+            "key": "0",
+            "text": "No"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "This field is required"
+        }
+      },
+      {
+        "key": "child_referred_hf",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
         "openmrs_entity_id": "",
         "type": "spinner",
-        "hint": "Name of Catchment"
-      },
-      {
-        "key": "coordinator_name",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "",
-        "type": "spinner",
-        "hint": "Name of Supervisor"
-      },
-      {
-        "key": "adherence_name",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "",
-        "type": "spinner",
-        "hint": "Adherence Officer name"
-      },
-      {
-        "key": "confirm_receipt",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "",
-        "type": "native_radio",
-        "label": "Did they receive 3 doses of treatment recently?",
-        "options": [
-          {
-            "key": "Yes",
-            "text": "Yes"
-          },
-          {
-            "key": "No",
-            "text": "No"
+        "hint": "What HF was child referred to?",
+        "relevance": {
+          "step1:childHfReferred": {
+            "type": "string",
+            "ex": "equalTo(., \"1\")"
           }
-        ],
-        "v_required": {
-          "value": true,
-          "err": "This field is required"
         }
       },
       {
-        "key": "day_2",
+        "key": "child_scan_qr_code",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
         "openmrs_entity_id": "",
-        "type": "native_radio",
-        "label": "Day 2 adherence?",
-        "options": [
-          {
-            "key": "Yes",
-            "text": "Yes"
-          },
-          {
-            "key": "No",
-            "text": "No"
+        "type": "barcode",
+        "barcode_type": "qrcode",
+        "scanButtonText": "Scan QR Code",
+        "relevance": {
+          "step1:childHfReferred": {
+            "type": "string",
+            "ex": "equalTo(., \"1\")"
           }
-        ],
-        "v_required": {
-          "value": true,
-          "err": "This field is required"
         }
       },
       {
-        "key": "day_3",
+        "key": "referral_reason",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
         "openmrs_entity_id": "",
-        "type": "native_radio",
-        "label": "Day 3 adherence?",
-        "options": [
-          {
-            "key": "Yes",
-            "text": "Yes"
-          },
-          {
-            "key": "No",
-            "text": "No"
-          }
-        ],
+        "type": "edit_text",
+        "hint": "What is the reason(s) for referral?",
+        "edit_type": "name",
         "v_required": {
-          "value": true,
-          "err": "This field is required"
+          "value": "true",
+          "err": "Please give a reason"
         }
       },
       {
-        "key": "adherent",
+        "key": "user_qr_code",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
         "openmrs_entity_id": "",
-        "type": "native_radio",
-        "label": "Fully adherent?",
-        "options": [
-          {
-            "key": "Yes",
-            "text": "Yes"
-          },
-          {
-            "key": "No",
-            "text": "No"
-          }
-        ],
+        "type": "barcode",
+        "barcode_type": "qrcode",
+        "hint": "Enter Code",
+        "scanButtonText": "Scan QR Code",
+        "v_numeric": {
+          "value": "true",
+          "err": "Please scan QR"
+        },
         "v_required": {
-          "value": true,
-          "err": "This field is required"
-        }
-      },
-      {
-        "key": "adverse",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "",
-        "type": "native_radio",
-        "label": "Any reported adverse events?",
-        "options": [
-          {
-            "key": "Yes",
-            "text": "Yes"
-          },
-          {
-            "key": "No",
-            "text": "No"
-          }
-        ],
-        "v_required": {
-          "value": true,
-          "err": "This field is required"
-        }
-      },
-      {
-        "key": "adverse_form",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "",
-        "type": "native_radio",
-        "label": "Was this adverse event recorded in the adverse events form?",
-        "options": [
-          {
-            "key": "Yes",
-            "text": "Yes"
-          },
-          {
-            "key": "No",
-            "text": "No"
-          }
-        ],
-        "v_required": {
-          "value": true,
-          "err": "This field is required"
+          "value": "true",
+          "err": "Please scan QR"
         }
       },
       {

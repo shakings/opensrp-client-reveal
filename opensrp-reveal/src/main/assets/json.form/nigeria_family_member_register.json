@@ -74,7 +74,7 @@
         "openmrs_entity": "person",
         "openmrs_entity_id": "first_name",
         "type": "edit_text",
-        "hint": "Name of Child",
+        "hint": "First Name",
         "edit_type": "name",
         "text_size": "8sp",
         "v_required": {
@@ -114,7 +114,7 @@
         "relevance": {
           "rules-engine": {
             "ex-rules": {
-              "rules-file": "nigeria-family-member-relevance.yml"
+              "rules-file": "family-member-relevance.yml"
             }
           }
         }
@@ -135,7 +135,7 @@
         "calculation": {
           "rules-engine": {
             "ex-rules": {
-              "rules-file": "nigeria-family-member-calculation.yml"
+              "rules-file": "family-member-calculation.yml"
             }
           }
         }
@@ -159,7 +159,7 @@
         ],
         "v_required": {
           "value": "true",
-          "err": "Please enter the sex"
+          "err": "Please enter the gender"
         }
       },
       {
@@ -182,7 +182,7 @@
         "relevance": {
           "rules-engine": {
             "ex-rules": {
-              "rules-file": "nigeria-family-member-relevance.yml"
+              "rules-file": "family-member-relevance.yml"
             }
           }
         }
@@ -226,7 +226,7 @@
         "relevance": {
           "rules-engine": {
             "ex-rules": {
-              "rules-file": "nigeria-family-member-relevance.yml"
+              "rules-file": "family-member-relevance.yml"
             }
           }
         },

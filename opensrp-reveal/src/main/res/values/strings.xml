@@ -351,4 +351,5 @@
     <string name="not_tested">Not Tested</string>
     <string name="yes">Yes</string>
     <string name="enter_eligibility_compound">Enter Eligibility Compound</string>
+    <string name="enter_structure_level_drug_reconciliation">Enter Structure-Level Drug Reconciliation</string>
 </resources>

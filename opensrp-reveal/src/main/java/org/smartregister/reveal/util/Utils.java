@@ -172,14 +172,14 @@ public class Utils {
     public static int getInterventionLabel() {
         String plan = PreferencesUtil.getInstance().getCurrentPlan();
         String interventionType = PreferencesUtil.getInstance().getInterventionTypeForPlan(plan);
-        if (interventionType.equals(FI))
-            return R.string.focus_investigation;
-        else if (interventionType.equals(IRS))
-            return R.string.irs;
-        else if (interventionType.equals(MDA))
-            return R.string.mda;
-        else
-            return R.string.irs;
+        switch (interventionType) {
+            case FI:
+                return R.string.focus_investigation;
+            case MDA:
+                return R.string.mda;
+            default:
+                return R.string.irs;
+        }
     }
 
     public static String getAge(String dob) {

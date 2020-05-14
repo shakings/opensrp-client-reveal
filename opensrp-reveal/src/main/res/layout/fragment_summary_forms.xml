@@ -162,6 +162,25 @@
             android:textAllCaps="false"
             android:textColor="@color/text_black"
             android:textSize="20sp" />
+
+        <View
+            android:id="@+id/separator9"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="5dp"
+            android:background="@color/light_grey" />
+
+        <Button
+            android:id="@+id/structure_level"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/white"
+            android:gravity="center_horizontal"
+            android:padding="5dp"
+            android:text="@string/enter_structure_level_drug_reconciliation"
+            android:textAllCaps="false"
+            android:textColor="@color/text_black"
+            android:textSize="20sp" />
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

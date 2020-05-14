@@ -1,7 +1,10 @@
 {
-  "count": "1",
-  "encounter_type": "mda_dispense",
+  "count": "3",
   "entity_id": "",
+  "relational_id": "",
+  "validate_on_submit": true,
+  "show_errors_on_submit": true,
+  "encounter_type": "mda_dispense",
   "metadata": {
     "start": {
       "openmrs_entity_parent": "",
@@ -47,55 +50,23 @@
     "encounter_location": ""
   },
   "step1": {
-    "title": "MDA Dispense",
+    "title": "Child SMC Form",
     "display_back_button": "true",
     "fields": [
-      {
-        "key": "catchment_area",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "",
-        "type": "spinner",
-        "hint": "Name of Catchment"
-      },
-      {
-        "key": "coordinator_name",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "",
-        "type": "spinner",
-        "hint": "Name of Supervisor"
-      },
-      {
-        "key": "datacollector",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "",
-        "type": "spinner",
-        "hint": "Enumerator name"
-      },
-      {
-        "key": "chw_name",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "",
-        "type": "spinner",
-        "hint": "Name of CHW"
-      },
       {
         "key": "present",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
         "openmrs_entity_id": "",
         "type": "native_radio",
-        "label": "Is the member present?",
+        "label": "Was SPAQ administered?",
         "options": [
           {
-            "key": "Yes",
+            "key": "1",
             "text": "Yes"
           },
           {
-            "key": "No",
+            "key": "0",
             "text": "No"
           }
         ],
@@ -105,208 +76,104 @@
         }
       },
       {
-        "key": "about_malaria",
+        "key": "child_record",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
         "openmrs_entity_id": "",
         "type": "native_radio",
-        "label": "Have you heard or seen messages or information about malaria in the past year?",
+        "label": "Have you heard filled out the child record card for day 1, and provided instructions to the caregiver to fill out for day 2 & day 3?",
         "options": [
           {
-            "key": "Yes",
+            "key": "1",
             "text": "Yes"
           },
           {
-            "key": "No",
+            "key": "0",
             "text": "No"
           }
         ],
         "v_required": {
           "value": true,
           "err": "This field is required"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "nigeria-child-smc-relevance.yml"
-            }
-          }
         }
       },
       {
-        "key": "information",
+        "key": "referred",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
         "openmrs_entity_id": "",
-        "type": "check_box",
-        "label": "What type of message or information did you see or hear?",
-        "combine_checkbox_option_values" : "true",
+        "type": "native_radio",
+        "label": "Was the child referred to HF?",
         "options": [
           {
-            "key": "malaria_is_dangerous",
-            "text": "Malaria is dangerous"
+            "key": "1",
+            "text": "Yes"
           },
           {
-            "key": "mosquitoes_spread_malaria",
-            "text": "Mosquitoes spread malaria"
-          },
-          {
-            "key": "importance_of_house_spraying",
-            "text": "Importance of house spraying"
-          },
-          {
-            "key": "importance_of_mda",
-            "text": "Importance of Mass Drug Administration"
-          },
-          {
-            "key": "importance_of_sleeping_under_net",
-            "text": "Importance of sleeping under a mosquito net"
-          },
-          {
-            "key": "seek_testing_for_fever",
-            "text": "Seek testing for fever"
-          },
-          {
-            "key": "seek_treatment_for_fever",
-            "text": "Seek treatment for fever"
-          },
-          {
-            "key": "malaria_elimination_is_possible",
-            "text": "Malaria elimination is possible"
-          },
-          {
-            "key": "malaria_ends_with_me",
-            "text": "Malaria ends with me"
-          },
-          {
-            "key": "other",
-            "text": "Other"
+            "key": "0",
+            "text": "No"
           }
         ],
         "v_required": {
           "value": true,
           "err": "This field is required"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "nigeria-child-smc-relevance.yml"
-            }
-          }
         }
       },
       {
-        "key": "other_information",
+        "key": "user_qr_code",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "barcode",
+        "barcode_type": "qrcode",
+        "hint": "Enter Code",
+        "scanButtonText": "Scan QR Code",
+        "v_numeric": {
+          "value": "true",
+          "err": "Please scan QR"
+        },
+        "v_required": {
+          "value": "true",
+          "err": "Please scan QR"
+        }
+      },
+      {
+        "key": "referral_reason",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
         "openmrs_entity_id": "",
         "type": "edit_text",
-        "hint": "Specify other information message",
-        "text_size": "8sp",
-        "v_required": {
-          "value": true,
-          "err": "This field is required"
-        },
+        "hint": "What is the reason(s) for the referral?",
         "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "nigeria-child-smc-relevance.yml"
-            }
+          "step1:referred": {
+            "type": "string",
+            "ex": "equalTo(., \"1\")"
           }
         }
       },
       {
-        "key": "preferred_source",
+        "key": "child_qr_code",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
         "openmrs_entity_id": "",
-        "type": "check_box",
-        "label": "Which are your preferred sources of malaria messages or information?",
-        "combine_checkbox_option_values": "true",
-        "options": [
-          {
-            "key": "health_facility",
-            "text": "Health facility"
-          },
-          {
-            "key": "chw",
-            "text": "Community Health Worker"
-          },
-          {
-            "key": "village_meeting",
-            "text": "Village meeting"
-          },
-          {
-            "key": "friend_or_family",
-            "text": "Friend or Family"
-          },
-          {
-            "key": "church",
-            "text": "Church"
-          },
-          {
-            "key": "school",
-            "text": "School"
-          },
-          {
-            "key": "radio",
-            "text": "Radio"
-          },
-          {
-            "key": "tv",
-            "text": "TV"
-          },
-          {
-            "key": "other",
-            "text": "other"
-          }
-        ],
-        "v_required": {
-          "value": true,
-          "err": "This field is required"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "nigeria-child-smc-relevance.yml"
-            }
-          }
-        }
+        "type": "barcode",
+        "barcode_type": "qrcode",
+        "scanButtonText": "Scan QR Code"
       },
       {
-        "key": "other_preferred_source",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "",
-        "type": "edit_text",
-        "hint": "Specify other information source",
-        "text_size": "8sp",
-        "v_required": {
-          "value": true,
-          "err": "This field is required"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "nigeria-child-smc-relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "eligible",
+        "key": "currently_present",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
         "openmrs_entity_id": "",
         "type": "native_radio",
-        "label": "Is this member eligible for treatment",
+        "label": "Is the child current present?",
         "options": [
           {
-            "key": "Yes",
+            "key": "1",
             "text": "Yes"
           },
           {
-            "key": "No",
+            "key": "0",
             "text": "No"
           }
         ],
@@ -316,91 +183,19 @@
         }
       },
       {
-        "key": "ineligible_reason",
+        "key": "child_present_days",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
         "openmrs_entity_id": "",
         "type": "native_radio",
-        "label": "Why were they ineligible?",
+        "label": "Will the child be present in the next four days?",
         "options": [
           {
-            "key": "pregnant",
-            "text": "Pregnant"
-          },
-          {
-            "key": "infant_less_than_3_months",
-            "text": "Infant less than 3 months old"
-          },
-          {
-            "key": "drug_contraindication",
-            "text": "Drug contraindication"
-          },
-          {
-            "key": "heart_condition",
-            "text": "Heart condition"
-          },
-          {
-            "key": "other",
-            "text": "Other reason"
-          }
-        ],
-        "v_required": {
-          "value": true,
-          "err": "This field is required"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "nigeria-child-smc-relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "malaria_prevention",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "",
-        "type": "check_box",
-        "label": "Other malaria prevention received?",
-        "combine_checkbox_option_values" : "true",
-        "options": [
-          {
-            "key": "irs",
-            "text": "IRS"
-          },
-          {
-            "key": "ipt",
-            "text": "IPT"
-          },
-          {
-            "key": "itn_used",
-            "text": "ITN used"
-          },
-          {
-            "key": "none",
-            "text": "None"
-          }
-        ],
-        "v_required": {
-          "value": true,
-          "err": "This field is required"
-        }
-      },
-      {
-        "key": "ill",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "",
-        "type": "native_radio",
-        "label": "Is the member currently ill?",
-        "options": [
-          {
-            "key": "Yes",
+            "key": "1",
             "text": "Yes"
           },
           {
-            "key": "No",
+            "key": "0",
             "text": "No"
           }
         ],
@@ -410,74 +205,19 @@
         }
       },
       {
-        "key": "symptoms",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "",
-        "type": "check_box",
-        "label": "Indicate if recipient reports any symptoms or complaints on DAY 1 prior to taking DHAp",
-        "combine_checkbox_option_values" : "true",
-        "options": [
-          {
-            "key": "current_fever",
-            "text": "Current fever"
-          },
-          {
-            "key": "fever_history_14_days",
-            "text": "History of fever in the last 14 days"
-          },
-          {
-            "key": "headache",
-            "text": "Headache"
-          },
-          {
-            "key": "cough",
-            "text": "Cough"
-          },
-          {
-            "key": "diarrhea_or_watery_stool",
-            "text": "Diarrhea or watery stool"
-          },
-          {
-            "key": "vomiting",
-            "text": "Vomiting"
-          },
-          {
-            "key": "problems_breathing",
-            "text": "Problems breathing"
-          },
-          {
-            "key": "chest_pain",
-            "text": "Chest pain"
-          },
-          {
-            "key": "no_symptoms",
-            "text": "No symptoms"
-          },
-          {
-            "key": "other",
-            "text": "Other symptoms"
-          }
-        ],
-        "v_required": {
-          "value": true,
-          "err": "This field is required"
-        }
-      },
-      {
-        "key": "referal",
+        "key": "very_sick",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
         "openmrs_entity_id": "",
         "type": "native_radio",
-        "label": "Did you refer them to the health centre",
+        "label": "Is the child very sick?(Fever, etc).",
         "options": [
           {
-            "key": "Yes",
+            "key": "1",
             "text": "Yes"
           },
           {
-            "key": "No",
+            "key": "0",
             "text": "No"
           }
         ],
@@ -487,75 +227,25 @@
         }
       },
       {
-        "key": "treatment",
+        "key": "allergic_severe",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
         "openmrs_entity_id": "",
         "type": "native_radio",
-        "label": "Did they refuse or receive treatment?",
+        "label": "Allergic? / Severe adverse reaction to SPAQ broadly/in the previous round?",
         "options": [
           {
-            "key": "refused",
-            "text": "Refused"
-          },
-          {
-            "key": "received",
-            "text": "Received"
-          }
-        ],
-        "v_required": {
-          "value": true,
-          "err": "This field is required"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "nigeria-child-smc-relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "day_1",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "",
-        "type": "native_radio",
-        "label": "Day 1 adherence?",
-        "options": [
-          {
-            "key": "Yes",
+            "key": "1",
             "text": "Yes"
           },
           {
-            "key": "No",
+            "key": "0",
             "text": "No"
           }
         ],
         "v_required": {
           "value": true,
           "err": "This field is required"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "nigeria-child-smc-relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "business_status",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "",
-        "type": "hidden",
-        "calculation": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "nigeria-child-smc-calculation.yml"
-            }
-          }
         }
       }
     ]

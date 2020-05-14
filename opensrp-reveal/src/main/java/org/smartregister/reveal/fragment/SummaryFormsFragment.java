@@ -50,6 +50,8 @@ public class SummaryFormsFragment extends Fragment implements OtherFormsfragment
 
     private Button btnEligibilityCompound;
 
+    private Button btnStructureLevelDrug;
+
     public static SummaryFormsFragment newInstance(Bundle bundle) {
 
         SummaryFormsFragment fragment = new SummaryFormsFragment();
@@ -87,6 +89,7 @@ public class SummaryFormsFragment extends Fragment implements OtherFormsfragment
         btnIrsFieldOfficer = view.findViewById(R.id.summary_irs_field_officer);
         btnVerificationForm = view.findViewById(R.id.summary_verification_form);
         btnEligibilityCompound = view.findViewById(R.id.eligibility_compound);
+        btnStructureLevelDrug = view.findViewById(R.id.structure_level);
 
         setClickListeners();
     }
@@ -101,6 +104,7 @@ public class SummaryFormsFragment extends Fragment implements OtherFormsfragment
         btnVerificationForm.setOnClickListener(this);
         btnDailySummary.setOnClickListener(this);
         btnEligibilityCompound.setOnClickListener(this);
+        btnStructureLevelDrug.setOnClickListener(this);
     }
 
     @Override
@@ -179,6 +183,9 @@ public class SummaryFormsFragment extends Fragment implements OtherFormsfragment
                 break;
             case R.id.eligibility_compound:
                 presenter.showBasicForm(Constants.JsonForm.NIGERIA_ELIGIBILITY_COMPOUND);
+                break;
+            case R.id.structure_level:
+                presenter.showBasicForm(Constants.JsonForm.NIGERIA_STRUCTURE_LEVEL_DRUG_RECON);
                 break;
             default:
                 break;
