@@ -216,6 +216,23 @@
             "ex": "equalTo(., \"0\")"
           }
         }
+      },
+      {
+        "key": "smcNumberCompound",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "edit_text",
+        "hint": "How many individuals live in this structure?",
+        "text_size": "8sp",
+        "v_numeric": {
+          "value": "true",
+          "err": "What is the SMC number for this compound?"
+        },
+        "v_min": {
+          "value": "1",
+          "err": "Number must be equal or greater than 1"
+        }
       }
     ]
   }
