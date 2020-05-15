@@ -223,11 +223,11 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "",
         "type": "edit_text",
-        "hint": "How many individuals live in this structure?",
+        "hint": "What is the SMC number for this compound?",
         "text_size": "8sp",
         "v_numeric": {
           "value": "true",
-          "err": "What is the SMC number for this compound?"
+          "err": "Please enter SMC number for this compound"
         },
         "v_min": {
           "value": "1",
