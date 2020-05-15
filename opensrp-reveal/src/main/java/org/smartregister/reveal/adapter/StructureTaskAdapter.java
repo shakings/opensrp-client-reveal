@@ -8,9 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import org.smartregister.domain.Task;
+import org.smartregister.reveal.BuildConfig;
 import org.smartregister.reveal.R;
 import org.smartregister.reveal.model.StructureTaskDetails;
 import org.smartregister.reveal.util.Constants.Intervention;
+import org.smartregister.reveal.util.Country;
 import org.smartregister.reveal.viewholder.StructureTaskViewHolder;
 
 import java.util.ArrayList;
@@ -60,9 +62,17 @@ public class StructureTaskAdapter extends RecyclerView.Adapter<StructureTaskView
                 action = context.getString(R.string.register_family);
                 name = context.getString(R.string.add_fam);
             } else if (Intervention.MDA_ADHERENCE.equals(taskDetails.getTaskCode())) {
-                action = context.getString(R.string.adhere_mda);
+                if (BuildConfig.BUILD_COUNTRY == Country.NIGERIA) {
+                    action = context.getString(R.string.spaq_smc);
+                } else {
+                    action = context.getString(R.string.adhere_mda);
+                }
             } else if (Intervention.MDA_DISPENSE.equals(taskDetails.getTaskCode())) {
-                action = context.getString(R.string.dispense_mda);
+                if (BuildConfig.BUILD_COUNTRY ==  Country.NIGERIA) {
+                    action = context.getString(R.string.child_smc);
+                } else {
+                    action = context.getString(R.string.dispense_mda);
+                }
             }
             taskDetails.setTaskName(name);
             taskDetails.setTaskAction(action);

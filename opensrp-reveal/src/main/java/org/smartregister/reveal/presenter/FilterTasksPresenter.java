@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.widget.ToggleButton;
 
 import org.apache.commons.lang3.StringUtils;
+import org.smartregister.reveal.BuildConfig;
 import org.smartregister.reveal.R;
 import org.smartregister.reveal.contract.FilterTasksContract;
 import org.smartregister.reveal.model.TaskFilterParams;
@@ -14,6 +15,7 @@ import org.smartregister.reveal.util.Constants.BusinessStatus;
 import org.smartregister.reveal.util.Constants.Filter;
 import org.smartregister.reveal.util.Constants.Intervention;
 import org.smartregister.reveal.util.Constants.InterventionType;
+import org.smartregister.reveal.util.Country;
 import org.smartregister.reveal.util.Utils;
 
 import java.util.Arrays;
@@ -53,9 +55,19 @@ public class FilterTasksPresenter implements FilterTasksContract.Presenter {
         labelsMap.put(Intervention.CASE_CONFIRMATION, R.string.case_confirmation);
         labelsMap.put(Intervention.REGISTER_FAMILY, R.string.register_family);
         labelsMap.put(Intervention.PAOT, R.string.paot);
-        labelsMap.put(Intervention.MDA_DISPENSE, R.string.mda_dispense);
-        labelsMap.put(Intervention.MDA_ADHERENCE, R.string.mda_adherence);
+        if (BuildConfig.BUILD_COUNTRY == Country.NIGERIA) {
+            labelsMap.put(Intervention.MDA_DISPENSE, R.string.child_smc);
+        } else  {
+            labelsMap.put(Intervention.MDA_DISPENSE, R.string.mda_dispense);
+        }
+
+        if (BuildConfig.BUILD_COUNTRY == Country.NIGERIA) {
+            labelsMap.put(Intervention.MDA_ADHERENCE, R.string.spaq_smc);
+        } else {
+            labelsMap.put(Intervention.MDA_ADHERENCE, R.string.mda_adherence);
+        }
         labelsMap.put(Intervention.IRS_VERIFICATION, R.string.irs_verification);
+
 
         //Intervention Types
         labelsMap.put(InterventionType.OPERATIONAL_AREA, R.string.operational_area);

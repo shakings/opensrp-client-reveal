@@ -176,10 +176,22 @@ public class Utils {
             case FI:
                 return R.string.focus_investigation;
             case MDA:
-                return R.string.mda;
+                return R.string.smc_label;
             default:
                 return R.string.irs;
         }
+
+
+//        if (FI.equals(interventionType)) {
+//            return R.string.focus_investigation;
+//        } else if (MDA.equals(interventionType)) {
+//            if (BuildConfig.BUILD_COUNTRY == Country.NIGERIA) {
+//                return R.string.smc_label;
+//            } else {
+//                return R.string.mda;
+//            }
+//        }
+//        return R.string.irs;
     }
 
     public static String getAge(String dob) {
@@ -310,7 +322,7 @@ public class Utils {
     }
 
     public static boolean isMDA() {
-        return getInterventionLabel() == R.string.mda;
+        return getInterventionLabel() == R.string.smc_label;
     }
 
     public static boolean isFocusInvestigationOrMDA() {

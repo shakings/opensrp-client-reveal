@@ -73,34 +73,87 @@
         }
       },
       {
-        "key": "peopleLivingStr",
+        "key": "compoundPart",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "native_radio",
+        "label": "Is this structure part of a compound?",
+        "options": [
+          {
+            "key": "1",
+            "text": "Yes"
+          },
+          {
+            "key": "0",
+            "text": "No"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "This field is required"
+        }
+      },
+      {
+        "key": "withinCompound",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "native_radio",
+        "label": "Is this the main structure within this compound?",
+        "options": [
+          {
+            "key": "1",
+            "text": "Yes"
+          },
+          {
+            "key": "0",
+            "text": "No"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "This field is required"
+        }
+      },
+      {
+        "key": "nameOfHeadCompound",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
         "openmrs_entity_id": "",
         "type": "edit_text",
-        "hint": "People living in structure?",
+        "hint": "Name of head of compound?",
         "v_required": {
           "value": true,
           "err": "This field is required"
         },
         "relevance": {
-          "step1:eligibleRes": {
+          "step1:compoundPart": {
             "type": "string",
-            "ex": "equalTo(., \"0\")"
+            "ex": "equalTo(., \"1\")"
           }
         }
       },
       {
-        "key": "residentialType",
+        "key": "numCompoundStructures",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
         "openmrs_entity_id": "",
-        "type": "spinner",
-        "hint": "Type of non-residential structure",
+        "type": "edit_text",
+        "hint": "How many structures are in this compound?",
+        "text_size": "8sp",
+        "v_numeric_integer": {
+          "value": "true",
+          "err": "Please enter a number of structures"
+        },
+        "v_required": {
+          "value": true,
+          "err": "This field is required"
+        },
         "relevance": {
-          "step1:eligibleRes": {
+          "step1:compoundPart": {
             "type": "string",
-            "ex": "equalTo(., \"0\")"
+            "ex": "equalTo(., \"1\")"
           }
         }
       },
@@ -132,7 +185,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "",
         "type": "check_box",
-        "label": "Reasons why this structure is eligible?",
+        "label": "Reasons why this structure is ineligible?",
         "combine_checkbox_option_values": "true",
         "text_size": "8sp",
         "options": [
@@ -165,25 +218,21 @@
         }
       },
       {
-        "key": "isCompound",
-        "label": "Is this a compound?",
-        "type": "native_radio",
+        "key": "smc_qr_code",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
         "openmrs_entity_id": "",
-        "options": [
-          {
-            "key": "1",
-            "text": "Yes"
-          },
-          {
-            "key": "0",
-            "text": "No"
-          }
-        ],
+        "type": "barcode",
+        "barcode_type": "qrcode",
+        "hint": "What is the SMC number for this compound?",
+        "scanButtonText": "Scan SMC Code",
+        "v_numeric": {
+          "value": "true",
+          "err": "Please scan QR"
+        },
         "v_required": {
-          "value": true,
-          "err": "This field is required"
+          "value": "true",
+          "err": "Please scan QR"
         }
       }
     ]
