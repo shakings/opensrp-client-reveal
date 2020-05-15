@@ -120,24 +120,6 @@
         }
       },
       {
-        "key": "user_qr_code",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "",
-        "type": "barcode",
-        "barcode_type": "qrcode",
-        "hint": "Enter Code",
-        "scanButtonText": "Scan QR Code",
-        "v_numeric": {
-          "value": "true",
-          "err": "Please scan QR"
-        },
-        "v_required": {
-          "value": "true",
-          "err": "Please scan QR"
-        }
-      },
-      {
         "key": "referral_reason",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
@@ -150,15 +132,6 @@
             "ex": "equalTo(., \"1\")"
           }
         }
-      },
-      {
-        "key": "child_qr_code",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "",
-        "type": "barcode",
-        "barcode_type": "qrcode",
-        "scanButtonText": "Scan QR Code"
       },
       {
         "key": "currently_present",
