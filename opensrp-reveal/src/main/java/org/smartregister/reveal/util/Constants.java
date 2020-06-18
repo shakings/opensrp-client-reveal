@@ -21,6 +21,8 @@ public interface Constants {
 
     String REGISTER_STRUCTURE_EVENT = "Register_Structure";
 
+    String REGISTER_ELIGIBILITY_COMPOUND_EVENT = "Register_eligibility_compound";
+
     String MOSQUITO_COLLECTION_EVENT = "mosquito_collection";
 
     String LARVAL_DIPPING_EVENT = "larval_dipping";
@@ -124,6 +126,8 @@ public interface Constants {
         String PROVINCE = "Province";
         String REGION = "Region";
         String DISTRICT = "District";
+        String STATE = "State";
+        String LGA = "Lga";
         String SUB_DISTRICT = "Sub-district";
         String HEALTH_CENTER = "Rural Health Centre";
         String CANTON = "Canton";
@@ -286,6 +290,8 @@ public interface Constants {
 
         String TRAP_FOLLOW_UP_DATE = "trap_end";
 
+        public static final String PERFORM_FORM_TRANSLATION = "perform_form_translation";
+
         String BUSINESS_STATUS = "business_status";
 
         String STRUCTURE_TYPE = "structureType";
@@ -374,9 +380,11 @@ public interface Constants {
 
         String NIGERIA_SECOND_DOSE_OF_SPAQ = "json.form/nigeria_second_dose_of_spaq.json";
 
-        String NIGERIA_STRUCTURE_LEVEL_DRUG_RECON = "json.form/nigeria_structure_level_drug_reconciliation_form.json";
+        String NIGERIA_STRUCTURE_LEVEL_DRUG_RECON = "json.form/nigeria_daily_summary_morning.json";
 
         String OPERATIONAL_AREA_TAG = "operational_area";
+
+        String ELIGIBILITY_COMPOUND_TAG = "eligibility_compound";
 
         String STRUCTURES_TAG = "structures";
 
@@ -404,6 +412,8 @@ public interface Constants {
 
         String SELECTED_OPERATIONAL_AREA_NAME = "selectedOpAreaName";
 
+        String SELECTED_COMPOUND_ELIGIBILITY_NAME = "selectedCompoundName";
+
         String NAMIBIA_ADD_STRUCTURE_FORM = "json.form/namibia_add_structure.json";
 
         String HOUSEHOLD_ACCESSIBLE = "householdAccessible";
@@ -416,6 +426,16 @@ public interface Constants {
         /**
          * Non-Task Related Forms
          */
+
+        /**
+         * NIGERIA
+         */
+        String DAILY_SUMMARY_MORNING = "json.form/nigeria_daily_summary_morning.json";
+
+        String DAILY_SUMMARY_EVENING = "json.form/nigeria_daily_summary_evening.json";
+
+        String HFW_LEVEL_REFERRAL = "json.form/nigeria_hfw_level_referral.json";
+
         String DAILY_SUMMARY_ZAMBIA = "json.form/zambia_daily_summary.json";
 
         String TEAM_LEADER_DOS_ZAMBIA = "json.form/zambia_team_leader_dos.json";

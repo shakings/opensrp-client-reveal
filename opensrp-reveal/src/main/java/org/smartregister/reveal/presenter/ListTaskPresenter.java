@@ -2,6 +2,7 @@ package org.smartregister.reveal.presenter;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.PointF;
 import android.graphics.RectF;
 import android.location.Location;
@@ -13,6 +14,8 @@ import com.mapbox.geojson.Feature;
 import com.mapbox.geojson.FeatureCollection;
 import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.mapbox.mapboxsdk.maps.MapboxMap;
+import com.vijay.jsonwizard.activities.JsonWizardFormActivity;
+import com.vijay.jsonwizard.domain.Form;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -48,6 +51,7 @@ import org.smartregister.reveal.util.Country;
 import org.smartregister.reveal.util.PasswordDialogUtils;
 import org.smartregister.reveal.util.PreferencesUtil;
 import org.smartregister.reveal.util.RevealJsonFormUtils;
+import org.smartregister.reveal.view.ListTasksActivity;
 import org.smartregister.util.Utils;
 
 import java.util.ArrayList;
@@ -61,6 +65,7 @@ import timber.log.Timber;
 
 import static android.content.DialogInterface.BUTTON_NEGATIVE;
 import static android.content.DialogInterface.BUTTON_NEUTRAL;
+import static android.content.DialogInterface.BUTTON_POSITIVE;
 import static com.vijay.jsonwizard.constants.JsonFormConstants.TEXT;
 import static com.vijay.jsonwizard.constants.JsonFormConstants.VALUE;
 import static org.smartregister.reveal.contract.ListTaskContract.ListTaskView;
@@ -84,6 +89,7 @@ import static org.smartregister.reveal.util.Constants.Intervention.PAOT;
 import static org.smartregister.reveal.util.Constants.Intervention.REGISTER_FAMILY;
 import static org.smartregister.reveal.util.Constants.JsonForm.DISTRICT_NAME;
 import static org.smartregister.reveal.util.Constants.JsonForm.LOCATION_COMPONENT_ACTIVE;
+import static org.smartregister.reveal.util.Constants.JsonForm.NIGERIA_ELIGIBILITY_COMPOUND;
 import static org.smartregister.reveal.util.Constants.JsonForm.OPERATIONAL_AREA_TAG;
 import static org.smartregister.reveal.util.Constants.JsonForm.PROVINCE_NAME;
 import static org.smartregister.reveal.util.Constants.Map.CLICK_SELECT_RADIUS;
@@ -312,7 +318,7 @@ public class ListTaskPresenter implements ListTaskContract.Presenter, PasswordRe
                 || NOT_ELIGIBLE.equals(businessStatus) || COMPLETE.equals(businessStatus))) {
             listTaskInteractor.fetchInterventionDetails(code, feature.id(), false);
         } else if (REGISTER_FAMILY.equals(code) && NOT_VISITED.equals(businessStatus)) {
-            displayMarkStructureIneligibleDialog();
+            listTaskView.eligibilityCompound();
         } else if (REGISTER_FAMILY.equals(code) && NOT_ELIGIBLE.equals(businessStatus)) {
             listTaskInteractor.fetchInterventionDetails(code, feature.id(), false);
         } else if (PAOT.equals(code)) {
@@ -558,7 +564,6 @@ public class ListTaskPresenter implements ListTaskContract.Presenter, PasswordRe
         } catch (Exception e) {
             Timber.e(e, "error launching add structure form");
         }
-
     }
 
     @Override
@@ -567,7 +572,7 @@ public class ListTaskPresenter implements ListTaskContract.Presenter, PasswordRe
             onMarkStructureIneligibleConfirmed();
             markStructureIneligibleConfirmed = false;
         } else if (REGISTER_FAMILY.equals(selectedFeatureInterventionType)) {
-            listTaskView.registerFamily();
+            listTaskView.eligibilityCompound();
         } else if (cardDetails == null || !changeInterventionStatus) {
             startForm(selectedFeature, null, selectedFeatureInterventionType);
         } else {

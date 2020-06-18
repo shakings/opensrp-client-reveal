@@ -34,7 +34,7 @@ public class SummaryFormsFragment extends Fragment implements OtherFormsfragment
 
     private LocationUtils locationUtils;
 
-    private Button btnDailySummary;
+    private Button btnDailySummaryMorning;
 
     private Button btnTeamLeaderDos;
 
@@ -48,10 +48,9 @@ public class SummaryFormsFragment extends Fragment implements OtherFormsfragment
 
     private Button btnVerificationForm;
 
-    private Button btnEligibilityCompound;
+    private Button btnDailySummaryEvening;
 
-    private Button btnStructureLevelDrug;
-
+    private Button btnHfwLevelReferral;
     public static SummaryFormsFragment newInstance(Bundle bundle) {
 
         SummaryFormsFragment fragment = new SummaryFormsFragment();
@@ -81,30 +80,28 @@ public class SummaryFormsFragment extends Fragment implements OtherFormsfragment
 
     private void initializeViews(View view)
     {
-        btnDailySummary = view.findViewById(R.id.summary_daily_summary);
+        btnDailySummaryMorning = view.findViewById(R.id.summary_daily_summary_morning);
+        btnDailySummaryEvening = view.findViewById(R.id.summary_daily_summary_evening);
         btnTeamLeaderDos = view.findViewById(R.id.summary_team_leader_dos);
         btnCbSprayArea = view.findViewById(R.id.summary_cb_spray_area);
         btnIrsSaDecision = view.findViewById(R.id.summary_irs_sa_decision);
         btnMobilization = view.findViewById(R.id.summary_mobilization_form);
         btnIrsFieldOfficer = view.findViewById(R.id.summary_irs_field_officer);
         btnVerificationForm = view.findViewById(R.id.summary_verification_form);
-        btnEligibilityCompound = view.findViewById(R.id.eligibility_compound);
-        btnStructureLevelDrug = view.findViewById(R.id.structure_level);
-
+        btnHfwLevelReferral =  view.findViewById(R.id.hfw_level_referral);
         setClickListeners();
     }
 
     private void setClickListeners() {
-        btnDailySummary.setOnClickListener(this);
+        btnDailySummaryMorning.setOnClickListener(this);
         btnTeamLeaderDos.setOnClickListener(this);
         btnCbSprayArea.setOnClickListener(this);
         btnIrsSaDecision.setOnClickListener(this);
         btnMobilization.setOnClickListener(this);
         btnIrsFieldOfficer.setOnClickListener(this);
         btnVerificationForm.setOnClickListener(this);
-        btnDailySummary.setOnClickListener(this);
-        btnEligibilityCompound.setOnClickListener(this);
-        btnStructureLevelDrug.setOnClickListener(this);
+        btnDailySummaryEvening.setOnClickListener(this);
+        btnHfwLevelReferral.setOnClickListener(this);
     }
 
     @Override
@@ -160,8 +157,11 @@ public class SummaryFormsFragment extends Fragment implements OtherFormsfragment
     @Override
     public void onClick(View view) {
         switch(view.getId()) {
-            case R.id.summary_daily_summary:
-                presenter.showBasicForm(org.smartregister.reveal.util.Constants.JsonForm.DAILY_SUMMARY_ZAMBIA);
+            case R.id.summary_daily_summary_morning:
+                presenter.showBasicForm(Constants.JsonForm.DAILY_SUMMARY_MORNING);
+                break;
+            case R.id.summary_daily_summary_evening:
+                presenter.showBasicForm(Constants.JsonForm.DAILY_SUMMARY_EVENING);
                 break;
             case R.id.summary_team_leader_dos:
                 presenter.showBasicForm(org.smartregister.reveal.util.Constants.JsonForm.TEAM_LEADER_DOS_ZAMBIA);
@@ -181,11 +181,8 @@ public class SummaryFormsFragment extends Fragment implements OtherFormsfragment
             case R.id.summary_verification_form:
                 presenter.showBasicForm(org.smartregister.reveal.util.Constants.JsonForm.VERIFICATION_FORM_ZAMBIA);
                 break;
-            case R.id.eligibility_compound:
-                presenter.showBasicForm(Constants.JsonForm.NIGERIA_ELIGIBILITY_COMPOUND);
-                break;
-            case R.id.structure_level:
-                presenter.showBasicForm(Constants.JsonForm.NIGERIA_STRUCTURE_LEVEL_DRUG_RECON);
+            case R.id.hfw_level_referral:
+                presenter.showBasicForm(Constants.JsonForm.HFW_LEVEL_REFERRAL);
                 break;
             default:
                 break;

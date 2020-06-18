@@ -356,4 +356,12 @@
     <string name="enter_eligibility_compound">Enter Eligibility Compound</string>
     <string name="enter_structure_level_drug_reconciliation">Enter Structure-Level Drug Reconciliation</string>
     <string name="smc_label">SMC</string>
+    <string name="eligibility_compound">You are required to register for compound eligibility</string>
+    <string name="eligibility_compound_yes">Proceed</string>
+    <string name="elgibility_compound_no">Cancel</string>
+    <string name="eligibility_compound_return">Return</string>
+    <string name="daily_summary_morning">Enter HF-level Drug Morning Form</string>
+    <string name="daily_summary_evening">Enter HF-level Drug Evening Form</string>
+    <string name="hfw_level_referral">Enter HFW-Referral Form</string>
+    <string name="eligibility_compound_reg">PROCEED</string>
 </resources>

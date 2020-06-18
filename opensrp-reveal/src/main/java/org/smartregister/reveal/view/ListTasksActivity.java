@@ -546,6 +546,21 @@ public class ListTasksActivity extends BaseMapActivity implements ListTaskContra
     }
 
     @Override
+    public void eligibilityCompound() {
+        clearSelectedFeature();
+        Intent intent = new Intent(this, EligibilityCompoundActivity.class);
+        intent.putExtra(START_REGISTRATION, true);
+        Feature feature = listTaskPresenter.getSelectedFeature();
+        intent.putExtra(Properties.LOCATION_UUID, feature.id());
+        intent.putExtra(Properties.TASK_IDENTIFIER, feature.getStringProperty(Properties.TASK_IDENTIFIER));
+        intent.putExtra(Properties.TASK_BUSINESS_STATUS, feature.getStringProperty(Properties.TASK_BUSINESS_STATUS));
+        intent.putExtra(Properties.TASK_STATUS, feature.getStringProperty(Properties.TASK_STATUS));
+        if (feature.hasProperty(Properties.STRUCTURE_NAME))
+            intent.putExtra(Properties.STRUCTURE_NAME, feature.getStringProperty(Properties.STRUCTURE_NAME));
+        startActivity(intent);
+    }
+
+    @Override
     public void onLocationComponentInitialized() {
         if (PermissionsManager.areLocationPermissionsGranted(this)) {
             LocationComponent locationComponent = kujakuMapView.getMapboxLocationComponentWrapper()

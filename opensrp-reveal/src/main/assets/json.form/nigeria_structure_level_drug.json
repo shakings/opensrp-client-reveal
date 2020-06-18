@@ -46,7 +46,7 @@
     },
     "encounter_location": ""
   },
-  "step1": {
+  "step2": {
     "title": "Structure-Level Drug Reconciliation",
     "display_back_button": "true",
     "fields": [
@@ -204,4 +204,3 @@
     ]
   }
 }
-
