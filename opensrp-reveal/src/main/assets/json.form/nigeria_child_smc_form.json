@@ -117,6 +117,27 @@
         "v_required": {
           "value": true,
           "err": "This field is required"
+        },
+        "relevance": {
+          "step1:currently_present": {
+            "type": "string",
+            "ex": "equalTo(., \"1\")"
+          }
+        }
+      },
+      {
+        "key": "ischildVerySickAlert",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Refer to HF & do not administer SPAQ",
+        "toaster_type": "problem",
+        "relevance": {
+          "step1:very_sick": {
+            "type": "string",
+            "ex": "equalTo(., \"1\")"
+          }
         }
       },
       {
@@ -142,6 +163,21 @@
         }
       },
       {
+        "key": "isSevereReaction",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Refer to HF & do not administer SPAQ",
+        "toaster_type": "problem",
+        "relevance": {
+          "step1:allergic_severe": {
+            "type": "string",
+            "ex": "equalTo(., \"1\")"
+          }
+        }
+      },
+      {
         "key": "present",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
@@ -164,25 +200,54 @@
         }
       },
       {
-        "key": "present",
+        "key": "isChildReceivedContrimoxazole",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
         "openmrs_entity_id": "",
-        "type": "native_radio",
-        "label": "Administered SPAQ? (yes, no - refused, no - other)",
-        "options": [
-          {
-            "key": "1",
-            "text": "Yes"
-          },
-          {
-            "key": "0",
-            "text": "No"
+        "type": "toaster_notes",
+        "text": "Do not administer SPAQ",
+        "toaster_type": "problem",
+        "relevance": {
+          "step1:present": {
+            "type": "string",
+            "ex": "equalTo(., \"1\")"
           }
+        }
+      },
+      {
+        "key": "administeredSpaq",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "spinner",
+        "hint": "Administered SPAQ?",
+        "values": [
+          "Yes",
+          "Refused",
+          "Other Reason - specify"
+        ],
+        "keys": [
+          "Yes",
+          "Refused",
+          "Other Reason - specify"
         ],
         "v_required": {
           "value": true,
           "err": "This field is required"
+        }
+      },
+      {
+        "key": "administeredSpaqReason",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "edit_text",
+        "hint": "Other Reason - specify",
+        "relevance": {
+          "step1:administeredSpaq": {
+            "type": "string",
+            "ex": "equalTo(., \"Other Reason - specify\")"
+          }
         }
       },
       {
@@ -191,7 +256,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "",
         "type": "native_radio",
-        "label": "Have you heard filled out the child record card for day 1, and provided instructions to the caregiver to fill out for day 2 & day 3?",
+        "label": "Have you filled out the child\n record card for day 1, and provided instructions to the caregiver to fill out for day 2 & day 3?",
         "options": [
           {
             "key": "1",
@@ -213,7 +278,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "",
         "type": "native_radio",
-        "label": "Was the child referred to HF?",
+        "label": "Was child referred to HF?",
         "options": [
           {
             "key": "1",
@@ -234,13 +299,44 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
         "openmrs_entity_id": "",
-        "type": "text",
-        "label": "What HF was child referred to?",
+        "openmrs_data_type": "text",
+        "type": "tree",
+        "hint": "What HF was child referred to?",
         "tree": [
+          {
+            "name" : "Nigeria",
+            "key": "nigeria",
+            "level": "1",
+            "nodes": [
+              {
+                "name": "MPHC Shinaka",
+                "key": "mphc_shinaka"
+              },
+              {
+                "name": "Giyawa",
+                "key": "giyawa"
+              },
+              {
+                "name": "Balakozo",
+                "key": "balakozo"
+              },
+              {
+                "name": "Takakume",
+                "key": "takakume"
+              }
+            ]
+          }
         ],
+        "default": "Nigeria",
         "v_required": {
           "value": true,
           "err": "This field is required"
+        },
+        "relevance": {
+          "step1:referred": {
+            "type": "string",
+            "ex": "equalTo(., \"1\")"
+          }
         }
       },
       {
@@ -248,36 +344,43 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
         "openmrs_entity_id": "",
-        "type": "check_box",
-        "label": "What is the reason(s) for referral?",
-        "combine_checkbox_option_values": "true",
-        "text_size": "8sp",
-        "options": [
-          {
-            "key": "severeSickness",
-            "text": "Severe sickness"
-          },
-          {
-            "key": "fever",
-            "text": "Fever"
-          },
-          {
-            "key": "severeAllergy",
-            "text": "Severe allergy"
-          },
-          {
-            "key": "adverseReactionToday",
-            "text": "Adverse reaction/side effect of SPAQ today"
-          },
-          {
-            "key": "adverseReactionPrev",
-            "text": "Adverse reaction/side effect of SPAQ previous cycle"
-          },
-          {
-            "key": "other",
-            "text": "Other - specify"
-          }
+        "type": "spinner",
+        "hint": "What is the reason(s) for referral?",
+        "values": [
+          "Severe sickness",
+          "Fever",
+          "Severe allergy",
+          "Adverse reaction/side effect of SPAQ today",
+          "Adverse reaction/side effect of SPAQ previous cycle",
+          "Other - specify"
         ],
+        "keys": [
+          "Severe sickness",
+          "Fever",
+          "Severe allergy",
+          "Adverse reaction/side effect of SPAQ today",
+          "Adverse reaction/side effect of SPAQ previous cycle",
+          "Other - specify"
+        ],
+        "v_required": {
+          "value": true,
+          "err": "Required field"
+        },
+        "relevance": {
+          "step1:referred": {
+            "type": "string",
+            "ex": "equalTo(., \"1\")"
+          }
+        }
+      },
+      {
+        "key": "otherReferralReason",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "edit_text",
+        "hint": "Other reason - specify:",
+        "edit_type": "name",
         "v_required": {
           "value": true,
           "err": "Required field"
@@ -285,7 +388,7 @@
         "relevance": {
           "step1:referralReasons": {
             "type": "string",
-            "ex": "equalTo(., \"other\")"
+            "ex": "equalTo(., \"Other - specify\")"
           }
         }
       }

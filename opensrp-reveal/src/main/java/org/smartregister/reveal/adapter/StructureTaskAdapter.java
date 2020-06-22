@@ -73,13 +73,18 @@ public class StructureTaskAdapter extends RecyclerView.Adapter<StructureTaskView
                 } else {
                     action = context.getString(R.string.dispense_mda);
                 }
+            } else if (Intervention.DRUG_STRUCTURE.equals(taskDetails.getTaskCode())) {
+                if (BuildConfig.BUILD_COUNTRY == Country.NIGERIA) {
+                    action = context.getString(R.string.structure_drug);
+                }
             }
             taskDetails.setTaskName(name);
             taskDetails.setTaskAction(action);
 
         }
         if (Intervention.MDA_DISPENSE.equals(taskDetails.getTaskCode()) ||
-                Intervention.MDA_ADHERENCE.equals(taskDetails.getTaskCode())) {
+                Intervention.MDA_ADHERENCE.equals(taskDetails.getTaskCode()) ||
+                Intervention.DRUG_STRUCTURE.equals(taskDetails.getTaskCode())) {
             viewHolder.setTaskName(taskDetails.getTaskName(), taskDetails.getTaskCode());
         } else {
             viewHolder.setTaskName(taskDetails.getTaskName());

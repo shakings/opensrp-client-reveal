@@ -107,6 +107,7 @@
 
         <activity android:name=".view.EligibilityCompoundActivity"
             android:launchMode="singleTask"
+            android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait" />
 
         <service android:name=".sync.LocationTaskIntentService" />

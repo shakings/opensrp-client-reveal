@@ -121,6 +121,10 @@ public class TaskUtils {
                 R.string.mda_adherence_desciption);
     }
 
+    public void generateMDAStructureDrug(Context context, String entityId, String structureId) {
+        generateTask(context, entityId, structureId, BusinessStatus.NOT_VISITED, Intervention.DRUG_STRUCTURE,R.string.drug_structure);
+    }
+
     public void tagEventTaskDetails(List<Event> events, SQLiteDatabase sqLiteDatabase) {
         for (Event event : events) {
             Cursor cursor = null;

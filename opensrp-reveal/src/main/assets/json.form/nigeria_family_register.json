@@ -1,6 +1,6 @@
 {
   "count": "2",
-  "encounter_type": "Family Registration",
+  "encounter_type": "Household Registration",
   "entity_id": "",
   "relational_id": "",
   "metadata": {
@@ -52,7 +52,7 @@
     }
   },
   "step1": {
-    "title": "Family details",
+    "title": "Eligibility & Family details",
     "next": "step2",
     "fields": [
       {
@@ -127,9 +127,9 @@
         "openmrs_entity": "person_identifier",
         "openmrs_entity_id": "opensrp_id",
         "type": "edit_text",
+        "text_size": "8sp",
         "hint": "ID",
         "read_only": "True",
-        "text_size": "8sp",
         "v_required": {
           "value": "true",
           "err": "Please enter the ID"
@@ -234,7 +234,7 @@
           "label": "Age"
         },
         "min_date": "today-120y",
-        "max_date": "today-5y",
+        "max_date": "today-0y",
         "v_required": {
           "value": "true",
           "err": "Please enter the date of birth"
@@ -274,14 +274,6 @@
         "v_numeric_integer": {
           "value": "true",
           "err": "Please enter a number"
-        },
-        "v_min": {
-          "value": "5",
-          "err": "Age must be equal or greater than 5"
-        },
-        "v_max": {
-          "value": "120",
-          "err": "Age must be equal or less than 120"
         },
         "relevance": {
           "rules-engine": {

@@ -47,17 +47,19 @@ public class EligibilityCompoundActivity extends AppCompatActivity implements Vi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.content_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        findViewById(R.id.native_form_basic).setOnClickListener(this);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main_menu, menu);
-        return true;
-    }
+        @Override
+        public boolean onCreateOptionsMenu(Menu menu) {
+            // Inflate the menu; this adds items to the action bar if it is present.
+            getMenuInflater().inflate(R.menu.main_menu, menu);
+            return true;
+        }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -66,19 +68,20 @@ public class EligibilityCompoundActivity extends AppCompatActivity implements Vi
             Timber.i("Result json String !!!! %s", jsonString);
         }
         super.onActivityResult(requestCode, resultCode, data);
+        Intent startFamily = new Intent(this, FamilyRegisterActivity.class);
+        startActivity(startFamily);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void startForm(int jsonFormActivityRequestCode, String formName, String entityId, boolean translate) throws Exception {
 
-        final String STEP1 = "step1";
-        final String FIELDS = "fields";
-        final String KEY = "key";
-        final String ZEIR_ID = "ZEIR_ID";
-        final String VALUE = "value";
+//        final String STEP1 = "step1";
+//        final String FIELDS = "fields";
+//        final String KEY = "key";
+//        final String ZEIR_ID = "ZEIR_ID";
+//        final String VALUE = "value";
 
-        String currentLocationId = "NIGERIA";
-
+        String currentLocationId = "Nigeria";
 
         JSONObject jsonForm = getFormJson(formName);
         if (jsonForm != null) {
@@ -95,8 +98,8 @@ public class EligibilityCompoundActivity extends AppCompatActivity implements Vi
                 form.setNextLabel(getString(R.string.next));
                 form.setPreviousLabel(getString(R.string.previous));
                 form.setSaveLabel(getString(R.string.save));
-                form.setActionBarBackground(R.color.customAppThemeBlue);
-                form.setNavigationBackground(R.color.button_navy_blue);
+                form.setActionBarBackground(R.color.family_actionbar);
+                form.setNavigationBackground(R.color.family_navigation);
                 form.setHideSaveLabel(true);
                 intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, form);
                 startActivityForResult(intent, jsonFormActivityRequestCode);
@@ -105,19 +108,19 @@ public class EligibilityCompoundActivity extends AppCompatActivity implements Vi
                     entityId = "ABC" + Math.random();
                 }
 
-                // Inject zeir id into the form
-                JSONObject stepOne = jsonForm.getJSONObject(STEP1);
-                JSONArray jsonArray = stepOne.getJSONArray(FIELDS);
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    JSONObject jsonObject = jsonArray.getJSONObject(i);
-                    if (jsonObject.getString(KEY)
-                            .equalsIgnoreCase(ZEIR_ID)) {
-                        jsonObject.remove(VALUE);
-                        jsonObject.put(VALUE, entityId);
-                    }
-                }
+//                // Inject zeir id into the form
+//                JSONObject stepOne = jsonForm.getJSONObject(STEP1);
+//                JSONArray jsonArray = stepOne.getJSONArray(FIELDS);
+//                for (int i = 0; i < jsonArray.length(); i++) {
+//                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+//                    if (jsonObject.getString(KEY)
+//                            .equalsIgnoreCase(ZEIR_ID)) {
+//                        jsonObject.remove(VALUE);
+//                        jsonObject.put(VALUE, entityId);
+//                    }
+//                }
 
-                Intent intent = new Intent(this, JsonFormActivity.class);
+                Intent intent = new Intent(this, JsonWizardFormActivity.class);
                 intent.putExtra("json", jsonForm.toString());
                 intent.putExtra(Constants.JsonForm.PERFORM_FORM_TRANSLATION, translate);
                 Timber.d("form is %s", jsonForm.toString());
@@ -151,16 +154,30 @@ public class EligibilityCompoundActivity extends AppCompatActivity implements Vi
         }
         return null;
     }
+
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void onClick(View view) {
+        int id = view.getId();
         try {
-            startForm(REQUEST_CODE_GET_JSON, "nigeria_eligibility_compound", null, true);
+            if (id == R.id.native_form_basic) {
+                startForm(REQUEST_CODE_GET_JSON, "nigeria_eligibility_compound", null, false);
+            }
         } catch (Exception e) {
-            e.printStackTrace();
+            Timber.e(e);
         }
-
     }
+//    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+//    @Override
+//    public void onClick(View view) {
+//        int id = view.getId();
+//        try {
+//            if (id == R.layout.native_form_activity_json_form)
+//            startForm(REQUEST_CODE_GET_JSON, "nigeria_eligibility_compound", null, true);
+//        } catch (Exception e) {
+//            Timber.e(e);
+//        }
+//    }
 //    private OtherFormsPresenter presenter;
 //    private RevealJsonFormUtils jsonFormUtils;
 //    private ProgressDialog progressDialog;

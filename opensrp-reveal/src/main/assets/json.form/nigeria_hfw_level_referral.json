@@ -99,6 +99,29 @@
         }
       },
       {
+        "key": "birthdate_unknown",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person",
+        "openmrs_entity_id": "birthdateApprox",
+        "type": "native_radio",
+        "label": "Do you know the birth date?",
+        "text_size": "8sp",
+        "options": [
+          {
+            "key": "1",
+            "text": "Yes"
+          },
+          {
+            "key": "0",
+            "text": "No"
+          }
+        ],
+        "v_required": {
+          "value": "true",
+          "err": "Required field"
+        }
+      },
+      {
         "key": "dob",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person",
@@ -107,31 +130,45 @@
         "hint": "Birthdate",
         "expanded": false,
         "duration": {
-          "label": "Birthdate"
+          "label": "Enter Birthdate"
         },
         "min_date": "today-120y",
-        "max_date": "today-5y",
+        "max_date": "today-0y",
         "v_required": {
           "value": "true",
           "err": "Please enter birth date"
+        },
+        "relevance": {
+          "step1:birthdate_unknown": {
+            "type": "string",
+            "ex": "equalTo(., \"1\")"
+          }
         }
       },
       {
         "key": "age",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "person",
-        "openmrs_entity_id": "birthdate",
-        "type": "date_picker",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "spinner",
         "hint": "Age",
-        "expanded": false,
-        "duration": {
-          "label": "Age"
-        },
-        "min_date": "today-120y",
-        "max_date": "today-5y",
+        "values": [
+          "3-<12 months",
+          "12-59 months"
+        ],
+        "keys": [
+          "3-<12 months",
+          "12-59 months"
+        ],
         "v_required": {
           "value": "true",
           "err": "Please enter the age"
+        },
+        "relevance": {
+          "step1:birthdate_unknown": {
+            "type": "string",
+            "ex": "equalTo(., \"0\")"
+          }
         }
       },
       {
@@ -146,7 +183,7 @@
           "label": "Date of referral"
         },
         "min_date": "today-120y",
-        "max_date": "today-5y",
+        "max_date": "today-0y",
         "v_required": {
           "value": "true",
           "err": "Please enter the date of referral"
@@ -161,7 +198,31 @@
         "type": "tree",
         "hint": "What HF was child referred to?",
         "tree": [
+          {
+            "name" : "Nigeria",
+            "key": "nigeria",
+            "level": "1",
+            "nodes": [
+              {
+                "name": "MPHC Shinaka",
+                "key": "mphc_shinaka"
+              },
+              {
+                "name": "Giyawa",
+                "key": "giyawa"
+              },
+              {
+                "name": "Balakozo",
+                "key": "balakozo"
+              },
+              {
+                "name": "Takakume",
+                "key": "takakume"
+              }
+            ]
+          }
         ],
+        "default": "Nigeria",
         "v_required": {
           "value": true,
           "err": "This field is required"
@@ -173,7 +234,37 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "",
         "type": "spinner",
-        "hint": "What is the reason(s) for referral?"
+        "hint": "What is the reason(s) for referral?",
+        "values": [
+          "Severe sickness",
+          "Fever",
+          "Severe allergy",
+          "Adverse reaction/side effect of SPAQ today",
+          "Adverse reaction/side effect of SPAQ previous cycle",
+          "Other - specify"
+        ],
+        "keys": [
+          "Severe sickness",
+          "Fever",
+          "Severe allergy",
+          "Adverse reaction/side effect of SPAQ today",
+          "Adverse reaction/side effect of SPAQ previous cycle",
+          "Other - specify"
+        ]
+      },
+      {
+        "key": "otherRefferalReason",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "edit_text",
+        "hint": "Other Reason - specify",
+        "relevance": {
+          "step1:referralReason": {
+            "type": "string",
+            "ex": "equalTo(., \"Other - specify\")"
+          }
+        }
       },
       {
         "key": "dateOfEvaluation",
@@ -187,7 +278,7 @@
           "label": "Date of evaluation"
         },
         "min_date": "today-120y",
-        "max_date": "today-5y",
+        "max_date": "today-0y",
         "v_required": {
           "value": "true",
           "err": "Please enter the date of evaluation"
@@ -200,9 +291,33 @@
         "openmrs_entity_id": "",
         "openmrs_data_type": "text",
         "type": "tree",
-        "hint": "Name of Health Facility",
+        "hint": "Name of health facility",
         "tree": [
+          {
+            "name" : "Nigeria",
+            "key": "nigeria",
+            "level": "1",
+            "nodes": [
+              {
+                "name": "MPHC Shinaka",
+                "key": "mphc_shinaka"
+              },
+              {
+                "name": "Giyawa",
+                "key": "giyawa"
+              },
+              {
+                "name": "Balakozo",
+                "key": "balakozo"
+              },
+              {
+                "name": "Takakume",
+                "key": "takakume"
+              }
+            ]
+          }
         ],
+        "default": "Nigeria",
         "v_required": {
           "value": true,
           "err": "This field is required"
@@ -242,12 +357,6 @@
         "v_required": {
           "value": "true",
           "err": "Required field"
-        },
-        "relevance": {
-          "step1:checklist": {
-            "type": "string",
-            "ex": "equalTo(., \"no\")"
-          }
         }
       },
       {
@@ -256,7 +365,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "",
         "type": "native_radio",
-        "label": "Child was treated: admitted to HF or referred to hospital for severe illness:",
+        "label": "Child was treated:",
         "text_size": "8sp",
         "options": [
           {
@@ -284,12 +393,6 @@
         "v_required": {
           "value": "true",
           "err": "Required field"
-        },
-        "relevance": {
-          "step1:checklist_child_treated": {
-            "type": "string",
-            "ex": "equalTo(., \"no\")"
-          }
         }
       },
       {
@@ -441,12 +544,6 @@
         "v_required": {
           "value": "true",
           "err": "Required field"
-        },
-        "relevance": {
-          "step1:isChildWithConfirmedMalaria": {
-            "type": "string",
-            "ex": "equalTo(., \"no\")"
-          }
         }
       },
       {
@@ -493,6 +590,12 @@
         "v_required": {
           "value": "true",
           "err": "Required field"
+        },
+        "relevance": {
+          "step1:isChildHaveFever": {
+            "type": "string",
+            "ex": "equalTo(., \"no\")"
+          }
         }
       },
       {
@@ -577,9 +680,9 @@
           "err": "Required field"
         },
         "relevance": {
-          "step1:checklist_notes": {
+          "step1:isChildSideEffects": {
             "type": "string",
-            "ex": "equalTo(., \"yes\")"
+            "ex": "equalTo(., \"no\")"
           }
         }
       },

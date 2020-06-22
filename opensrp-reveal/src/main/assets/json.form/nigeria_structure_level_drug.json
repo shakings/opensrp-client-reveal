@@ -1,6 +1,6 @@
 {
   "count": "1",
-  "encounter_type": "drug_recon",
+  "encounter_type": "drug_reconciliation",
   "entity_id": "",
   "metadata": {
     "start": {
@@ -46,7 +46,7 @@
     },
     "encounter_location": ""
   },
-  "step2": {
+  "step1": {
     "title": "Structure-Level Drug Reconciliation",
     "display_back_button": "true",
     "fields": [
@@ -200,6 +200,14 @@
           "value": true,
           "err": "This field is required"
         }
+      },
+      {
+        "key": "business_status",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "hidden",
+        "value": "Complete"
       }
     ]
   }

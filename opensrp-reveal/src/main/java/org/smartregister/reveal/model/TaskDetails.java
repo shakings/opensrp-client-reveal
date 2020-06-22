@@ -24,6 +24,7 @@ import static org.smartregister.reveal.util.Constants.HYPHEN;
 import static org.smartregister.reveal.util.Constants.Intervention.BEDNET_DISTRIBUTION;
 import static org.smartregister.reveal.util.Constants.Intervention.BLOOD_SCREENING;
 import static org.smartregister.reveal.util.Constants.Intervention.CASE_CONFIRMATION;
+import static org.smartregister.reveal.util.Constants.Intervention.DRUG_STRUCTURE;
 import static org.smartregister.reveal.util.Constants.Intervention.MDA_ADHERENCE;
 import static org.smartregister.reveal.util.Constants.Intervention.MDA_DISPENSE;
 import static org.smartregister.reveal.util.Constants.Intervention.REGISTER_FAMILY;
@@ -269,6 +270,19 @@ public class TaskDetails extends BaseTaskDetails implements Comparable<TaskDetai
                 case MDA_ADHERENCE:
                     this.mdaAdhered = COMPLETE.equals(taskCodeStatusArray[1]);
                     break;
+                case DRUG_STRUCTURE:
+                    mdaStatusMap.put(MDA_DISPENSE_TASK_COUNT, mdaStatusMap.get(MDA_DISPENSE_TASK_COUNT) + 1);
+                    switch (taskCodeStatusArray[1]) {
+                        case FULLY_RECEIVED:
+                            mdaStatusMap.put(FULLY_RECEIVED, mdaStatusMap.get(FULLY_RECEIVED) + 1);
+                            break;
+                        case NONE_RECEIVED:
+                            mdaStatusMap.put(NONE_RECEIVED, mdaStatusMap.get(NONE_RECEIVED) + 1);
+                            break;
+                        case NOT_ELIGIBLE:
+                            mdaStatusMap.put(NOT_ELIGIBLE, mdaStatusMap.get(NOT_ELIGIBLE) + 1);
+                            break;
+                    }
                 case MDA_DISPENSE:
                     mdaStatusMap.put(MDA_DISPENSE_TASK_COUNT, mdaStatusMap.get(MDA_DISPENSE_TASK_COUNT) + 1);
                     switch (taskCodeStatusArray[1]) {

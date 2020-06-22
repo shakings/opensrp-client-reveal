@@ -224,8 +224,6 @@ public class RevealJsonFormUtils {
                 formName = JsonForm.THAILAND_SPRAY_FORM;
             } else if (BuildConfig.BUILD_COUNTRY == Country.REFAPP) {
                 formName = JsonForm.SPRAY_FORM_REFAPP;
-//            } else if (BuildConfig.BUILD_COUNTRY == Country.NIGERIA) {
-//                formName = JsonForm.NIGERIA_SPRAY_FORM;
             } else {
                 formName = JsonForm.SPRAY_FORM;
             }
@@ -302,6 +300,8 @@ public class RevealJsonFormUtils {
                 formName = JsonForm.REFAPP_MDA_ADHERENCE_FORM;
             } else if (BuildConfig.BUILD_COUNTRY == Country.NIGERIA) {
                 formName = JsonForm.NIGERIA_SECOND_DOSE_OF_SPAQ;
+            } else {
+                formName = JsonForm.NIGERIA_STRUCTURE_LEVEL_DRUG_RECON;
             }
         } else if (Intervention.MDA_DISPENSE.equals(taskCode)) {
             if (BuildConfig.BUILD_COUNTRY == Country.ZAMBIA) {
@@ -310,6 +310,10 @@ public class RevealJsonFormUtils {
                 formName = JsonForm.REFAPP_MDA_DISPENSE_FORM;
             } else if (BuildConfig.BUILD_COUNTRY == Country.NIGERIA) {
                 formName = JsonForm.NIGERIA_CHILD_SMC_FORM;
+            }
+        } else if (Intervention.DRUG_STRUCTURE.equals(taskCode)) {
+            if (BuildConfig.BUILD_COUNTRY == Country.NIGERIA) {
+                formName = JsonForm.NIGERIA_STRUCTURE_LEVEL_DRUG_RECON;
             }
         } else if (IRS_VERIFICATION.equals(encounterType) || Intervention.IRS_VERIFICATION.equals(taskCode)) {
             formName = JsonForm.ZAMBIA_IRS_VERIFICATION_FORM;

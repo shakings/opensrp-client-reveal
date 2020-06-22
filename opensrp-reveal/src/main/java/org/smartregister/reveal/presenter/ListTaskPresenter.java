@@ -318,7 +318,7 @@ public class ListTaskPresenter implements ListTaskContract.Presenter, PasswordRe
                 || NOT_ELIGIBLE.equals(businessStatus) || COMPLETE.equals(businessStatus))) {
             listTaskInteractor.fetchInterventionDetails(code, feature.id(), false);
         } else if (REGISTER_FAMILY.equals(code) && NOT_VISITED.equals(businessStatus)) {
-            listTaskView.eligibilityCompound();
+            displayMarkStructureIneligibleDialog();
         } else if (REGISTER_FAMILY.equals(code) && NOT_ELIGIBLE.equals(businessStatus)) {
             listTaskInteractor.fetchInterventionDetails(code, feature.id(), false);
         } else if (PAOT.equals(code)) {
@@ -572,7 +572,7 @@ public class ListTaskPresenter implements ListTaskContract.Presenter, PasswordRe
             onMarkStructureIneligibleConfirmed();
             markStructureIneligibleConfirmed = false;
         } else if (REGISTER_FAMILY.equals(selectedFeatureInterventionType)) {
-            listTaskView.eligibilityCompound();
+            listTaskView.registerFamily();
         } else if (cardDetails == null || !changeInterventionStatus) {
             startForm(selectedFeature, null, selectedFeatureInterventionType);
         } else {

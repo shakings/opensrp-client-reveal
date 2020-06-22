@@ -328,6 +328,7 @@
     <string name="paot">PAOT</string>
     <string name="mda_dispense">MDA Dispense</string>
     <string name="mda_adherence">MDA Adherence</string>
+    <string name="drug_structure">DRUG Structure</string>
 
 
     <!-- form -->
@@ -364,4 +365,5 @@
     <string name="daily_summary_evening">Enter HF-level Drug Evening Form</string>
     <string name="hfw_level_referral">Enter HFW-Referral Form</string>
     <string name="eligibility_compound_reg">PROCEED</string>
+    <string name="structure_drug">Structure Drug</string>
 </resources>

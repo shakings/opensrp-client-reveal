@@ -173,9 +173,12 @@ public class BaseInteractor implements BaseContract.BaseInteractor {
                             getString(jsonForm, ENTITY_ID), getJSONObject(jsonForm, DETAILS).getString(Properties.LOCATION_ID));
 
                 case BLOOD_SCREENING_EVENT:
+                case EventType.DRUG_STRUCTURE:
+                    saveMemberForm(jsonForm, encounterType, BLOOD_SCREENING);
                 case EventType.MDA_ADHERENCE:
                     saveMemberForm(jsonForm, encounterType, BLOOD_SCREENING);
                     break;
+
 
                 case CASE_CONFIRMATION_EVENT:
                     saveCaseConfirmation(jsonForm, encounterType);
@@ -225,6 +228,8 @@ public class BaseInteractor implements BaseContract.BaseInteractor {
                 interventionType = Intervention.MDA_DISPENSE;
             } else if (encounterType.equals(EventType.MDA_ADHERENCE)) {
                 interventionType = Intervention.MDA_ADHERENCE;
+            } else if (encounterType.equals(EventType.DRUG_STRUCTURE)) {
+                interventionType = Intervention.DRUG_STRUCTURE;
             } else if (encounterType.equals(EventType.IRS_VERIFICATION)) {
                 interventionType = Intervention.IRS_VERIFICATION;
             }
@@ -234,24 +239,21 @@ public class BaseInteractor implements BaseContract.BaseInteractor {
 
         final String finalInterventionType = interventionType;
         final String finalEncounterType = encounterType;
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    org.smartregister.domain.db.Event event = saveEvent(jsonForm, finalEncounterType, STRUCTURE);
-                    clientProcessor.processClient(Collections.singletonList(new EventClient(event, null)), true);
-                    appExecutors.mainThread().execute(new Runnable() {
-                        @Override
-                        public void run() {
-                            String businessStatus = clientProcessor.calculateBusinessStatus(event);
-                            String taskID = event.getDetails().get(Properties.TASK_IDENTIFIER);
-                            presenterCallBack.onFormSaved(event.getBaseEntityId(), taskID, Task.TaskStatus.COMPLETED, businessStatus, finalInterventionType);
-                        }
-                    });
-                } catch (JSONException e) {
-                    Timber.e(e, "Error saving saving Form ");
-                    presenterCallBack.onFormSaveFailure(finalEncounterType);
-                }
+        Runnable runnable = () -> {
+            try {
+                org.smartregister.domain.db.Event event = saveEvent(jsonForm, finalEncounterType, STRUCTURE);
+                clientProcessor.processClient(Collections.singletonList(new EventClient(event, null)), true);
+                appExecutors.mainThread().execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        String businessStatus = clientProcessor.calculateBusinessStatus(event);
+                        String taskID = event.getDetails().get(Properties.TASK_IDENTIFIER);
+                        presenterCallBack.onFormSaved(event.getBaseEntityId(), taskID, Task.TaskStatus.COMPLETED, businessStatus, finalInterventionType);
+                    }
+                });
+            } catch (JSONException e) {
+                Timber.e(e, "Error saving saving Form ");
+                presenterCallBack.onFormSaveFailure(finalEncounterType);
             }
         };
 
@@ -259,103 +261,105 @@ public class BaseInteractor implements BaseContract.BaseInteractor {
     }
 
     private void saveRegisterStructureForm(JSONObject jsonForm) {
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    jsonForm.put(ENTITY_ID, UUID.randomUUID().toString());
-                    JSONObject eventDetails = new JSONObject();
-                    eventDetails.put(Properties.APP_VERSION_NAME, BuildConfig.VERSION_NAME);
-                    eventDetails.put(Properties.LOCATION_PARENT, operationalAreaId);
-                    jsonForm.put(DETAILS, eventDetails);
-                    org.smartregister.domain.db.Event event = saveEvent(jsonForm, REGISTER_STRUCTURE_EVENT, STRUCTURE);
-                    com.cocoahero.android.geojson.Feature feature = new com.cocoahero.android.geojson.Feature(new JSONObject(event.findObs(null, false, "structure").getValue().toString()));
-                    Date now = new Date();
-                    Location structure = new Location();
-                    structure.setId(event.getBaseEntityId());
-                    structure.setType(feature.getType());
-                    org.smartregister.domain.Geometry geometry = new org.smartregister.domain.Geometry();
-                    geometry.setType(org.smartregister.domain.Geometry.GeometryType.valueOf(feature.getGeometry().getType().toUpperCase()));
-                    JsonArray coordinates = new JsonArray();
-                    JSONArray featureCoordinates = feature.getGeometry().toJSON().getJSONArray(JSON_COORDINATES);
-                    coordinates.add(Double.parseDouble(featureCoordinates.get(0).toString()));
-                    coordinates.add(Double.parseDouble(featureCoordinates.get(1).toString()));
-                    geometry.setCoordinates(coordinates);
-                    structure.setGeometry(geometry);
-                    LocationProperty properties = new LocationProperty();
-                    String structureType = event.findObs(null, false, STRUCTURE_TYPE).getValue().toString();
-                    properties.setType(structureType);
-                    properties.setEffectiveStartDate(now);
-                    properties.setParentId(operationalAreaId);
-                    properties.setStatus(LocationProperty.PropertyStatus.PENDING_REVIEW);
-                    properties.setUid(UUID.randomUUID().toString());
-                    Obs structureNameObs = event.findObs(null, false, STRUCTURE_NAME);
-                    if (structureNameObs != null && structureNameObs.getValue() != null) {
-                        properties.setName(structureNameObs.getValue().toString());
-                    }
-                    Obs physicalTypeObs = event.findObs(null, false, PHYSICAL_TYPE);
-                    if (physicalTypeObs != null && physicalTypeObs.getValue() != null) {
-                        Map<String, String> customProperties = new HashMap<>();
-                        customProperties.put(PHYSICAL_TYPE, physicalTypeObs.getValue().toString());
-                        properties.setCustomProperties(customProperties);
-                    }
-                    structure.setProperties(properties);
-                    structure.setSyncStatus(BaseRepository.TYPE_Created);
-                    structureRepository.addOrUpdate(structure);
-                    Context applicationContext = getInstance().getApplicationContext();
-                    Task task = null;
-                    if (StructureType.RESIDENTIAL.equals(structureType) && Utils.isFocusInvestigationOrMDA()) {
-                        task = taskUtils.generateRegisterFamilyTask(applicationContext, structure.getId());
-                    } else {
-                        if (StructureType.RESIDENTIAL.equals(structureType)) {
+        Runnable runnable = () -> {
+            try {
+                jsonForm.put(ENTITY_ID, UUID.randomUUID().toString());
+                JSONObject eventDetails = new JSONObject();
+                eventDetails.put(Properties.APP_VERSION_NAME, BuildConfig.VERSION_NAME);
+                eventDetails.put(Properties.LOCATION_PARENT, operationalAreaId);
+                jsonForm.put(DETAILS, eventDetails);
+                org.smartregister.domain.db.Event event = saveEvent(jsonForm, REGISTER_STRUCTURE_EVENT, STRUCTURE);
+                com.cocoahero.android.geojson.Feature feature = new com.cocoahero.android.geojson.Feature(new JSONObject(event.findObs(null, false, "structure").getValue().toString()));
+                Date now = new Date();
+                Location structure = new Location();
+                structure.setId(event.getBaseEntityId());
+                structure.setType(feature.getType());
+                org.smartregister.domain.Geometry geometry = new org.smartregister.domain.Geometry();
+                geometry.setType(org.smartregister.domain.Geometry.GeometryType.valueOf(feature.getGeometry().getType().toUpperCase()));
+                JsonArray coordinates = new JsonArray();
+                JSONArray featureCoordinates = feature.getGeometry().toJSON().getJSONArray(JSON_COORDINATES);
+                coordinates.add(Double.parseDouble(featureCoordinates.get(0).toString()));
+                coordinates.add(Double.parseDouble(featureCoordinates.get(1).toString()));
+                geometry.setCoordinates(coordinates);
+                structure.setGeometry(geometry);
+                LocationProperty properties = new LocationProperty();
+                String structureType = event.findObs(null, false, STRUCTURE_TYPE).getValue().toString();
+                properties.setType(structureType);
+                properties.setEffectiveStartDate(now);
+                properties.setParentId(operationalAreaId);
+                properties.setStatus(LocationProperty.PropertyStatus.PENDING_REVIEW);
+                properties.setUid(UUID.randomUUID().toString());
+                Obs structureNameObs = event.findObs(null, false, STRUCTURE_NAME);
+                if (structureNameObs != null && structureNameObs.getValue() != null) {
+                    properties.setName(structureNameObs.getValue().toString());
+                }
+                Obs physicalTypeObs = event.findObs(null, false, PHYSICAL_TYPE);
+                if (physicalTypeObs != null && physicalTypeObs.getValue() != null) {
+                    Map<String, String> customProperties = new HashMap<>();
+                    customProperties.put(PHYSICAL_TYPE, physicalTypeObs.getValue().toString());
+                    properties.setCustomProperties(customProperties);
+                }
+                structure.setProperties(properties);
+                structure.setSyncStatus(BaseRepository.TYPE_Created);
+                structureRepository.addOrUpdate(structure);
+                Context applicationContext = getInstance().getApplicationContext();
+                Task task = null;
+                if (StructureType.RESIDENTIAL.equals(structureType) && Utils.isFocusInvestigationOrMDA()) {
+                    task = taskUtils.generateRegisterFamilyTask(applicationContext, structure.getId());
+                } else {
+                    switch (structureType) {
+                        case StructureType.RESIDENTIAL:
                             task = taskUtils.generateTask(applicationContext, structure.getId(), structure.getId(),
                                     BusinessStatus.NOT_VISITED, Intervention.IRS, R.string.irs_task_description);
-                        } else if (StructureType.MOSQUITO_COLLECTION_POINT.equals(structureType)) {
+                            break;
+                        case StructureType.MOSQUITO_COLLECTION_POINT:
                             task = taskUtils.generateTask(applicationContext, structure.getId(), structure.getId(),
                                     BusinessStatus.NOT_VISITED, Intervention.MOSQUITO_COLLECTION, R.string.mosquito_collection_task_description);
-                        } else if (StructureType.LARVAL_BREEDING_SITE.equals(structureType)) {
+                            break;
+                        case StructureType.LARVAL_BREEDING_SITE:
                             task = taskUtils.generateTask(applicationContext, structure.getId(), structure.getId(),
                                     BusinessStatus.NOT_VISITED, Intervention.LARVAL_DIPPING, R.string.larval_dipping_task_description);
-                        } else if (StructureType.POTENTIAL_AREA_OF_TRANSMISSION.equals(structureType)) {
+                            break;
+                        case StructureType.POTENTIAL_AREA_OF_TRANSMISSION:
                             task = taskUtils.generateTask(applicationContext, structure.getId(), structure.getId(),
                                     BusinessStatus.NOT_VISITED, PAOT, R.string.poat_task_description);
-                        }
+                            break;
                     }
-                    clientProcessor.processClient(Collections.singletonList(new EventClient(event, null)), true);
-                    Task finalTask = task;
-                    appExecutors.mainThread().execute(new Runnable() {
-                        @Override
-                        public void run() {
-                            Map<String, String> taskProperties = new HashMap<>();
-                            if (finalTask != null) {
-
-                                taskProperties.put(Properties.TASK_IDENTIFIER, finalTask.getIdentifier());
-                                taskProperties.put(Properties.TASK_BUSINESS_STATUS, finalTask.getBusinessStatus());
-                                taskProperties.put(Properties.TASK_STATUS, finalTask.getStatus().name());
-                                taskProperties.put(Properties.TASK_CODE, finalTask.getCode());
-                            }
-                            taskProperties.put(Properties.LOCATION_UUID, structure.getProperties().getUid());
-                            taskProperties.put(Properties.LOCATION_VERSION, structure.getProperties().getVersion() + "");
-                            taskProperties.put(Properties.LOCATION_TYPE, structure.getProperties().getType());
-                            structure.getProperties().setCustomProperties(taskProperties);
-
-
-                            Obs myLocationActiveObs = event.findObs(null, false, LOCATION_COMPONENT_ACTIVE);
-
-                            boolean myLocationActive = myLocationActiveObs != null && Boolean.valueOf(myLocationActiveObs.getValue().toString());
-                            getInstance().setMyLocationComponentEnabled(myLocationActive);
-
-
-                            Obs zoomObs = event.findObs(null, false, GeoWidgetFactory.ZOOM_LEVEL);
-                            double zoomLevel = Double.parseDouble(zoomObs.getValue().toString());
-
-                            presenterCallBack.onStructureAdded(Feature.fromJson(gson.toJson(structure)), featureCoordinates, zoomLevel);
-                        }
-                    });
-                } catch (JSONException e) {
-                    Timber.e(e, "Error saving new Structure");
-                    presenterCallBack.onFormSaveFailure(REGISTER_STRUCTURE_EVENT);
                 }
+                clientProcessor.processClient(Collections.singletonList(new EventClient(event, null)), true);
+                Task finalTask = task;
+                appExecutors.mainThread().execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        Map<String, String> taskProperties = new HashMap<>();
+                        if (finalTask != null) {
+
+                            taskProperties.put(Properties.TASK_IDENTIFIER, finalTask.getIdentifier());
+                            taskProperties.put(Properties.TASK_BUSINESS_STATUS, finalTask.getBusinessStatus());
+                            taskProperties.put(Properties.TASK_STATUS, finalTask.getStatus().name());
+                            taskProperties.put(Properties.TASK_CODE, finalTask.getCode());
+                        }
+                        taskProperties.put(Properties.LOCATION_UUID, structure.getProperties().getUid());
+                        taskProperties.put(Properties.LOCATION_VERSION, structure.getProperties().getVersion() + "");
+                        taskProperties.put(Properties.LOCATION_TYPE, structure.getProperties().getType());
+                        structure.getProperties().setCustomProperties(taskProperties);
+
+
+                        Obs myLocationActiveObs = event.findObs(null, false, LOCATION_COMPONENT_ACTIVE);
+
+                        boolean myLocationActive = myLocationActiveObs != null && Boolean.parseBoolean(myLocationActiveObs.getValue().toString());
+                        getInstance().setMyLocationComponentEnabled(myLocationActive);
+
+
+                        Obs zoomObs = event.findObs(null, false, GeoWidgetFactory.ZOOM_LEVEL);
+                        double zoomLevel = Double.parseDouble(zoomObs.getValue().toString());
+
+                        presenterCallBack.onStructureAdded(Feature.fromJson(gson.toJson(structure)), featureCoordinates, zoomLevel);
+                    }
+                });
+            } catch (JSONException e) {
+                Timber.e(e, "Error saving new Structure");
+                presenterCallBack.onFormSaveFailure(REGISTER_STRUCTURE_EVENT);
             }
         };
 

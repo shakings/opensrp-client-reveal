@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.widget.ToggleButton;
 
 import org.apache.commons.lang3.StringUtils;
+import org.smartregister.domain.Child;
 import org.smartregister.reveal.BuildConfig;
 import org.smartregister.reveal.R;
 import org.smartregister.reveal.contract.FilterTasksContract;
@@ -66,6 +67,11 @@ public class FilterTasksPresenter implements FilterTasksContract.Presenter {
         } else {
             labelsMap.put(Intervention.MDA_ADHERENCE, R.string.mda_adherence);
         }
+
+        if (BuildConfig.BUILD_COUNTRY == Country.NIGERIA) {
+            labelsMap.put(Intervention.DRUG_STRUCTURE, R.string.drug_structure);
+        }
+
         labelsMap.put(Intervention.IRS_VERIFICATION, R.string.irs_verification);
 
 

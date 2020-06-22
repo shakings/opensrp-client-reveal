@@ -187,6 +187,8 @@ public interface Constants {
 
         String MDA_ADHERENCE = "MDA Adherence";
 
+        String DRUG_STRUCTURE = "Drug Structure";
+
         String MDA = "MDA";
 
         String IRS_VERIFICATION = "IRS Verification";
@@ -199,7 +201,7 @@ public interface Constants {
                 LARVAL_DIPPING, BCC, BEDNET_DISTRIBUTION, BLOOD_SCREENING, CASE_CONFIRMATION,
                 REGISTER_FAMILY, PAOT);
 
-        List<String> MDA_INTERVENTIONS = Arrays.asList(REGISTER_FAMILY, MDA_ADHERENCE, MDA_DISPENSE);
+        List<String> MDA_INTERVENTIONS = Arrays.asList(REGISTER_FAMILY, MDA_ADHERENCE, MDA_DISPENSE, DRUG_STRUCTURE);
 
         List<String> TASK_RESET_INTERVENTIONS = Arrays.asList(MOSQUITO_COLLECTION,
                 LARVAL_DIPPING, BCC, CASE_CONFIRMATION,
@@ -221,6 +223,8 @@ public interface Constants {
         String MDA_ADHERENCE = "mda_adherence";
 
         String IRS_VERIFICATION = "irs_verification";
+
+        String DRUG_STRUCTURE = "drug_structure";
     }
 
     interface Tables {
@@ -380,7 +384,7 @@ public interface Constants {
 
         String NIGERIA_SECOND_DOSE_OF_SPAQ = "json.form/nigeria_second_dose_of_spaq.json";
 
-        String NIGERIA_STRUCTURE_LEVEL_DRUG_RECON = "json.form/nigeria_daily_summary_morning.json";
+        String NIGERIA_STRUCTURE_LEVEL_DRUG_RECON = "json.form/nigeria_structure_level_drug.json";
 
         String OPERATIONAL_AREA_TAG = "operational_area";
 
