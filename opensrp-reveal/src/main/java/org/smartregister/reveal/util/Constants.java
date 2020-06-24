@@ -64,6 +64,8 @@ public interface Constants {
 
     String DG_ID_PLACEHOLDER = "DIGITAL_GLOBE_ID";
 
+    int MDA_MIN_AGE = 5;
+
     interface CONFIGURATION {
         String LOGIN = "login";
         String GLOBAL_CONFIGS = "global_configs";
