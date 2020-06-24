@@ -169,44 +169,6 @@
         }
       },
       {
-        "key": "firstNameOfHeadCompound",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "",
-        "type": "edit_text",
-        "hint": "First name of head of compound?",
-        "edit_type": "name",
-        "v_required": {
-          "value": true,
-          "err": "This field is required"
-        },
-        "relevance": {
-          "step1:compoundPart": {
-            "type": "string",
-            "ex": "equalTo(., \"1\")"
-          }
-        }
-      },
-      {
-        "key": "surnameOfHeadCompound",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "",
-        "type": "edit_text",
-        "hint": "Surname of head of compound?",
-        "edit_type": "name",
-        "v_required": {
-          "value": true,
-          "err": "This field is required"
-        },
-        "relevance": {
-          "step1:compoundPart": {
-            "type": "string",
-            "ex": "equalTo(., \"1\")"
-          }
-        }
-      },
-      {
         "key": "numCompoundStructures",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",

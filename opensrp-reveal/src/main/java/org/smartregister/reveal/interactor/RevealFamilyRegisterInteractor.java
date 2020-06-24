@@ -58,7 +58,6 @@ public class RevealFamilyRegisterInteractor extends org.smartregister.family.int
                     if (Utils.isFocusInvestigation())
                         taskUtils.generateBloodScreeningTask(context, entityId, structureId);
                     else if (Utils.isMDA()) {
-
                         DateTime birthDate = new DateTime(eventClient.getClient().getBirthdate().getTime());
                         int age = Years.yearsBetween(birthDate, DateTime.now()).getYears();
                         if (age < Constants.MDA_MIN_AGE)
