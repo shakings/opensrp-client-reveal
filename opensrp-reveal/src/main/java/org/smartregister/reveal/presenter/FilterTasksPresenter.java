@@ -31,7 +31,6 @@ import java.util.Set;
  */
 public class FilterTasksPresenter implements FilterTasksContract.Presenter {
 
-
     private FilterTasksContract.View view;
 
     private Map<String, Integer> labelsMap;
@@ -63,17 +62,16 @@ public class FilterTasksPresenter implements FilterTasksContract.Presenter {
         }
 
         if (BuildConfig.BUILD_COUNTRY == Country.NIGERIA) {
-            labelsMap.put(Intervention.MDA_ADHERENCE, R.string.spaq_smc);
+            labelsMap.put(Intervention.MDA_ADHERENCE, R.string.spaq_redose);
         } else {
             labelsMap.put(Intervention.MDA_ADHERENCE, R.string.mda_adherence);
         }
 
         if (BuildConfig.BUILD_COUNTRY == Country.NIGERIA) {
-            labelsMap.put(Intervention.DRUG_STRUCTURE, R.string.drug_structure);
+            labelsMap.put(Intervention.DRUG_RECON, R.string.drug_recon);
         }
 
         labelsMap.put(Intervention.IRS_VERIFICATION, R.string.irs_verification);
-
 
         //Intervention Types
         labelsMap.put(InterventionType.OPERATIONAL_AREA, R.string.operational_area);
@@ -91,6 +89,9 @@ public class FilterTasksPresenter implements FilterTasksContract.Presenter {
         labelsMap.put(BusinessStatus.INCOMPLETE, R.string.incomplete);
         labelsMap.put(BusinessStatus.NOT_ELIGIBLE, R.string.not_eligible);
         labelsMap.put(BusinessStatus.IN_PROGRESS, R.string.in_progress);
+        labelsMap.put(BusinessStatus.DRUG_RECON_COMPLETE, R.string.drug_recon_complete);
+        labelsMap.put(BusinessStatus.SMC_COMPLETE, R.string.smc_complete);
+        labelsMap.put(BusinessStatus.REDOSE_COMPLETE, R.string.redose_complete);
     }
 
 

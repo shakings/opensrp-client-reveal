@@ -114,7 +114,7 @@
         "relevance": {
           "rules-engine": {
             "ex-rules": {
-              "rules-file": "family-member-relevance.yml"
+              "rules-file": "nigeria-family-member-relevance.yml"
             }
           }
         }
@@ -135,7 +135,7 @@
         "calculation": {
           "rules-engine": {
             "ex-rules": {
-              "rules-file": "family-member-calculation.yml"
+              "rules-file": "nigeria-family-member-calculation.yml"
             }
           }
         }
@@ -163,29 +163,6 @@
         }
       },
       {
-        "key": "birthdate_unknown",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person",
-        "openmrs_entity_id": "birthdateApprox",
-        "type": "native_radio",
-        "label": "Do you know the birth date?",
-        "text_size": "8sp",
-        "options": [
-          {
-            "key": "1",
-            "text": "Yes"
-          },
-          {
-            "key": "0",
-            "text": "No"
-          }
-        ],
-        "v_required": {
-          "value": "true",
-          "err": "Required field"
-        }
-      },
-      {
         "key": "dob",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person",
@@ -196,45 +173,128 @@
         "duration": {
           "label": "Age"
         },
+        "min_date": "today-120y",
+        "max_date": "today-0y",
         "v_required": {
           "value": "true",
           "err": "Please enter the date of birth"
         },
-        "min_date": "today-4y",
-        "max_date": "today-0y",
         "relevance": {
-          "step1:birthdate_unknown": {
-            "type": "string",
-            "ex": "equalTo(., \"1\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "nigeria-family-member-relevance.yml"
+            }
           }
         }
       },
       {
-        "key": "jobAidQuestion",
+        "key": "dob_unknown",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person",
+        "openmrs_entity_id": "birthdateApprox",
+        "type": "check_box",
+        "label": "",
+        "options": [
+          {
+            "key": "dob_unknown",
+            "text": "DOB unknown?",
+            "text_size": "18px",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "key": "age",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "age_entered",
+        "type": "edit_text",
+        "hint": "Age",
+        "text_size": "8sp",
+        "v_numeric_integer": {
+          "value": "true",
+          "err": "Please enter a number"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "nigeria-family-member-relevance.yml"
+            }
+          }
+        },
+        "v_required": {
+          "value": true,
+          "err": "Please enter the age"
+        }
+      },
+      {
+        "key": "age_unknown",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person",
+        "openmrs_entity_id": "birthdateApprox",
+        "type": "check_box",
+        "label": "",
+        "options": [
+          {
+            "key": "age_unknown",
+            "text": "Age unknown?",
+            "text_size": "18px",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "key": "job_aid_label",
+        "type": "label",
+        "text": "Job Aid Questions",
+        "has_bg": true,
+        "top_padding": "10dp",
+        "left_padding": "20dp",
+        "right_padding": "20dp",
+        "text_size": "10sp",
+        "text_color": "#000000",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
         "openmrs_entity_id": "",
-        "type": "spinner",
-        "hint": "If age is unknown, please assess age based on the job aid as follows:",
-
-        "values": [
-          "3 < 12 months: Can hold head and neck steady when upright; Can grasp object in hand and bring to mouth; Has few lower teeth ",
-          "12 < 59 months: Can sit without help; Can stand or walk",
-          "> 60 months: Can stand on 1 foot for 10 seconds; Can jump on 1 foot; Can raise arm and touch opposite ear"
-        ],
-        "keys": [
-          "3 < 12 months: Can hold head and neck steady when upright; Can grasp object in hand and bring to mouth; Has few lower teeth ",
-          "12 < 59 months: Can sit without help; Can stand or walk",
-          "> 60 months: Can stand on 1 foot for 10 seconds; Can jump on 1 foot; Can raise arm and touch opposite ear"
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "nigeria-family-member-relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "job_aid",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "native_radio",
+        "label": "If age is unknown, please assess age based on the job aid as follows:",
+        "text_size": "8sp",
+        "options": [
+          {
+            "key": "threeToTwelve",
+            "text": "3 < 12 months: Can hold head and neck steady when upright; Can grasp object in hand and bring to mouth; Has few lower teeth"
+          },
+          {
+            "key": "twelveToFiftyNine",
+            "text": "12 < 59 months: Can sit without help; Can stand or walk"
+          },
+          {
+            "key": "moreThaSixty",
+            "text": "> 60 months: Can stand on 1 foot for 10 seconds; Can jump on 1 foot; Can raise arm and touch opposite ear"
+          }
         ],
         "v_required": {
           "value": true,
           "err": "Please enter the job aid question"
         },
         "relevance": {
-          "step1:birthdate_unknown": {
-            "type": "string",
-            "ex": "equalTo(., \"0\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "nigeria-family-member-relevance.yml"
+            }
           }
         }
       },
@@ -244,7 +304,7 @@
         "openmrs_entity": "person",
         "openmrs_entity_id": "",
         "type": "native_radio",
-        "label": "Does this child live here permanently!",
+        "label": "Does this child live here permanently?",
         "options": [
           {
             "key": "0",

@@ -1,6 +1,6 @@
 {
   "count": "1",
-  "encounter_type": "drug_reconciliation",
+  "encounter_type": "drug_recon",
   "entity_id": "",
   "metadata": {
     "start": {
@@ -47,29 +47,38 @@
     "encounter_location": ""
   },
   "step1": {
-    "title": "Structure-Level Drug Reconciliation",
+    "title": "Structure-Level Drug Recon",
     "display_back_button": "true",
     "fields": [
+      {
+        "key": "label_1",
+        "type": "label",
+        "text": "Structure-level Drug reconciliation",
+        "has_bg": true,
+        "top_padding": "10dp",
+        "left_padding": "20dp",
+        "right_padding": "20dp",
+        "text_size": "10sp",
+        "text_color": "#000000",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": ""
+      },
       {
         "key": "childrenTreated",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
         "openmrs_entity_id": "",
-        "type": "native_radio",
-        "label": "Confirm number of children treated",
-        "options": [
-          {
-            "key": "1",
-            "text": "Yes"
-          },
-          {
-            "key": "0",
-            "text": "No"
-          }
-        ],
-        "v_required": {
-          "value": true,
+        "type": "edit_text",
+        "hint": "Confirm number of children to be treated",
+        "text_size": "8sp",
+        "v_numeric": {
+          "value": "true",
           "err": "This field is required"
+        },
+        "v_min": {
+          "value": "1",
+          "err": "This number does not match the data captured in the forms!"
         }
       },
       {
@@ -77,53 +86,16 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
         "openmrs_entity_id": "",
-        "type": "native_radio",
-        "label": "Confirm additional doses administered",
-        "options": [
-          {
-            "key": "1",
-            "text": "Yes"
-          },
-          {
-            "key": "0",
-            "text": "No"
-          }
-        ],
-        "v_required": {
-          "value": true,
-          "err": "This field is required"
-        }
-      },
-      {
-        "key": "reasonsEligibility",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "",
-        "type": "check_box",
-        "label": "Why was more than one additional dose given?",
-        "combine_checkbox_option_values": "true",
+        "type": "edit_text",
+        "hint": "Confirm additional doses administered",
         "text_size": "8sp",
-        "options": [
-          {
-            "key": "resNoChildren",
-            "text": "Residential: No children between 3-59 months"
-          },
-          {
-            "key": "resUnoccupied",
-            "text": "Residential: Unoccupied"
-          },
-          {
-            "key": "resUnderConstruction",
-            "text": "Residential: Under construction"
-          },
-          {
-            "key": "otherReason",
-            "text": "Other Reason - specify"
-          }
-        ],
-        "v_required": {
-          "value": true,
-          "err": "Required field"
+        "v_numeric": {
+          "value": "true",
+          "err": "This field is required"
+        },
+        "v_min": {
+          "value": "1",
+          "err": "Number must be equal or greater than 1"
         }
       },
       {
@@ -144,61 +116,37 @@
         }
       },
       {
-        "key": "residentialType",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "",
-        "type": "spinner",
-        "hint": "Type of non-residential structure",
-        "relevance": {
-          "step1:eligibleRes": {
-            "type": "string",
-            "ex": "equalTo(., \"0\")"
-          }
-        }
-      },
-      {
         "key": "confirmSPAQNumberWasted",
-        "label": "Confirm number of SPAQ wasted?",
-        "type": "native_radio",
+        "hint": "Confirm number of SPAQ blister packets wasted?",
+        "type": "edit_text",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
         "openmrs_entity_id": "",
-        "options": [
-          {
-            "key": "1",
-            "text": "Yes"
-          },
-          {
-            "key": "0",
-            "text": "No"
-          }
-        ],
-        "v_required": {
-          "value": true,
+        "text_size": "8sp",
+        "v_numeric": {
+          "value": "true",
           "err": "This field is required"
+        },
+        "v_min": {
+          "value": "1",
+          "err": "Number must be equal or greater than 1"
         }
       },
       {
         "key": "confirmNumberSPAQBlistersUsed",
-        "label": "Confirm number of SPAQ blisters used?",
-        "type": "native_radio",
+        "hint": "Confirm TOTAL number of SPAQ blisters used?",
+        "type": "edit_text",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
         "openmrs_entity_id": "",
-        "options": [
-          {
-            "key": "1",
-            "text": "Yes"
-          },
-          {
-            "key": "0",
-            "text": "No"
-          }
-        ],
-        "v_required": {
-          "value": true,
+        "text_size": "8sp",
+        "v_numeric": {
+          "value": "true",
           "err": "This field is required"
+        },
+        "v_min": {
+          "value": "1",
+          "err": "Number must be equal or greater than 1"
         }
       },
       {
@@ -207,7 +155,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "",
         "type": "hidden",
-        "value": "Complete"
+        "value": "Drug Recon Complete"
       }
     ]
   }

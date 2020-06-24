@@ -1,4 +1,4 @@
-{
+ {
   "count": "1",
   "encounter_type": "mda_adherence",
   "entity_id": "",
@@ -47,7 +47,7 @@
     "encounter_location": ""
   },
   "step1": {
-    "title": "SPAQ & Drug Reconciliation",
+    "title": "SPAQ Redose",
     "display_back_button": "true",
     "fields": [
       {
@@ -224,111 +224,12 @@
         }
       },
       {
-        "key": "label_1",
-        "type": "label",
-        "text": "Structure-level drug reconciliation",
-        "has_bg": true,
-        "top_padding": "10dp",
-        "left_padding": "20dp",
-        "right_padding": "20dp",
-        "text_size": "14sp",
-        "text_color": "#000000",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": ""
-      },
-      {
-        "key": "childrenTreated",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "",
-        "type": "edit_text",
-        "hint": "Confirm number of children treated",
-        "text_size": "8sp",
-        "v_numeric": {
-          "value": "true",
-          "err": "This field is required"
-        },
-        "v_min": {
-          "value": "1",
-          "err": "Number must be equal or greater than 1"
-        }
-      },
-      {
-        "key": "additionalDosesAdministered",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "",
-        "type": "edit_text",
-        "hint": "Confirm additional doses administered",
-        "text_size": "8sp",
-        "v_numeric": {
-          "value": "true",
-          "err": "This field is required"
-        },
-        "v_min": {
-          "value": "1",
-          "err": "Number must be equal or greater than 1"
-        }
-      },
-      {
-        "key": "blisterPacketsNumber",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "",
-        "type": "edit_text",
-        "hint": "How many blister packets were dropped or damaged?",
-        "text_size": "8sp",
-        "v_numeric": {
-          "value": "true",
-          "err": "This field is required"
-        },
-        "v_min": {
-          "value": "1",
-          "err": "Number must be equal or greater than 1"
-        }
-      },
-      {
-        "key": "confirmSPAQNumberWasted",
-        "hint": "Confirm number of SPAQ wasted?",
-        "type": "edit_text",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "",
-        "text_size": "8sp",
-        "v_numeric": {
-          "value": "true",
-          "err": "This field is required"
-        },
-        "v_min": {
-          "value": "1",
-          "err": "Number must be equal or greater than 1"
-        }
-      },
-      {
-        "key": "confirmNumberSPAQBlistersUsed",
-        "hint": "Confirm number of SPAQ blisters used?",
-        "type": "edit_text",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "",
-        "text_size": "8sp",
-        "v_numeric": {
-          "value": "true",
-          "err": "This field is required"
-        },
-        "v_min": {
-          "value": "1",
-          "err": "Number must be equal or greater than 1"
-        }
-      },
-      {
         "key": "business_status",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
         "openmrs_entity_id": "",
         "type": "hidden",
-        "value": "Complete"
+        "value": "Redose Complete"
       }
     ]
   }

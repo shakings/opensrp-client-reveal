@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.View;
 import android.support.v7.widget.Toolbar;
 
+import com.mapbox.geojson.Feature;
 import com.vijay.jsonwizard.activities.JsonFormActivity;
 import com.vijay.jsonwizard.activities.JsonWizardFormActivity;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
@@ -25,6 +26,7 @@ import org.json.JSONObject;
 import org.smartregister.family.adapter.ViewPagerAdapter;
 import org.smartregister.reveal.R;
 import org.smartregister.reveal.contract.OtherFormsContract;
+import org.smartregister.reveal.presenter.ListTaskPresenter;
 import org.smartregister.reveal.presenter.OtherFormsPresenter;
 import org.smartregister.reveal.util.Constants;
 import org.smartregister.reveal.util.RevealJsonFormUtils;
@@ -39,10 +41,14 @@ import timber.log.Timber;
 
 import static org.smartregister.reveal.util.Constants.JSON_FORM_PARAM_JSON;
 import static org.smartregister.reveal.util.Constants.RequestCode.REQUEST_CODE_GET_JSON;
+import static org.smartregister.reveal.util.FamilyConstants.Intent.START_REGISTRATION;
 
 public class EligibilityCompoundActivity extends AppCompatActivity implements View.OnClickListener {
     private static final int REQUEST_CODE_GET_JSON = 1234;
     private static final String TAG = EligibilityCompoundActivity.class.getCanonicalName();
+    public final static String REGISTER_FAMILY = "org.smartregister.reveal.view.registerFamily";
+    ListTasksActivity listTasksActivity;
+    ListTaskPresenter listTaskPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,13 +69,31 @@ public class EligibilityCompoundActivity extends AppCompatActivity implements Vi
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == RESULT_OK) {
-            String jsonString = data.getStringExtra("json");
-            Timber.i("Result json String !!!! %s", jsonString);
-        }
+//        if (resultCode == RESULT_OK) {
+//            String jsonString = data.getStringExtra("json");
+//            Timber.i("Result json String !!!! %s", jsonString);
+//        }
+//        super.onActivityResult(requestCode, resultCode, data);
+//        Intent intent = new Intent(this, ListTasksActivity.class);
+//        intent.putExtra(REGISTER_FAMILY, "registerFamily");
+
+//        if (resultCode == RESULT_OK) {
+//            String jsonString = data.getStringExtra("json");
+//            Timber.i("Result json String !!!! %s", jsonString);
+//        }
+
         super.onActivityResult(requestCode, resultCode, data);
-        Intent startFamily = new Intent(this, FamilyRegisterActivity.class);
-        startActivity(startFamily);
+//        listTasksActivity.clearSelectedFeature();
+        Intent intent = new Intent(this, FamilyRegisterActivity.class);
+        intent.putExtra(START_REGISTRATION, true);
+        Feature feature = listTaskPresenter.getSelectedFeature();
+        intent.putExtra(Constants.Properties.LOCATION_UUID, feature.id());
+        intent.putExtra(Constants.Properties.TASK_IDENTIFIER, feature.getStringProperty(Constants.Properties.TASK_IDENTIFIER));
+        intent.putExtra(Constants.Properties.TASK_BUSINESS_STATUS, feature.getStringProperty(Constants.Properties.TASK_BUSINESS_STATUS));
+        intent.putExtra(Constants.Properties.TASK_STATUS, feature.getStringProperty(Constants.Properties.TASK_STATUS));
+        if (feature.hasProperty(Constants.Properties.STRUCTURE_NAME))
+            intent.putExtra(Constants.Properties.STRUCTURE_NAME, feature.getStringProperty(Constants.Properties.STRUCTURE_NAME));
+        startActivity(intent);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -167,85 +191,4 @@ public class EligibilityCompoundActivity extends AppCompatActivity implements Vi
             Timber.e(e);
         }
     }
-//    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-//    @Override
-//    public void onClick(View view) {
-//        int id = view.getId();
-//        try {
-//            if (id == R.layout.native_form_activity_json_form)
-//            startForm(REQUEST_CODE_GET_JSON, "nigeria_eligibility_compound", null, true);
-//        } catch (Exception e) {
-//            Timber.e(e);
-//        }
-//    }
-//    private OtherFormsPresenter presenter;
-//    private RevealJsonFormUtils jsonFormUtils;
-//    private ProgressDialog progressDialog;
-//
-//    @Override
-//    protected void onCreate(@Nullable Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.compound_eligibility);
-//        presenter = new OtherFormsPresenter(this);
-//        Toolbar toolbar = this.findViewById(R.id.summary_toolbar);
-//        toolbar.setTitle(R.string.eligibility_compound_return);
-//        this.setSupportActionBar(toolbar);
-//        toolbar.setNavigationOnClickListener(view -> onBackPressed());
-//        setupViews();
-//    }
-//
-//    protected void setupViews() {
-//        TabLayout tabLayout = findViewById(R.id.tabs);
-//        ViewPager viewPager = findViewById(R.id.viewpager);
-//        tabLayout.setupWithViewPager(setupViewPager(viewPager));
-//    }
-//    protected ViewPager setupViewPager(ViewPager viewPager) {
-//        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-//
-//        jsonFormUtils = new RevealJsonFormUtils();
-//
-//        viewPager.setAdapter(adapter);
-//
-//        return viewPager;
-//    }
-//
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-//        if (requestCode == REQUEST_CODE_GET_JSON && resultCode == RESULT_OK && data.hasExtra(JSON_FORM_PARAM_JSON)) {
-//            String json = data.getStringExtra(JSON_FORM_PARAM_JSON);
-//            Timber.d( json);
-//            getPresenter().saveJsonForm(json);
-//        }
-//    }
-//
-//    @Override
-//    public void startFormActivity(JSONObject jsonObject) {
-//        jsonFormUtils.startJsonForm(jsonObject, this);
-//    }
-//
-//    @Override
-//    public void saveJsonForm(String json) {
-//
-//    }
-//
-//    @Override
-//    public void showProgressDialog(int titleIdentifier) {
-//        progressDialog = new ProgressDialog(this);
-//        progressDialog.setCancelable(false);
-//        progressDialog.setTitle(titleIdentifier);
-//        progressDialog.setMessage(getString(R.string.please_wait_message));
-//        if (!isFinishing())
-//            progressDialog.show();
-//    }
-//
-//    @Override
-//    public void hideProgressDialog() {
-//        if (progressDialog != null) {
-//            progressDialog.dismiss();
-//        }
-//    }
-//
-//    private OtherFormsContract.Presenter getPresenter() {
-//        return presenter;
-//    }
 }

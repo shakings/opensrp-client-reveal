@@ -51,6 +51,20 @@
     "display_back_button": "true",
     "fields": [
       {
+        "key": "label_1",
+        "type": "label",
+        "text": "Eligibility Compound",
+        "has_bg": true,
+        "top_padding": "10dp",
+        "left_padding": "20dp",
+        "right_padding": "20dp",
+        "text_size": "10sp",
+        "text_color": "#000000",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": ""
+      },
+      {
         "key": "eligibleRes",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",

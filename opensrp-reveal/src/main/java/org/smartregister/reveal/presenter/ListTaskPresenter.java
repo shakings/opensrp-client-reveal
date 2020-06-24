@@ -81,6 +81,7 @@ import static org.smartregister.reveal.util.Constants.BusinessStatus.SPRAYED;
 import static org.smartregister.reveal.util.Constants.DateFormat.EVENT_DATE_FORMAT_XXX;
 import static org.smartregister.reveal.util.Constants.DateFormat.EVENT_DATE_FORMAT_Z;
 import static org.smartregister.reveal.util.Constants.GeoJSON.FEATURES;
+import static org.smartregister.reveal.util.Constants.Intervention.ELIGIBILITY_COMPOUND;
 import static org.smartregister.reveal.util.Constants.Intervention.IRS;
 import static org.smartregister.reveal.util.Constants.Intervention.IRS_VERIFICATION;
 import static org.smartregister.reveal.util.Constants.Intervention.LARVAL_DIPPING;
@@ -230,7 +231,7 @@ public class ListTaskPresenter implements ListTaskContract.Presenter, PasswordRe
 
         if (taskDetailsList != null) {
 
-            if (BuildConfig.BUILD_COUNTRY == Country.ZAMBIA) {
+            if (BuildConfig.BUILD_COUNTRY == Country.ZAMBIA || BuildConfig.BUILD_COUNTRY == Country.NIGERIA) {
                 new IndicatorsCalculatorTask(listTaskView.getActivity(), taskDetailsList).execute();
             }
         }
@@ -683,20 +684,17 @@ public class ListTaskPresenter implements ListTaskContract.Presenter, PasswordRe
     public void displayMarkStructureIneligibleDialog() {
 
         AlertDialogUtils.displayNotificationWithCallback(listTaskView.getContext(), R.string.mark_location_ineligible,
-                R.string.is_structure_eligible_for_fam_reg, R.string.eligible, R.string.not_eligible_unoccupied, R.string.not_eligible_other, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if (which == BUTTON_NEGATIVE || which == BUTTON_NEUTRAL) {
-                            markStructureIneligibleConfirmed = true;
-                            reasonUnEligible = which == BUTTON_NEGATIVE ? listTaskView.getContext().getString(R.string.not_eligible_unoccupied) : listTaskView.getContext().getString(R.string.not_eligible_other);
-                        }
-                        if (validateFarStructures()) {
-                            validateUserLocation();
-                        } else {
-                            onLocationValidated();
-                        }
-                        dialog.dismiss();
+                R.string.is_structure_eligible_for_fam_reg, R.string.eligible, R.string.not_eligible_unoccupied, R.string.not_eligible_other, (dialog, which) -> {
+                    if (which == BUTTON_NEGATIVE || which == BUTTON_NEUTRAL) {
+                        markStructureIneligibleConfirmed = true;
+                        reasonUnEligible = which == BUTTON_NEGATIVE ? listTaskView.getContext().getString(R.string.not_eligible_unoccupied) : listTaskView.getContext().getString(R.string.not_eligible_other);
                     }
+                    if (validateFarStructures()) {
+                        validateUserLocation();
+                    } else {
+                        onLocationValidated();
+                    }
+                    dialog.dismiss();
                 });
     }
 

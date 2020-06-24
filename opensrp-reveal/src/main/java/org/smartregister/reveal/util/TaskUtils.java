@@ -28,10 +28,14 @@ import java.util.UUID;
 import timber.log.Timber;
 
 import static org.smartregister.domain.Task.TaskStatus.READY;
+import static org.smartregister.family.util.DBConstants.KEY.DOB;
+import static org.smartregister.reveal.util.Constants.DatabaseKeys.BASE_ENTITY_ID;
 import static org.smartregister.reveal.util.Constants.DatabaseKeys.CODE;
 import static org.smartregister.reveal.util.Constants.DatabaseKeys.FOR;
 import static org.smartregister.reveal.util.Constants.DatabaseKeys.STATUS;
 import static org.smartregister.reveal.util.Constants.DatabaseKeys.TASK_TABLE;
+import static org.smartregister.reveal.util.FamilyConstants.DatabaseKeys.AGE;
+import static org.smartregister.reveal.util.FamilyConstants.TABLE_NAME.FAMILY_MEMBER;
 
 /**
  * Created by samuelgithengi on 4/14/19.
@@ -122,7 +126,8 @@ public class TaskUtils {
     }
 
     public void generateMDAStructureDrug(Context context, String entityId, String structureId) {
-        generateTask(context, entityId, structureId, BusinessStatus.NOT_VISITED, Intervention.DRUG_STRUCTURE,R.string.drug_structure);
+        generateTask(context, entityId, structureId, BusinessStatus.NOT_VISITED, Intervention.DRUG_RECON,
+                R.string.drug_recon);
     }
 
     public void tagEventTaskDetails(List<Event> events, SQLiteDatabase sqLiteDatabase) {

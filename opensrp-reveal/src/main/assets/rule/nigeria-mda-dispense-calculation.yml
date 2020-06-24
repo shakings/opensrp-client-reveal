@@ -1,0 +1,7 @@
+---
+name: step1_business_status
+description: Business status calculation
+priority: 1
+condition: "true"
+actions:
+  - "calculation = ('yes'.equals(step1_referred)  &&  'yes'.equals(step1_present)) ? 'Fully Received' : ('no'.equals(step1_referred)  &&  'no'.equals(step1_present)) ? 'None Received' : 'Complete'"

@@ -253,7 +253,7 @@
     <string name="adhere_mda">Adhere MDA</string>
 
     <string name="child_smc">Child SMC</string>
-    <string name="spaq_smc">SPAQ SMC</string>
+    <string name="spaq_redose">SPAQ Redose</string>
 
     <string name="irs_verification">IRS Verification</string>
     <string name="not_true_structure">Not True Structure</string>
@@ -326,9 +326,9 @@
     <string name="blood_screening">Blood Screening</string>
     <string name="case_confirmation">Case Confirmation</string>
     <string name="paot">PAOT</string>
-    <string name="mda_dispense">MDA Dispense</string>
-    <string name="mda_adherence">MDA Adherence</string>
-    <string name="drug_structure">DRUG Structure</string>
+    <string name="mda_dispense">SMC SPAQ Redose</string>
+    <string name="mda_adherence">Child SMC</string>
+    <string name="drug_recon">Drug Recon</string>
 
 
     <!-- form -->
@@ -354,10 +354,8 @@
     <string name="tested">Tested</string>
     <string name="not_tested">Not Tested</string>
     <string name="yes">Yes</string>
-    <string name="enter_eligibility_compound">Enter Eligibility Compound</string>
-    <string name="enter_structure_level_drug_reconciliation">Enter Structure-Level Drug Reconciliation</string>
     <string name="smc_label">SMC</string>
-    <string name="eligibility_compound">You are required to register for compound eligibility</string>
+    <string name="eligibility_compound">Eligibility Compound</string>
     <string name="eligibility_compound_yes">Proceed</string>
     <string name="elgibility_compound_no">Cancel</string>
     <string name="eligibility_compound_return">Return</string>
@@ -365,5 +363,8 @@
     <string name="daily_summary_evening">Enter HF-level Drug Evening Form</string>
     <string name="hfw_level_referral">Enter HFW-Referral Form</string>
     <string name="eligibility_compound_reg">PROCEED</string>
-    <string name="structure_drug">Structure Drug</string>
+    <string name="drug_reconciliation">Drug Reconciliation</string>
+    <string name="drug_recon_complete">Drug Recon Complete</string>
+    <string name="smc_complete">SMC Complete</string>
+    <string name="redose_complete">Redose Complete</string>
 </resources>

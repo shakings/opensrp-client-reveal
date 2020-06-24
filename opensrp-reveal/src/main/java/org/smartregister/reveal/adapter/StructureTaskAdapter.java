@@ -7,13 +7,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.smartregister.commonregistry.CommonPersonObjectClient;
 import org.smartregister.domain.Task;
+import org.smartregister.family.util.DBConstants;
+import org.smartregister.family.util.Utils;
 import org.smartregister.reveal.BuildConfig;
 import org.smartregister.reveal.R;
 import org.smartregister.reveal.model.StructureTaskDetails;
 import org.smartregister.reveal.util.Constants.Intervention;
 import org.smartregister.reveal.util.Country;
+import org.smartregister.reveal.viewholder.FamilyMemberViewHolder;
 import org.smartregister.reveal.viewholder.StructureTaskViewHolder;
+import org.smartregister.view.contract.SmartRegisterClient;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +49,7 @@ public class StructureTaskAdapter extends RecyclerView.Adapter<StructureTaskView
     @Override
     public void onBindViewHolder(@NonNull StructureTaskViewHolder viewHolder, int position) {
         StructureTaskDetails taskDetails = taskDetailsList.get(position);
+
         if (Intervention.BEDNET_DISTRIBUTION.equals(taskDetails.getTaskCode())) {
             taskDetails.setTaskName(context.getString(R.string.distribute_llin));
             taskDetails.setTaskAction(context.getString(R.string.record_llin));
@@ -61,9 +67,12 @@ public class StructureTaskAdapter extends RecyclerView.Adapter<StructureTaskView
             } else if (Intervention.REGISTER_FAMILY.equals(taskDetails.getTaskCode())) {
                 action = context.getString(R.string.register_family);
                 name = context.getString(R.string.add_fam);
+            } else if (Intervention.DRUG_RECON.equals(taskDetails.getTaskCode())) {
+                action = context.getString(R.string.drug_recon);
+//                name = context.getString(R.string.drug_reconciliation);
             } else if (Intervention.MDA_ADHERENCE.equals(taskDetails.getTaskCode())) {
                 if (BuildConfig.BUILD_COUNTRY == Country.NIGERIA) {
-                    action = context.getString(R.string.spaq_smc);
+                    action = context.getString(R.string.spaq_redose);
                 } else {
                     action = context.getString(R.string.adhere_mda);
                 }
@@ -73,18 +82,21 @@ public class StructureTaskAdapter extends RecyclerView.Adapter<StructureTaskView
                 } else {
                     action = context.getString(R.string.dispense_mda);
                 }
-            } else if (Intervention.DRUG_STRUCTURE.equals(taskDetails.getTaskCode())) {
-                if (BuildConfig.BUILD_COUNTRY == Country.NIGERIA) {
-                    action = context.getString(R.string.structure_drug);
-                }
             }
+//            if (Intervention.DRUG_RECON.equals(taskDetails.getTaskCode())) {
+//                if (BuildConfig.BUILD_COUNTRY == Country.NIGERIA) {
+//                    action = context.getString(R.string.drug_recon);
+//                    name = context.getString(R.string.drug_reconciliation);
+//                }
+//            }
             taskDetails.setTaskName(name);
             taskDetails.setTaskAction(action);
-
         }
+
         if (Intervention.MDA_DISPENSE.equals(taskDetails.getTaskCode()) ||
                 Intervention.MDA_ADHERENCE.equals(taskDetails.getTaskCode()) ||
-                Intervention.DRUG_STRUCTURE.equals(taskDetails.getTaskCode())) {
+                Intervention.DRUG_RECON.equals(taskDetails.getTaskCode())
+        ) {
             viewHolder.setTaskName(taskDetails.getTaskName(), taskDetails.getTaskCode());
         } else {
             viewHolder.setTaskName(taskDetails.getTaskName());

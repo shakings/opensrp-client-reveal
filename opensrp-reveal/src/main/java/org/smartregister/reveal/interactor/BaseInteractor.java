@@ -168,18 +168,18 @@ public class BaseInteractor implements BaseContract.BaseInteractor {
                 case REGISTER_STRUCTURE_EVENT:
                     saveRegisterStructureForm(jsonForm);
                     break;
+                case EventType.DRUG_RECON:
+                    saveMemberForm(jsonForm, encounterType, BLOOD_SCREENING);
+                    break;
                 case EventType.MDA_DISPENSE:
                     taskUtils.generateMDAAdherenceTask(RevealApplication.getInstance().getApplicationContext(),
                             getString(jsonForm, ENTITY_ID), getJSONObject(jsonForm, DETAILS).getString(Properties.LOCATION_ID));
-
+                    taskUtils.generateMDAStructureDrug(RevealApplication.getInstance().getApplicationContext(),
+                            getString(jsonForm, ENTITY_ID), getJSONObject(jsonForm, DETAILS).getString(Properties.LOCATION_ID));
                 case BLOOD_SCREENING_EVENT:
-                case EventType.DRUG_STRUCTURE:
-                    saveMemberForm(jsonForm, encounterType, BLOOD_SCREENING);
                 case EventType.MDA_ADHERENCE:
                     saveMemberForm(jsonForm, encounterType, BLOOD_SCREENING);
                     break;
-
-
                 case CASE_CONFIRMATION_EVENT:
                     saveCaseConfirmation(jsonForm, encounterType);
                     break;
@@ -228,8 +228,8 @@ public class BaseInteractor implements BaseContract.BaseInteractor {
                 interventionType = Intervention.MDA_DISPENSE;
             } else if (encounterType.equals(EventType.MDA_ADHERENCE)) {
                 interventionType = Intervention.MDA_ADHERENCE;
-            } else if (encounterType.equals(EventType.DRUG_STRUCTURE)) {
-                interventionType = Intervention.DRUG_STRUCTURE;
+            } else if (encounterType.equals(EventType.DRUG_RECON)) {
+                interventionType = Intervention.DRUG_RECON;
             } else if (encounterType.equals(EventType.IRS_VERIFICATION)) {
                 interventionType = Intervention.IRS_VERIFICATION;
             }

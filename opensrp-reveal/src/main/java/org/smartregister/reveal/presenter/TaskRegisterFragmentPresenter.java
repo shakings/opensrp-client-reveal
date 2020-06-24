@@ -42,6 +42,8 @@ import static org.smartregister.domain.Task.INACTIVE_TASK_STATUS;
 import static org.smartregister.reveal.util.Constants.Intervention.BEDNET_DISTRIBUTION;
 import static org.smartregister.reveal.util.Constants.Intervention.BLOOD_SCREENING;
 import static org.smartregister.reveal.util.Constants.Intervention.CASE_CONFIRMATION;
+import static org.smartregister.reveal.util.Constants.Intervention.DRUG_RECON;
+import static org.smartregister.reveal.util.Constants.Intervention.ELIGIBILITY_COMPOUND;
 import static org.smartregister.reveal.util.Constants.Intervention.REGISTER_FAMILY;
 
 /**
@@ -228,7 +230,7 @@ public class TaskRegisterFragmentPresenter extends BaseFormFragmentPresenter imp
                     &&
                     (BLOOD_SCREENING.equals(details.getTaskCode()) ||
                             BEDNET_DISTRIBUTION.equals(details.getTaskCode()) ||
-                            REGISTER_FAMILY.equals(details.getTaskCode())) ||
+                            REGISTER_FAMILY.equals(details.getTaskCode())) || DRUG_RECON.equals(details.getTaskCode()) ||
                     (details.getTaskCount() != null && details.getTaskCount() > 1)) { // structures with grouped tasks should display the family profile
                 setTaskDetails(details);
                 interactor.fetchFamilyDetails(details.getStructureId());

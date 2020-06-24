@@ -179,15 +179,17 @@ public interface Constants {
 
         String REGISTER_FAMILY = "RACD Register Family";
 
+        String ELIGIBILITY_COMPOUND = "Eligibility Compound";
+
         String FI = "FI";
 
         String PAOT = "PAOT";
 
-        String MDA_DISPENSE = "MDA Dispense";
+        String MDA_DISPENSE = "SMC Child Dispense";
 
-        String MDA_ADHERENCE = "MDA Adherence";
+        String MDA_ADHERENCE = "SMC SPAQ Redose";
 
-        String DRUG_STRUCTURE = "Drug Structure";
+        String DRUG_RECON = "SMC Drug Reconciliation";
 
         String MDA = "MDA";
 
@@ -201,7 +203,7 @@ public interface Constants {
                 LARVAL_DIPPING, BCC, BEDNET_DISTRIBUTION, BLOOD_SCREENING, CASE_CONFIRMATION,
                 REGISTER_FAMILY, PAOT);
 
-        List<String> MDA_INTERVENTIONS = Arrays.asList(REGISTER_FAMILY, MDA_ADHERENCE, MDA_DISPENSE, DRUG_STRUCTURE);
+        List<String> MDA_INTERVENTIONS = Arrays.asList(REGISTER_FAMILY, DRUG_RECON, ELIGIBILITY_COMPOUND, MDA_ADHERENCE, MDA_DISPENSE);
 
         List<String> TASK_RESET_INTERVENTIONS = Arrays.asList(MOSQUITO_COLLECTION,
                 LARVAL_DIPPING, BCC, CASE_CONFIRMATION,
@@ -224,7 +226,7 @@ public interface Constants {
 
         String IRS_VERIFICATION = "irs_verification";
 
-        String DRUG_STRUCTURE = "drug_structure";
+        String DRUG_RECON = "drug_recon";
     }
 
     interface Tables {
@@ -240,10 +242,12 @@ public interface Constants {
         String SPRAYED = "Sprayed";
         String NOT_SPRAYABLE = "Not Sprayable";
         String COMPLETE = "Complete";
+        String SMC_COMPLETE = "Smc Complete";
         String INCOMPLETE = "Incomplete";
         String NOT_ELIGIBLE = "Not Eligible";
         String IN_PROGRESS = "In Progress";
-
+        String REDOSE_COMPLETE = "Redose Complete";
+        String DRUG_RECON_COMPLETE = "Drug Recon Complete";
 
         //MDA status
         String FULLY_RECEIVED = "Fully Received";
@@ -265,12 +269,12 @@ public interface Constants {
                 BLOOD_SCREENING_COMPLETE, COMPLETE, NOT_ELIGIBLE);
 
         List<String> MDA_BUSINESS_STATUS = Arrays.asList(NOT_VISITED, FULLY_RECEIVED, NONE_RECEIVED,
-                ADHERENCE_VISIT_DONE, PARTIALLY_RECEIVED, COMPLETE, NOT_ELIGIBLE);
+                ADHERENCE_VISIT_DONE, PARTIALLY_RECEIVED, COMPLETE, REDOSE_COMPLETE, DRUG_RECON_COMPLETE, SMC_COMPLETE, NOT_ELIGIBLE);
     }
 
     interface BusinessStatusWrapper {
 
-        List<String> SPRAYED = Arrays.asList(BusinessStatus.SPRAYED, BusinessStatus.COMPLETE, BusinessStatus.PARTIALLY_SPRAYED);
+        List<String> SPRAYED = Arrays.asList(BusinessStatus.SPRAYED, BusinessStatus.COMPLETE, BusinessStatus.SMC_COMPLETE, BusinessStatus.PARTIALLY_SPRAYED);
         List<String> NOT_SPRAYED = Arrays.asList(BusinessStatus.NOT_SPRAYED, BusinessStatus.IN_PROGRESS, BusinessStatus.INCOMPLETE);
         List<String> NOT_ELIGIBLE = Arrays.asList(BusinessStatus.NOT_SPRAYABLE, BusinessStatus.NOT_ELIGIBLE);
         List<String> NOT_VISITED = Arrays.asList(BusinessStatus.NOT_VISITED);
@@ -387,8 +391,6 @@ public interface Constants {
         String NIGERIA_STRUCTURE_LEVEL_DRUG_RECON = "json.form/nigeria_structure_level_drug.json";
 
         String OPERATIONAL_AREA_TAG = "operational_area";
-
-        String ELIGIBILITY_COMPOUND_TAG = "eligibility_compound";
 
         String STRUCTURES_TAG = "structures";
 

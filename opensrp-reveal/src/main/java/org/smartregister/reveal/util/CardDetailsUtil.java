@@ -54,6 +54,9 @@ public class CardDetailsUtil {
                 break;
             case BusinessStatus.SPRAYED:
             case BusinessStatus.COMPLETE:
+            case BusinessStatus.SMC_COMPLETE:
+            case BusinessStatus.REDOSE_COMPLETE:
+            case BusinessStatus.DRUG_RECON_COMPLETE:
             case BusinessStatus.FULLY_RECEIVED:
                 cardDetails.setStatusColor(R.color.sprayed);
                 cardDetails.setStatusMessage(R.string.details_sprayed);
@@ -70,7 +73,7 @@ public class CardDetailsUtil {
                 cardDetails.setStatusMessage(R.string.partially_sprayed);
                 break;
             default:
-                Timber.w("business status not defined :" + cardDetails.getStatus());
+                Timber.w("business status not defined :%s", cardDetails.getStatus());
                 break;
         }
     }
