@@ -2,15 +2,19 @@ package org.smartregister.reveal.interactor;
 
 import android.content.Context;
 
+import org.joda.time.DateTime;
+import org.joda.time.Years;
 import org.smartregister.domain.db.EventClient;
 import org.smartregister.family.domain.FamilyEventClient;
 import org.smartregister.reveal.application.RevealApplication;
 import org.smartregister.reveal.contract.FamilyRegisterContract;
 import org.smartregister.reveal.sync.RevealClientProcessor;
 import org.smartregister.reveal.util.AppExecutors;
+import org.smartregister.reveal.util.Constants;
 import org.smartregister.reveal.util.TaskUtils;
 import org.smartregister.reveal.util.Utils;
 import org.smartregister.sync.ClientProcessorForJava;
+import org.smartregister.util.DateUtil;
 
 import java.util.HashSet;
 import java.util.List;
@@ -53,8 +57,13 @@ public class RevealFamilyRegisterInteractor extends org.smartregister.family.int
                     generatedIds.add(entityId);
                     if (Utils.isFocusInvestigation())
                         taskUtils.generateBloodScreeningTask(context, entityId, structureId);
-                    else if (Utils.isMDA())
-                        taskUtils.generateMDADispenseTask(context, entityId, structureId);
+                    else if (Utils.isMDA()) {
+
+                        DateTime birthDate = new DateTime(eventClient.getClient().getBirthdate().getTime());
+                        int age = Years.yearsBetween(DateTime.now(), birthDate).getYears();
+                        if (age > Constants.MDA_MIN_AGE)
+                            taskUtils.generateMDADispenseTask(context, entityId, structureId);
+                    }
                 }
             }
             if (Utils.isFocusInvestigation())
