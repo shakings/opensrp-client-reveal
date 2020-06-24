@@ -74,7 +74,7 @@
         "openmrs_entity": "person",
         "openmrs_entity_id": "first_name",
         "type": "edit_text",
-        "hint": "First Name",
+        "hint": "Firstname of child",
         "edit_type": "name",
         "text_size": "8sp",
         "v_required": {
@@ -92,7 +92,7 @@
         "options": [
           {
             "key": "same_as_fam_name",
-            "text": "Surname same as household name",
+            "text": "Same as compound head surname",
             "text_size": "18px",
             "value": "true"
           }
@@ -104,7 +104,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "",
         "type": "edit_text",
-        "hint": "Surname",
+        "hint": "Surname of child",
         "edit_type": "name",
         "text_size": "8sp",
         "v_required": {
@@ -282,7 +282,7 @@
             "text": "12 < 59 months: Can sit without help; Can stand or walk"
           },
           {
-            "key": "moreThaSixty",
+            "key": "moreThanSixty",
             "text": "> 60 months: Can stand on 1 foot for 10 seconds; Can jump on 1 foot; Can raise arm and touch opposite ear"
           }
         ],

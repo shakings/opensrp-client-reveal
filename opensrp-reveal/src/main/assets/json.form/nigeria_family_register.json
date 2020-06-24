@@ -457,7 +457,7 @@
         "openmrs_entity": "person",
         "openmrs_entity_id": "first_name",
         "type": "edit_text",
-        "hint": "First name",
+        "hint": "First name of head of structure",
         "edit_type": "name",
         "text_size": "8sp",
         "v_required": {
@@ -475,7 +475,7 @@
         "options": [
           {
             "key": "same_as_fam_name",
-            "text": "Surname same as household name",
+            "text": "Same as compound head surname",
             "text_size": "18px",
             "value": "true"
           }
@@ -487,7 +487,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "",
         "type": "edit_text",
-        "hint": "Surname",
+        "hint": "Surname of head of structure",
         "edit_type": "name",
         "text_size": "8sp",
         "v_required": {
