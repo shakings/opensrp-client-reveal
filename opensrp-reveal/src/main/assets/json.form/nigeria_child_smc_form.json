@@ -1,10 +1,7 @@
 {
-  "count": "3",
-  "entity_id": "",
-  "relational_id": "",
-  "validate_on_submit": true,
-  "show_errors_on_submit": true,
+  "count": "1",
   "encounter_type": "mda_dispense",
+  "entity_id": "",
   "metadata": {
     "start": {
       "openmrs_entity_parent": "",
@@ -95,6 +92,12 @@
         "v_required": {
           "value": true,
           "err": "This field is required"
+        },
+        "relevance": {
+          "step1:currently_present": {
+            "type": "string",
+            "ex": "equalTo(., \"0\")"
+          }
         }
       },
       {
@@ -160,6 +163,12 @@
         "v_required": {
           "value": true,
           "err": "This field is required"
+        },
+        "relevance": {
+          "step1:very_sick": {
+            "type": "string",
+            "ex": "equalTo(., \"1\")"
+          }
         }
       },
       {
@@ -197,6 +206,12 @@
         "v_required": {
           "value": true,
           "err": "This field is required"
+        },
+        "relevance": {
+          "step1:currently_present": {
+            "type": "string",
+            "ex": "equalTo(., \"1\")"
+          }
         }
       },
       {
@@ -223,17 +238,23 @@
         "hint": "Administered SPAQ?",
         "values": [
           "Yes",
-          "Refused",
-          "Other Reason - specify"
+          "No - Refused",
+          "No - Other Reason - specify"
         ],
         "keys": [
           "Yes",
-          "Refused",
-          "Other Reason - specify"
+          "No",
+          "No"
         ],
         "v_required": {
           "value": true,
           "err": "This field is required"
+        },
+        "relevance": {
+          "step1:currently_present": {
+            "type": "string",
+            "ex": "equalTo(., \"1\")"
+          }
         }
       },
       {
@@ -270,6 +291,12 @@
         "v_required": {
           "value": true,
           "err": "This field is required"
+        },
+        "relevance": {
+          "step1:currently_present": {
+            "type": "string",
+            "ex": "equalTo(., \"1\")"
+          }
         }
       },
       {
@@ -292,6 +319,12 @@
         "v_required": {
           "value": true,
           "err": "This field is required"
+        },
+        "relevance": {
+          "step1:currently_present": {
+            "type": "string",
+            "ex": "equalTo(., \"1\")"
+          }
         }
       },
       {
@@ -398,7 +431,13 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "",
         "type": "hidden",
-        "value": "Smc Complete"
+        "calculation": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "nigeria-mda-dispense-calculation.yml"
+            }
+          }
+        }
       }
     ]
   }

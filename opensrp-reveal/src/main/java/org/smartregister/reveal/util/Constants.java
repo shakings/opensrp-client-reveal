@@ -250,6 +250,8 @@ public interface Constants {
         String IN_PROGRESS = "In Progress";
         String REDOSE_COMPLETE = "Redose Complete";
         String DRUG_RECON_COMPLETE = "Drug Recon Complete";
+        String SMC_DISPENSE_INCOMPLETE = "Smc Incomplete";
+        String SMC_DISPENSE_INELIGIBLE = "Ineligible";
 
         //MDA status
         String FULLY_RECEIVED = "Fully Received";
@@ -271,7 +273,7 @@ public interface Constants {
                 BLOOD_SCREENING_COMPLETE, COMPLETE, NOT_ELIGIBLE);
 
         List<String> MDA_BUSINESS_STATUS = Arrays.asList(NOT_VISITED, FULLY_RECEIVED, NONE_RECEIVED,
-                ADHERENCE_VISIT_DONE, PARTIALLY_RECEIVED, COMPLETE, REDOSE_COMPLETE, DRUG_RECON_COMPLETE, SMC_COMPLETE, NOT_ELIGIBLE);
+                ADHERENCE_VISIT_DONE, PARTIALLY_RECEIVED, COMPLETE, REDOSE_COMPLETE, SMC_DISPENSE_INELIGIBLE, SMC_DISPENSE_INCOMPLETE, DRUG_RECON_COMPLETE, SMC_COMPLETE, NOT_ELIGIBLE);
     }
 
     interface BusinessStatusWrapper {
@@ -503,6 +505,7 @@ public interface Constants {
         String BOTSWANA_EC_CLIENT_FIELDS = "ec_client_fields_botswana.json";
         String ZAMBIA_EC_CLIENT_FIELDS = "ec_client_fields_zambia.json";
         String REFAPP_EC_CLIENT_FIELDS = "ec_client_fields_refapp.json";
+        String NIGERIA_EC_CLIENT_FIELDS = "ec_client_fields.json";
     }
 
 

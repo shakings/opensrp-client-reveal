@@ -24,6 +24,7 @@ import static org.smartregister.reveal.util.Constants.BusinessStatus.NONE_RECEIV
 import static org.smartregister.reveal.util.Constants.BusinessStatus.NOT_ELIGIBLE;
 import static org.smartregister.reveal.util.Constants.BusinessStatus.NOT_VISITED;
 import static org.smartregister.reveal.util.Constants.BusinessStatus.PARTIALLY_RECEIVED;
+import static org.smartregister.reveal.util.Constants.BusinessStatus.SMC_DISPENSE_INCOMPLETE;
 import static org.smartregister.reveal.util.Constants.GeoJSON.IS_INDEX_CASE;
 import static org.smartregister.reveal.util.Constants.Intervention.BEDNET_DISTRIBUTION;
 import static org.smartregister.reveal.util.Constants.Intervention.BLOOD_SCREENING;
@@ -62,6 +63,7 @@ public class GeoJsonUtils {
             mdaStatusMap.put(FULLY_RECEIVED, 0);
             mdaStatusMap.put(NONE_RECEIVED, 0);
             mdaStatusMap.put(NOT_ELIGIBLE, 0);
+            mdaStatusMap.put(SMC_DISPENSE_INCOMPLETE,0);
             mdaStatusMap.put(MDA_DISPENSE_TASK_COUNT, 0);
             StateWrapper state = new StateWrapper();
             if (taskSet == null)

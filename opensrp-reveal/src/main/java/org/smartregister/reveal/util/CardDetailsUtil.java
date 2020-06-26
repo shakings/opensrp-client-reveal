@@ -62,6 +62,7 @@ public class CardDetailsUtil {
                 cardDetails.setStatusMessage(R.string.details_sprayed);
                 cardDetails.setReason(null);
                 break;
+            case BusinessStatus.SMC_DISPENSE_INELIGIBLE:
             case BusinessStatus.NOT_SPRAYABLE:
             case BusinessStatus.NOT_ELIGIBLE:
                 cardDetails.setStatusColor(R.color.unsprayable);

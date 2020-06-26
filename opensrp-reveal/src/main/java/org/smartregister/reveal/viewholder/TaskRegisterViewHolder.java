@@ -10,10 +10,12 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.smartregister.reveal.BuildConfig;
 import org.smartregister.reveal.R;
 import org.smartregister.reveal.model.CardDetails;
 import org.smartregister.reveal.model.TaskDetails;
 import org.smartregister.reveal.util.Constants;
+import org.smartregister.reveal.util.Country;
 import org.smartregister.reveal.util.PreferencesUtil;
 import org.smartregister.reveal.util.Utils;
 
@@ -105,10 +107,10 @@ public class TaskRegisterViewHolder extends RecyclerView.ViewHolder {
             }
 
         } else if (cardDetails != null && cardDetails.getStatusColor() != null) {
-            actionView.setBackground(null);
-            actionView.setTextColor(context.getResources().getColor(cardDetails.getStatusColor()));
+            actionView.setBackground(context.getResources().getDrawable(R.drawable.not_visited_bg));
+            actionView.setTextColor(context.getResources().getColor(R.color.text_black));
         } else {
-            actionView.setBackground(context.getResources().getDrawable(R.drawable.task_action_bg));
+            actionView.setBackground(context.getResources().getDrawable(R.drawable.no_task_complete_bg));
             actionView.setTextColor(context.getResources().getColor(R.color.text_black));
         }
         actionView.setOnClickListener(onClickListener);
@@ -148,7 +150,11 @@ public class TaskRegisterViewHolder extends RecyclerView.ViewHolder {
         if (Utils.isFocusInvestigation()) {
             actionView.setBackground(context.getResources().getDrawable(R.drawable.tasks_complete_bg));
         } else if (Utils.isMDA()){
-            actionView.setBackground(context.getResources().getDrawable(R.drawable.mda_adhered_bg));
+            if (BuildConfig.BUILD_COUNTRY == Country.NIGERIA) {
+                actionView.setBackground(context.getResources().getDrawable(R.drawable.tasks_complete_bg));
+            } else {
+                actionView.setBackground(context.getResources().getDrawable(R.drawable.mda_adhered_bg));
+            }
         }
         actionView.setTextColor(context.getResources().getColor(R.color.text_black));
         actionView.setText(context.getText(R.string.tasks_complete));
@@ -176,7 +182,7 @@ public class TaskRegisterViewHolder extends RecyclerView.ViewHolder {
             }
         } else if (Utils.isMDA()) {
             if (familyRegTaskMissingOrFamilyRegComplete && task.isMdaAdhered()) {
-                actionBg = context.getResources().getDrawable(R.drawable.mda_adhered_bg);
+                actionBg = context.getResources().getDrawable(R.drawable.mda_dispensed_bg);
                 actionText = context.getText(R.string.tasks_complete).toString();
             } else if (familyRegTaskMissingOrFamilyRegComplete && task.isFullyReceived()) {
                 actionBg = context.getResources().getDrawable(R.drawable.mda_dispensed_bg);
@@ -187,6 +193,8 @@ public class TaskRegisterViewHolder extends RecyclerView.ViewHolder {
             } else if (familyRegTaskMissingOrFamilyRegComplete && task.isNotEligible()) {
                 actionBg = context.getResources().getDrawable(R.drawable.mda_not_eligible_bg);
             } else if (familyRegTaskMissingOrFamilyRegComplete) {
+                actionBg = context.getResources().getDrawable(R.drawable.mda_partially_received_bg);
+            } else if (task.isFamilyRegTaskExists() && task.getTaskCount() > 1) {
                 actionBg = context.getResources().getDrawable(R.drawable.family_registered_bg);
             } else {
                 actionBg = context.getResources().getDrawable(R.drawable.no_task_complete_bg);

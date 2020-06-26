@@ -180,18 +180,6 @@ public class Utils {
             default:
                 return R.string.irs;
         }
-
-
-//        if (FI.equals(interventionType)) {
-//            return R.string.focus_investigation;
-//        } else if (MDA.equals(interventionType)) {
-//            if (BuildConfig.BUILD_COUNTRY == Country.NIGERIA) {
-//                return R.string.smc_label;
-//            } else {
-//                return R.string.mda;
-//            }
-//        }
-//        return R.string.irs;
     }
 
     public static String getAge(String dob) {

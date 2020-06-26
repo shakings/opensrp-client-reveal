@@ -92,6 +92,8 @@ public class FilterTasksPresenter implements FilterTasksContract.Presenter {
         labelsMap.put(BusinessStatus.DRUG_RECON_COMPLETE, R.string.drug_recon_complete);
         labelsMap.put(BusinessStatus.SMC_COMPLETE, R.string.smc_complete);
         labelsMap.put(BusinessStatus.REDOSE_COMPLETE, R.string.redose_complete);
+        labelsMap.put(BusinessStatus.SMC_DISPENSE_INCOMPLETE, R.string.mda_dispense_incomplete);
+        labelsMap.put(BusinessStatus.SMC_DISPENSE_INELIGIBLE, R.string.mda_dispense_ineligible);
     }
 
 

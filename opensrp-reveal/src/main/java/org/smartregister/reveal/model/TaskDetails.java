@@ -4,6 +4,8 @@ import android.location.Location;
 import android.support.annotation.NonNull;
 
 import org.apache.commons.lang3.StringUtils;
+import org.smartregister.reveal.BuildConfig;
+import org.smartregister.reveal.util.Country;
 import org.smartregister.reveal.util.Utils;
 
 import java.io.Serializable;
@@ -19,6 +21,7 @@ import static org.smartregister.reveal.util.Constants.BusinessStatus.NONE_RECEIV
 import static org.smartregister.reveal.util.Constants.BusinessStatus.NOT_ELIGIBLE;
 import static org.smartregister.reveal.util.Constants.BusinessStatus.NOT_VISITED;
 import static org.smartregister.reveal.util.Constants.BusinessStatus.PARTIALLY_RECEIVED;
+import static org.smartregister.reveal.util.Constants.BusinessStatus.SMC_COMPLETE;
 import static org.smartregister.reveal.util.Constants.COMMA;
 import static org.smartregister.reveal.util.Constants.HYPHEN;
 import static org.smartregister.reveal.util.Constants.Intervention.BEDNET_DISTRIBUTION;
