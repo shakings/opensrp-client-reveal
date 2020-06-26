@@ -112,6 +112,7 @@ public class TaskRegisterViewHolder extends RecyclerView.ViewHolder {
         } else {
             actionView.setBackground(context.getResources().getDrawable(R.drawable.no_task_complete_bg));
             actionView.setTextColor(context.getResources().getColor(R.color.text_black));
+            actionView.setText(context.getText(R.string.family_registered));
         }
         actionView.setOnClickListener(onClickListener);
         actionView.setTag(R.id.task_details, task);
@@ -185,17 +186,16 @@ public class TaskRegisterViewHolder extends RecyclerView.ViewHolder {
                 actionBg = context.getResources().getDrawable(R.drawable.mda_dispensed_bg);
                 actionText = context.getText(R.string.tasks_complete).toString();
             } else if (familyRegTaskMissingOrFamilyRegComplete && task.isFullyReceived()) {
-                actionBg = context.getResources().getDrawable(R.drawable.mda_dispensed_bg);
-            } else if (familyRegTaskMissingOrFamilyRegComplete && task.isPartiallyReceived()) {
-                actionBg = context.getResources().getDrawable(R.drawable.mda_partially_received_bg);
+                actionBg = context.getResources().getDrawable(R.drawable.family_registered_bg);
+                actionText = context.getText(R.string.smc_complete).toString();
             } else if (familyRegTaskMissingOrFamilyRegComplete && task.isNoneReceived()) {
                 actionBg = context.getResources().getDrawable(R.drawable.mda_none_received_bg);
+                actionText = context.getText(R.string.non_received).toString();
             } else if (familyRegTaskMissingOrFamilyRegComplete && task.isNotEligible()) {
                 actionBg = context.getResources().getDrawable(R.drawable.mda_not_eligible_bg);
             } else if (familyRegTaskMissingOrFamilyRegComplete) {
                 actionBg = context.getResources().getDrawable(R.drawable.mda_partially_received_bg);
-            } else if (task.isFamilyRegTaskExists() && task.getTaskCount() > 1) {
-                actionBg = context.getResources().getDrawable(R.drawable.family_registered_bg);
+                actionText = context.getText(R.string.task_incomplete).toString();
             } else {
                 actionBg = context.getResources().getDrawable(R.drawable.no_task_complete_bg);
             }

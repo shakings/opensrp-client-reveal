@@ -4,6 +4,7 @@ import android.location.Location;
 import android.support.annotation.NonNull;
 
 import org.apache.commons.lang3.StringUtils;
+import org.smartregister.AllConstants;
 import org.smartregister.reveal.BuildConfig;
 import org.smartregister.reveal.util.Country;
 import org.smartregister.reveal.util.Utils;
@@ -17,6 +18,7 @@ import static org.smartregister.reveal.util.Constants.BusinessStatus.BLOOD_SCREE
 import static org.smartregister.reveal.util.Constants.BusinessStatus.COMPLETE;
 import static org.smartregister.reveal.util.Constants.BusinessStatus.FAMILY_REGISTERED;
 import static org.smartregister.reveal.util.Constants.BusinessStatus.FULLY_RECEIVED;
+import static org.smartregister.reveal.util.Constants.BusinessStatus.INCOMPLETE;
 import static org.smartregister.reveal.util.Constants.BusinessStatus.NONE_RECEIVED;
 import static org.smartregister.reveal.util.Constants.BusinessStatus.NOT_ELIGIBLE;
 import static org.smartregister.reveal.util.Constants.BusinessStatus.NOT_VISITED;
@@ -273,7 +275,12 @@ public class TaskDetails extends BaseTaskDetails implements Comparable<TaskDetai
                     caseConfirmed = COMPLETE.equals(taskCodeStatusArray[1]);
                     break;
                 case MDA_ADHERENCE:
-                    this.mdaAdhered = COMPLETE.equals(taskCodeStatusArray[1]);
+                    if (!this.mdaAdhered) {
+                        this.mdaAdhered = INCOMPLETE.equals(taskCodeStatusArray[1]);
+                    } else {
+                        this.mdaAdhered = COMPLETE.equals(taskCodeStatusArray[1]);
+                    }
+
                     break;
                 case DRUG_RECON:
                     switch (taskCodeStatusArray[1]) {
