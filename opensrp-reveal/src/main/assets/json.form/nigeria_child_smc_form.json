@@ -56,7 +56,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "",
         "type": "native_radio",
-        "label": "Is the child current present?",
+        "label": "Is the child currently present?",
         "options": [
           {
             "key": "1",

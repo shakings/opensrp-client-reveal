@@ -205,7 +205,7 @@ public interface Constants {
                 LARVAL_DIPPING, BCC, BEDNET_DISTRIBUTION, BLOOD_SCREENING, CASE_CONFIRMATION,
                 REGISTER_FAMILY, PAOT);
 
-        List<String> MDA_INTERVENTIONS = Arrays.asList(REGISTER_FAMILY, DRUG_RECON, ELIGIBILITY_COMPOUND, MDA_ADHERENCE, MDA_DISPENSE);
+        List<String> MDA_INTERVENTIONS = Arrays.asList(REGISTER_FAMILY, DRUG_RECON, BEDNET_DISTRIBUTION, ELIGIBILITY_COMPOUND, MDA_ADHERENCE, MDA_DISPENSE);
 
         List<String> TASK_RESET_INTERVENTIONS = Arrays.asList(MOSQUITO_COLLECTION,
                 LARVAL_DIPPING, BCC, CASE_CONFIRMATION,
@@ -244,14 +244,15 @@ public interface Constants {
         String SPRAYED = "Sprayed";
         String NOT_SPRAYABLE = "Not Sprayable";
         String COMPLETE = "Complete";
+        String NIGERIA_COMPLETE = "Complete";
         String SMC_COMPLETE = "Smc Complete";
         String INCOMPLETE = "Incomplete";
-        String NOT_ELIGIBLE = "Not Eligible";
+        String NOT_ELIGIBLE = "Ineligible";
         String IN_PROGRESS = "In Progress";
         String REDOSE_COMPLETE = "Redose Complete";
         String DRUG_RECON_COMPLETE = "Drug Recon Complete";
         String SMC_DISPENSE_INCOMPLETE = "Smc Incomplete";
-        String SMC_DISPENSE_INELIGIBLE = "Ineligible";
+//        String SMC_DISPENSE_INELIGIBLE = "Ineligible";
 
         //MDA status
         String FULLY_RECEIVED = "Fully Received";
@@ -272,8 +273,8 @@ public interface Constants {
         List<String> FI_BUSINESS_STATUS = Arrays.asList(NOT_VISITED, FAMILY_REGISTERED, BEDNET_DISTRIBUTED,
                 BLOOD_SCREENING_COMPLETE, COMPLETE, NOT_ELIGIBLE);
 
-        List<String> MDA_BUSINESS_STATUS = Arrays.asList(NOT_VISITED, FULLY_RECEIVED, NONE_RECEIVED,
-                ADHERENCE_VISIT_DONE, PARTIALLY_RECEIVED, COMPLETE, REDOSE_COMPLETE, SMC_DISPENSE_INELIGIBLE, SMC_DISPENSE_INCOMPLETE, DRUG_RECON_COMPLETE, SMC_COMPLETE, NOT_ELIGIBLE);
+        List<String> MDA_BUSINESS_STATUS = Arrays.asList(NOT_VISITED, NIGERIA_COMPLETE, FULLY_RECEIVED, NONE_RECEIVED,
+                ADHERENCE_VISIT_DONE, PARTIALLY_RECEIVED, COMPLETE, REDOSE_COMPLETE, SMC_DISPENSE_INCOMPLETE, DRUG_RECON_COMPLETE, SMC_COMPLETE, NOT_ELIGIBLE);
     }
 
     interface BusinessStatusWrapper {

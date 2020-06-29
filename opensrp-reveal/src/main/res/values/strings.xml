@@ -369,7 +369,10 @@
     <string name="redose_complete">Redose Complete</string>
     <string name="mda_dispense_incomplete">SMC Incomplete</string>
     <string name="mda_dispense_ineligible">Ineligible</string>
-    <string name="family_registered">Family Registered</string>
+    <string name="family_registered">Family \n Registered</string>
     <string name="non_received">Non Received</string>
     <string name="task_incomplete">Tasks Incomplete</string>
+    <string name="child_registered">Eligible Child \n Registered</string>
+    <string name="smc_incomplete">SMC \n Incomplete</string>
+    <string name="no_drugs_received">No Drugs \n Received</string>
 </resources>

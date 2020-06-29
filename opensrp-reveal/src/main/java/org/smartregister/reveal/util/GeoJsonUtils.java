@@ -112,8 +112,11 @@ public class GeoJsonUtils {
                     state.familyRegTaskExists = true;
                     state.familyRegistered = COMPLETE.equals(task.getBusinessStatus());
                     state.ineligibleForFamReg = NOT_ELIGIBLE.equals((task.getBusinessStatus()));
+                    state.partiallyReceived = NONE_RECEIVED.equals((task.getBusinessStatus()));
+                    state.nonReceived = NONE_RECEIVED.equals((task.getBusinessStatus()));
                     break;
                 case BEDNET_DISTRIBUTION:
+                    state.mdaAdhered = COMPLETE.equals(task.getBusinessStatus()) || NOT_ELIGIBLE.equals(task.getBusinessStatus());
                     state.bednetDistributed = COMPLETE.equals(task.getBusinessStatus()) || NOT_ELIGIBLE.equals(task.getBusinessStatus());
                     break;
                 case BLOOD_SCREENING:

@@ -54,6 +54,7 @@ public class CardDetailsUtil {
                 break;
             case BusinessStatus.SPRAYED:
             case BusinessStatus.COMPLETE:
+                cardDetails.setStatusColor(R.color.dark_grey);
             case BusinessStatus.SMC_COMPLETE:
             case BusinessStatus.REDOSE_COMPLETE:
             case BusinessStatus.DRUG_RECON_COMPLETE:
@@ -62,7 +63,6 @@ public class CardDetailsUtil {
                 cardDetails.setStatusMessage(R.string.details_sprayed);
                 cardDetails.setReason(null);
                 break;
-            case BusinessStatus.SMC_DISPENSE_INELIGIBLE:
             case BusinessStatus.NOT_SPRAYABLE:
             case BusinessStatus.NOT_ELIGIBLE:
                 cardDetails.setStatusColor(R.color.unsprayable);

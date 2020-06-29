@@ -245,6 +245,8 @@ public class RevealJsonFormUtils {
                 formName = JsonForm.THAILAND_BEDNET_DISTRIBUTION_FORM;
             } else if (BuildConfig.BUILD_COUNTRY == Country.REFAPP) {
                 formName = JsonForm.REFAPP_BEDNET_DISTRIBUTION_FORM;
+            } else if (BuildConfig.BUILD_COUNTRY == Country.NIGERIA) {
+                formName = JsonForm.NIGERIA_STRUCTURE_LEVEL_DRUG_RECON;
             } else {
                 formName = JsonForm.BEDNET_DISTRIBUTION_FORM;
             }
@@ -316,7 +318,7 @@ public class RevealJsonFormUtils {
             if (BuildConfig.BUILD_COUNTRY == Country.NIGERIA) {
                 formName = JsonForm.NIGERIA_STRUCTURE_LEVEL_DRUG_RECON;
             }
-        } else if (IRS_VERIFICATION.equals(encounterType) || Intervention.IRS_VERIFICATION.equals(taskCode)) {
+        }   else if (IRS_VERIFICATION.equals(encounterType) || Intervention.IRS_VERIFICATION.equals(taskCode)) {
             formName = JsonForm.ZAMBIA_IRS_VERIFICATION_FORM;
         }
         return formName;

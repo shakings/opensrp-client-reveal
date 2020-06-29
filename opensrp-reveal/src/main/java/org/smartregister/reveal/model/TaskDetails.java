@@ -259,10 +259,12 @@ public class TaskDetails extends BaseTaskDetails implements Comparable<TaskDetai
 
             switch (taskCodeStatusArray[0]) {
                 case REGISTER_FAMILY:
+                case DRUG_RECON:
                     setFamilyRegTaskExists(true);
                     this.familyRegistered = COMPLETE.equals(taskCodeStatusArray[1]);
                     break;
                 case BEDNET_DISTRIBUTION:
+                    this.mdaAdhered = COMPLETE.equals(taskCodeStatusArray[1]);
                     this.bednetDistributed = COMPLETE.equals(taskCodeStatusArray[1]);
                     break;
                 case BLOOD_SCREENING:
@@ -282,18 +284,18 @@ public class TaskDetails extends BaseTaskDetails implements Comparable<TaskDetai
                     }
 
                     break;
-                case DRUG_RECON:
-                    switch (taskCodeStatusArray[1]) {
-                        case FULLY_RECEIVED:
-                            mdaStatusMap.put(FULLY_RECEIVED, mdaStatusMap.get(FULLY_RECEIVED));
-                            break;
-                        case NONE_RECEIVED:
-                            mdaStatusMap.put(NONE_RECEIVED, mdaStatusMap.get(NONE_RECEIVED));
-                            break;
-                        case NOT_ELIGIBLE:
-                            mdaStatusMap.put(NOT_ELIGIBLE, mdaStatusMap.get(NOT_ELIGIBLE));
-                            break;
-                    }
+//                case DRUG_RECON:
+//                    switch (taskCodeStatusArray[1]) {
+//                        case FULLY_RECEIVED:
+//                            mdaStatusMap.put(FULLY_RECEIVED, mdaStatusMap.get(FULLY_RECEIVED));
+//                            break;
+//                        case NONE_RECEIVED:
+//                            mdaStatusMap.put(NONE_RECEIVED, mdaStatusMap.get(NONE_RECEIVED));
+//                            break;
+//                        case NOT_ELIGIBLE:
+//                            mdaStatusMap.put(NOT_ELIGIBLE, mdaStatusMap.get(NOT_ELIGIBLE));
+//                            break;
+//                    }
                 case MDA_DISPENSE:
                     mdaStatusMap.put(MDA_DISPENSE_TASK_COUNT, mdaStatusMap.get(MDA_DISPENSE_TASK_COUNT) + 1);
                     switch (taskCodeStatusArray[1]) {
@@ -347,6 +349,8 @@ public class TaskDetails extends BaseTaskDetails implements Comparable<TaskDetai
                 return PARTIALLY_RECEIVED;
             } else if (isFamilyRegisteredOrNoTaskExists() && isNoneReceived()) {
                 return NONE_RECEIVED;
+            } else if (isFamilyRegisteredOrNoTaskExists() && isBednetDistributed()) {
+                return BEDNET_DISTRIBUTED;
             } else if (isFamilyRegisteredOrNoTaskExists()) {
                 return FAMILY_REGISTERED;
             }
