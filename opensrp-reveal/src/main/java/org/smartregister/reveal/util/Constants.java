@@ -247,7 +247,7 @@ public interface Constants {
         String NIGERIA_COMPLETE = "Complete";
         String SMC_COMPLETE = "Smc Complete";
         String INCOMPLETE = "Incomplete";
-        String NOT_ELIGIBLE = "Ineligible";
+        String NOT_ELIGIBLE = "Not Eligible";
         String IN_PROGRESS = "In Progress";
         String REDOSE_COMPLETE = "Redose Complete";
         String DRUG_RECON_COMPLETE = "Drug Recon Complete";

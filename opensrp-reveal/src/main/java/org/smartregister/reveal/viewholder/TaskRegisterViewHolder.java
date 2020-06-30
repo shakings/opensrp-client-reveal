@@ -197,7 +197,7 @@ public class TaskRegisterViewHolder extends RecyclerView.ViewHolder {
                 actionBg = context.getResources().getDrawable(R.drawable.family_registered_bg);
                 actionText = context.getText(R.string.child_registered).toString();
             } else {
-                actionBg = context.getResources().getDrawable(R.drawable.mda_none_received_bg);
+                actionBg = context.getResources().getDrawable(R.drawable.no_task_complete_bg);
                 actionText = context.getText(R.string.no_drugs_received).toString();
             }
         }

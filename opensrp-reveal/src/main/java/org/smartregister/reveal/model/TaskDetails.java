@@ -264,7 +264,6 @@ public class TaskDetails extends BaseTaskDetails implements Comparable<TaskDetai
                     this.familyRegistered = COMPLETE.equals(taskCodeStatusArray[1]);
                     break;
                 case BEDNET_DISTRIBUTION:
-                    this.mdaAdhered = COMPLETE.equals(taskCodeStatusArray[1]);
                     this.bednetDistributed = COMPLETE.equals(taskCodeStatusArray[1]);
                     break;
                 case BLOOD_SCREENING:
@@ -349,8 +348,6 @@ public class TaskDetails extends BaseTaskDetails implements Comparable<TaskDetai
                 return PARTIALLY_RECEIVED;
             } else if (isFamilyRegisteredOrNoTaskExists() && isNoneReceived()) {
                 return NONE_RECEIVED;
-            } else if (isFamilyRegisteredOrNoTaskExists() && isBednetDistributed()) {
-                return BEDNET_DISTRIBUTED;
             } else if (isFamilyRegisteredOrNoTaskExists()) {
                 return FAMILY_REGISTERED;
             }

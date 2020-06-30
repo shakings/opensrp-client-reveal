@@ -374,5 +374,5 @@
     <string name="task_incomplete">Tasks Incomplete</string>
     <string name="child_registered">Eligible Child \n Registered</string>
     <string name="smc_incomplete">SMC \n Incomplete</string>
-    <string name="no_drugs_received">No Drugs \n Received</string>
+    <string name="no_drugs_received">Incomplete</string>
 </resources>

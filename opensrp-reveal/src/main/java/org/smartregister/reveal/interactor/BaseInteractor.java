@@ -175,7 +175,7 @@ public class BaseInteractor implements BaseContract.BaseInteractor {
                     taskUtils.generateMDAAdherenceTask(RevealApplication.getInstance().getApplicationContext(),
                             getString(jsonForm, ENTITY_ID), getJSONObject(jsonForm, DETAILS).getString(Properties.LOCATION_ID));
                     taskUtils.generateMDAStructureDrug(RevealApplication.getInstance().getApplicationContext(),
-                            getString(jsonForm, ENTITY_ID), getJSONObject(jsonForm, DETAILS).getString(Properties.LOCATION_ID));
+                            getJSONObject(jsonForm, DETAILS).getString(Properties.LOCATION_ID), getJSONObject(jsonForm, DETAILS).getString(Properties.LOCATION_ID));
                 case BLOOD_SCREENING_EVENT:
                 case EventType.MDA_ADHERENCE:
                     saveMemberForm(jsonForm, encounterType, BLOOD_SCREENING);
