@@ -42,7 +42,7 @@ public class RevealSyncConfiguration extends SyncConfiguration {
 
     @Override
     public String getSyncFilterValue() {
-        if (BuildConfig.BUILD_COUNTRY == Country.ZAMBIA) {
+        if (BuildConfig.BUILD_COUNTRY == Country.ZAMBIA || BuildConfig.BUILD_COUNTRY == Country.NIGERIA) {
             if (sharedPreferences == null) {
                 sharedPreferences = RevealApplication.getInstance().getContext().userService().getAllSharedPreferences();
             }

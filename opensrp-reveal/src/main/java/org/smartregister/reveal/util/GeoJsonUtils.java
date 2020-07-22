@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import timber.log.Timber;
+
 import static org.smartregister.reveal.interactor.ListTaskInteractor.gson;
 import static org.smartregister.reveal.util.Constants.BusinessStatus.ADHERENCE_VISIT_DONE;
 import static org.smartregister.reveal.util.Constants.BusinessStatus.BEDNET_DISTRIBUTED;
@@ -22,10 +24,12 @@ import static org.smartregister.reveal.util.Constants.BusinessStatus.NONE_RECEIV
 import static org.smartregister.reveal.util.Constants.BusinessStatus.NOT_ELIGIBLE;
 import static org.smartregister.reveal.util.Constants.BusinessStatus.NOT_VISITED;
 import static org.smartregister.reveal.util.Constants.BusinessStatus.PARTIALLY_RECEIVED;
+import static org.smartregister.reveal.util.Constants.BusinessStatus.SMC_DISPENSE_INCOMPLETE;
 import static org.smartregister.reveal.util.Constants.GeoJSON.IS_INDEX_CASE;
 import static org.smartregister.reveal.util.Constants.Intervention.BEDNET_DISTRIBUTION;
 import static org.smartregister.reveal.util.Constants.Intervention.BLOOD_SCREENING;
 import static org.smartregister.reveal.util.Constants.Intervention.CASE_CONFIRMATION;
+import static org.smartregister.reveal.util.Constants.Intervention.DRUG_RECON;
 import static org.smartregister.reveal.util.Constants.Intervention.MDA_ADHERENCE;
 import static org.smartregister.reveal.util.Constants.Intervention.MDA_DISPENSE;
 import static org.smartregister.reveal.util.Constants.Intervention.REGISTER_FAMILY;
@@ -59,6 +63,7 @@ public class GeoJsonUtils {
             mdaStatusMap.put(FULLY_RECEIVED, 0);
             mdaStatusMap.put(NONE_RECEIVED, 0);
             mdaStatusMap.put(NOT_ELIGIBLE, 0);
+            mdaStatusMap.put(SMC_DISPENSE_INCOMPLETE,0);
             mdaStatusMap.put(MDA_DISPENSE_TASK_COUNT, 0);
             StateWrapper state = new StateWrapper();
             if (taskSet == null)
@@ -107,8 +112,11 @@ public class GeoJsonUtils {
                     state.familyRegTaskExists = true;
                     state.familyRegistered = COMPLETE.equals(task.getBusinessStatus());
                     state.ineligibleForFamReg = NOT_ELIGIBLE.equals((task.getBusinessStatus()));
+                    state.partiallyReceived = NONE_RECEIVED.equals((task.getBusinessStatus()));
+                    state.nonReceived = NONE_RECEIVED.equals((task.getBusinessStatus()));
                     break;
                 case BEDNET_DISTRIBUTION:
+                    state.mdaAdhered = COMPLETE.equals(task.getBusinessStatus()) || NOT_ELIGIBLE.equals(task.getBusinessStatus());
                     state.bednetDistributed = COMPLETE.equals(task.getBusinessStatus()) || NOT_ELIGIBLE.equals(task.getBusinessStatus());
                     break;
                 case BLOOD_SCREENING:
@@ -121,6 +129,7 @@ public class GeoJsonUtils {
                     state.caseConfirmed = COMPLETE.equals(task.getBusinessStatus());
                     break;
                 case MDA_ADHERENCE:
+                case DRUG_RECON:
                     state.mdaAdhered = COMPLETE.equals(task.getBusinessStatus()) || NOT_ELIGIBLE.equals(task.getBusinessStatus());
                     break;
                 case MDA_DISPENSE:
@@ -135,6 +144,10 @@ public class GeoJsonUtils {
 
     private static void populateMDAStatus(Task task, Map<String, Integer> mdaStatusMap) {
         mdaStatusMap.put(MDA_DISPENSE_TASK_COUNT, mdaStatusMap.get(MDA_DISPENSE_TASK_COUNT) + 1);
+        if(task.getBusinessStatus()==null){
+            Timber.w("Task %s has null business status", task.getIdentifier());
+            return;
+        }
         switch (task.getBusinessStatus()) {
             case FULLY_RECEIVED:
                 mdaStatusMap.put(FULLY_RECEIVED, mdaStatusMap.get(FULLY_RECEIVED) + 1);
@@ -198,9 +211,7 @@ public class GeoJsonUtils {
                 } else {
                     taskProperties.put(TASK_BUSINESS_STATUS, NOT_VISITED);
                 }
-
             }
-
         }
     }
 
@@ -217,5 +228,6 @@ public class GeoJsonUtils {
         private boolean partiallyReceived;
         private boolean bloodScreeningExists = false;
         private boolean ineligibleForFamReg = false;
+        private boolean receivedDrugForm = false;
     }
 }

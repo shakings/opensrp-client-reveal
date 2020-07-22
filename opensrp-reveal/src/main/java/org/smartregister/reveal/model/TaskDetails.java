@@ -4,6 +4,9 @@ import android.location.Location;
 import androidx.annotation.NonNull;
 
 import org.apache.commons.lang3.StringUtils;
+import org.smartregister.AllConstants;
+import org.smartregister.reveal.BuildConfig;
+import org.smartregister.reveal.util.Country;
 import org.smartregister.reveal.util.Utils;
 
 import java.io.Serializable;
@@ -15,15 +18,18 @@ import static org.smartregister.reveal.util.Constants.BusinessStatus.BLOOD_SCREE
 import static org.smartregister.reveal.util.Constants.BusinessStatus.COMPLETE;
 import static org.smartregister.reveal.util.Constants.BusinessStatus.FAMILY_REGISTERED;
 import static org.smartregister.reveal.util.Constants.BusinessStatus.FULLY_RECEIVED;
+import static org.smartregister.reveal.util.Constants.BusinessStatus.INCOMPLETE;
 import static org.smartregister.reveal.util.Constants.BusinessStatus.NONE_RECEIVED;
 import static org.smartregister.reveal.util.Constants.BusinessStatus.NOT_ELIGIBLE;
 import static org.smartregister.reveal.util.Constants.BusinessStatus.NOT_VISITED;
 import static org.smartregister.reveal.util.Constants.BusinessStatus.PARTIALLY_RECEIVED;
+import static org.smartregister.reveal.util.Constants.BusinessStatus.SMC_COMPLETE;
 import static org.smartregister.reveal.util.Constants.COMMA;
 import static org.smartregister.reveal.util.Constants.HYPHEN;
 import static org.smartregister.reveal.util.Constants.Intervention.BEDNET_DISTRIBUTION;
 import static org.smartregister.reveal.util.Constants.Intervention.BLOOD_SCREENING;
 import static org.smartregister.reveal.util.Constants.Intervention.CASE_CONFIRMATION;
+import static org.smartregister.reveal.util.Constants.Intervention.DRUG_RECON;
 import static org.smartregister.reveal.util.Constants.Intervention.MDA_ADHERENCE;
 import static org.smartregister.reveal.util.Constants.Intervention.MDA_DISPENSE;
 import static org.smartregister.reveal.util.Constants.Intervention.REGISTER_FAMILY;
@@ -52,6 +58,8 @@ public class TaskDetails extends BaseTaskDetails implements Comparable<TaskDetai
     private Integer completeTaskCount;
 
     private boolean familyRegistered;
+
+    private boolean filledCompoundEligibility;
 
     private boolean bednetDistributed;
 
@@ -251,6 +259,7 @@ public class TaskDetails extends BaseTaskDetails implements Comparable<TaskDetai
 
             switch (taskCodeStatusArray[0]) {
                 case REGISTER_FAMILY:
+                case DRUG_RECON:
                     setFamilyRegTaskExists(true);
                     this.familyRegistered = COMPLETE.equals(taskCodeStatusArray[1]);
                     break;
@@ -267,8 +276,25 @@ public class TaskDetails extends BaseTaskDetails implements Comparable<TaskDetai
                     caseConfirmed = COMPLETE.equals(taskCodeStatusArray[1]);
                     break;
                 case MDA_ADHERENCE:
-                    this.mdaAdhered = COMPLETE.equals(taskCodeStatusArray[1]);
+                    if (!this.mdaAdhered) {
+                        this.mdaAdhered = INCOMPLETE.equals(taskCodeStatusArray[1]);
+                    } else {
+                        this.mdaAdhered = COMPLETE.equals(taskCodeStatusArray[1]);
+                    }
+
                     break;
+//                case DRUG_RECON:
+//                    switch (taskCodeStatusArray[1]) {
+//                        case FULLY_RECEIVED:
+//                            mdaStatusMap.put(FULLY_RECEIVED, mdaStatusMap.get(FULLY_RECEIVED));
+//                            break;
+//                        case NONE_RECEIVED:
+//                            mdaStatusMap.put(NONE_RECEIVED, mdaStatusMap.get(NONE_RECEIVED));
+//                            break;
+//                        case NOT_ELIGIBLE:
+//                            mdaStatusMap.put(NOT_ELIGIBLE, mdaStatusMap.get(NOT_ELIGIBLE));
+//                            break;
+//                    }
                 case MDA_DISPENSE:
                     mdaStatusMap.put(MDA_DISPENSE_TASK_COUNT, mdaStatusMap.get(MDA_DISPENSE_TASK_COUNT) + 1);
                     switch (taskCodeStatusArray[1]) {
@@ -301,8 +327,6 @@ public class TaskDetails extends BaseTaskDetails implements Comparable<TaskDetai
 
     /**
      * @return the aggregate business status
-     * @see org.smartregister.reveal.viewholder.TaskRegisterViewHolder#getActionDrawable(TaskDetails task)
-     * Calculates the aggregate/overall business status
      */
     private String calculateAggregateBusinessStatus() {
         if (Utils.isFocusInvestigation()) {

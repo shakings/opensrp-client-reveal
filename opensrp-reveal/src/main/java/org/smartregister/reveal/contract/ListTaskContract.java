@@ -45,6 +45,8 @@ public interface ListTaskContract {
 
         void registerFamily();
 
+        void eligibilityCompound();
+
         void setGeoJsonSource(@NonNull FeatureCollection featureCollection, Feature operationalArea, boolean changeMapPosition);
 
         void displayNotification(int title, @StringRes int message, Object... formatArgs);

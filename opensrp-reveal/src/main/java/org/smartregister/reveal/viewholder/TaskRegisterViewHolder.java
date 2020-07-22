@@ -10,10 +10,12 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.smartregister.reveal.BuildConfig;
 import org.smartregister.reveal.R;
 import org.smartregister.reveal.model.CardDetails;
 import org.smartregister.reveal.model.TaskDetails;
 import org.smartregister.reveal.util.Constants;
+import org.smartregister.reveal.util.Country;
 import org.smartregister.reveal.util.PreferencesUtil;
 import org.smartregister.reveal.util.Utils;
 
@@ -105,11 +107,12 @@ public class TaskRegisterViewHolder extends RecyclerView.ViewHolder {
             }
 
         } else if (cardDetails != null && cardDetails.getStatusColor() != null) {
-            actionView.setBackground(null);
-            actionView.setTextColor(context.getResources().getColor(cardDetails.getStatusColor()));
-        } else {
-            actionView.setBackground(context.getResources().getDrawable(R.drawable.task_action_bg));
+            actionView.setBackground(context.getResources().getDrawable(R.drawable.not_visited_bg));
             actionView.setTextColor(context.getResources().getColor(R.color.text_black));
+        } else {
+            actionView.setBackground(context.getResources().getDrawable(R.drawable.no_task_complete_bg));
+            actionView.setTextColor(context.getResources().getColor(R.color.text_black));
+            actionView.setText(context.getText(R.string.family_registered));
         }
         actionView.setOnClickListener(onClickListener);
         actionView.setTag(R.id.task_details, task);
@@ -148,7 +151,11 @@ public class TaskRegisterViewHolder extends RecyclerView.ViewHolder {
         if (Utils.isFocusInvestigation()) {
             actionView.setBackground(context.getResources().getDrawable(R.drawable.tasks_complete_bg));
         } else if (Utils.isMDA()){
-            actionView.setBackground(context.getResources().getDrawable(R.drawable.mda_adhered_bg));
+            if (BuildConfig.BUILD_COUNTRY == Country.NIGERIA) {
+                actionView.setBackground(context.getResources().getDrawable(R.drawable.tasks_complete_bg));
+            } else {
+                actionView.setBackground(context.getResources().getDrawable(R.drawable.mda_adhered_bg));
+            }
         }
         actionView.setTextColor(context.getResources().getColor(R.color.text_black));
         actionView.setText(context.getText(R.string.tasks_complete));
@@ -176,20 +183,22 @@ public class TaskRegisterViewHolder extends RecyclerView.ViewHolder {
             }
         } else if (Utils.isMDA()) {
             if (familyRegTaskMissingOrFamilyRegComplete && task.isMdaAdhered()) {
-                actionBg = context.getResources().getDrawable(R.drawable.mda_adhered_bg);
+                actionBg = context.getResources().getDrawable(R.drawable.mda_dispensed_bg);
                 actionText = context.getText(R.string.tasks_complete).toString();
             } else if (familyRegTaskMissingOrFamilyRegComplete && task.isFullyReceived()) {
-                actionBg = context.getResources().getDrawable(R.drawable.mda_dispensed_bg);
-            } else if (familyRegTaskMissingOrFamilyRegComplete && task.isPartiallyReceived()) {
                 actionBg = context.getResources().getDrawable(R.drawable.mda_partially_received_bg);
+                actionText = context.getText(R.string.smc_complete).toString();
             } else if (familyRegTaskMissingOrFamilyRegComplete && task.isNoneReceived()) {
                 actionBg = context.getResources().getDrawable(R.drawable.mda_none_received_bg);
+                actionText = context.getText(R.string.non_received).toString();
             } else if (familyRegTaskMissingOrFamilyRegComplete && task.isNotEligible()) {
                 actionBg = context.getResources().getDrawable(R.drawable.mda_not_eligible_bg);
             } else if (familyRegTaskMissingOrFamilyRegComplete) {
                 actionBg = context.getResources().getDrawable(R.drawable.family_registered_bg);
+                actionText = context.getText(R.string.child_registered).toString();
             } else {
                 actionBg = context.getResources().getDrawable(R.drawable.no_task_complete_bg);
+                actionText = context.getText(R.string.no_drugs_received).toString();
             }
         }
 

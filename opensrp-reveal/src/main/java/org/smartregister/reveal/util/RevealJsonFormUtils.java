@@ -11,6 +11,7 @@ import com.vijay.jsonwizard.constants.JsonFormConstants;
 import com.vijay.jsonwizard.utils.FormUtils;
 
 import org.apache.commons.lang3.StringUtils;
+import org.joda.time.DateTime;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -18,6 +19,7 @@ import org.smartregister.commonregistry.CommonPersonObject;
 import org.smartregister.domain.Event;
 import org.smartregister.domain.Location;
 import org.smartregister.domain.Obs;
+import org.smartregister.family.util.DBConstants;
 import org.smartregister.reveal.BuildConfig;
 import org.smartregister.reveal.activity.RevealJsonFormActivity;
 import org.smartregister.reveal.model.BaseTaskDetails;
@@ -62,6 +64,7 @@ import static org.smartregister.reveal.util.Constants.MOSQUITO_COLLECTION_EVENT;
 import static org.smartregister.reveal.util.Constants.REGISTER_STRUCTURE_EVENT;
 import static org.smartregister.reveal.util.Constants.RequestCode.REQUEST_CODE_GET_JSON;
 import static org.smartregister.reveal.util.Constants.SPRAY_EVENT;
+import static org.smartregister.reveal.util.Utils.getAge;
 import static org.smartregister.reveal.util.Utils.getPropertyValue;
 
 
@@ -259,6 +262,8 @@ public class RevealJsonFormUtils {
                 formName = JsonForm.THAILAND_BEDNET_DISTRIBUTION_FORM;
             } else if (BuildConfig.BUILD_COUNTRY == Country.REFAPP) {
                 formName = JsonForm.REFAPP_BEDNET_DISTRIBUTION_FORM;
+            } else if (BuildConfig.BUILD_COUNTRY == Country.NIGERIA) {
+                formName = JsonForm.NIGERIA_STRUCTURE_LEVEL_DRUG_RECON;
             } else {
                 formName = JsonForm.BEDNET_DISTRIBUTION_FORM;
             }
@@ -315,14 +320,22 @@ public class RevealJsonFormUtils {
                 formName = JsonForm.ZAMBIA_MDA_ADHERENCE_FORM;
             } else if (BuildConfig.BUILD_COUNTRY == Country.REFAPP) {
                 formName = JsonForm.REFAPP_MDA_ADHERENCE_FORM;
+            } else if (BuildConfig.BUILD_COUNTRY == Country.NIGERIA) {
+                formName = JsonForm.NIGERIA_SECOND_DOSE_OF_SPAQ;
             }
         } else if (Intervention.MDA_DISPENSE.equals(taskCode)) {
             if (BuildConfig.BUILD_COUNTRY == Country.ZAMBIA) {
                 formName = JsonForm.ZAMBIA_MDA_DISPENSE_FORM;
             } else if (BuildConfig.BUILD_COUNTRY == Country.REFAPP) {
                 formName = JsonForm.REFAPP_MDA_DISPENSE_FORM;
+            } else if (BuildConfig.BUILD_COUNTRY == Country.NIGERIA) {
+                formName = JsonForm.NIGERIA_CHILD_SMC_FORM;
             }
-        } else if (IRS_VERIFICATION.equals(encounterType) || Intervention.IRS_VERIFICATION.equals(taskCode)) {
+        } else if (Intervention.DRUG_RECON.equals(taskCode)) {
+            if (BuildConfig.BUILD_COUNTRY == Country.NIGERIA) {
+                formName = JsonForm.NIGERIA_STRUCTURE_LEVEL_DRUG_RECON;
+            }
+        }   else if (IRS_VERIFICATION.equals(encounterType) || Intervention.IRS_VERIFICATION.equals(taskCode)) {
             formName = JsonForm.ZAMBIA_IRS_VERIFICATION_FORM;
         }
         return formName;

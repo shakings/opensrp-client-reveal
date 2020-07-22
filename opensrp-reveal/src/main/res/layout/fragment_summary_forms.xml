@@ -19,13 +19,13 @@
             android:background="@color/light_grey" />
 
         <Button
-            android:id="@+id/summary_daily_summary"
+            android:id="@+id/summary_daily_summary_morning"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@color/white"
             android:gravity="center_horizontal"
             android:padding="5dp"
-            android:text="@string/daily_summary"
+            android:text="@string/daily_summary_morning"
             android:textAllCaps="false"
             android:textColor="@color/text_black"
             android:textSize="20sp" />
@@ -37,6 +37,24 @@
             android:layout_marginTop="5dp"
             android:background="@color/light_grey" />
 
+        <Button
+            android:id="@+id/summary_daily_summary_evening"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/white"
+            android:gravity="center_horizontal"
+            android:padding="5dp"
+            android:text="@string/daily_summary_evening"
+            android:textAllCaps="false"
+            android:textColor="@color/text_black"
+            android:textSize="20sp" />
+
+        <View
+            android:id="@+id/separator3"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="5dp"
+            android:background="@color/light_grey" />
         <Button
             android:id="@+id/summary_team_leader_dos"
             android:layout_width="match_parent"
@@ -50,7 +68,7 @@
             android:textSize="20sp" />
 
         <View
-            android:id="@+id/separator3"
+            android:id="@+id/separator4"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="5dp"
@@ -69,7 +87,7 @@
             android:textSize="20sp" />
 
         <View
-            android:id="@+id/separator4"
+            android:id="@+id/separator5"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="5dp"
@@ -88,7 +106,7 @@
             android:textSize="20sp" />
 
         <View
-            android:id="@+id/separator5"
+            android:id="@+id/separator6"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="5dp"
@@ -107,7 +125,7 @@
             android:textSize="20sp" />
 
         <View
-            android:id="@+id/separator6"
+            android:id="@+id/separator7"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="5dp"
@@ -126,7 +144,7 @@
             android:textSize="20sp" />
 
         <View
-            android:id="@+id/separator7"
+            android:id="@+id/separator8"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="5dp"
@@ -140,6 +158,25 @@
             android:gravity="center_horizontal"
             android:padding="5dp"
             android:text="@string/verification_form"
+            android:textAllCaps="false"
+            android:textColor="@color/text_black"
+            android:textSize="20sp" />
+
+        <View
+            android:id="@+id/separator9"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="5dp"
+            android:background="@color/light_grey" />
+
+        <Button
+            android:id="@+id/hfw_level_referral"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/white"
+            android:gravity="center_horizontal"
+            android:padding="5dp"
+            android:text="@string/hfw_level_referral"
             android:textAllCaps="false"
             android:textColor="@color/text_black"
             android:textSize="20sp" />

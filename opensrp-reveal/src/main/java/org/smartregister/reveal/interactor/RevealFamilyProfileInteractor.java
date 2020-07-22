@@ -5,6 +5,8 @@ import androidx.annotation.NonNull;
 
 import net.sqlcipher.database.SQLiteDatabase;
 
+import org.joda.time.DateTime;
+import org.joda.time.Years;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.smartregister.CoreLibrary;
@@ -24,6 +26,7 @@ import org.smartregister.reveal.application.RevealApplication;
 import org.smartregister.reveal.contract.FamilyProfileContract;
 import org.smartregister.reveal.sync.RevealClientProcessor;
 import org.smartregister.reveal.util.AppExecutors;
+import org.smartregister.reveal.util.Constants;
 import org.smartregister.reveal.util.FamilyJsonFormUtils;
 import org.smartregister.reveal.util.InteractorUtils;
 import org.smartregister.reveal.util.TaskUtils;
@@ -31,6 +34,7 @@ import org.smartregister.reveal.util.Utils;
 import org.smartregister.sync.ClientProcessorForJava;
 import org.smartregister.util.JsonFormUtils;
 
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -75,12 +79,15 @@ public class RevealFamilyProfileInteractor extends FamilyProfileInteractor imple
     }
 
     @Override
-    public void generateTasks(Context applicationContext, String baseEntityId, String structureId) {
+    public void generateTasks(Context applicationContext, String baseEntityId, String structureId, Date birthDate) {
         appExecutors.diskIO().execute(() -> {
             if (Utils.isFocusInvestigation())
                 taskUtils.generateBloodScreeningTask(applicationContext, baseEntityId, structureId);
-            else if (Utils.isMDA())
-                taskUtils.generateMDADispenseTask(applicationContext, baseEntityId, structureId);
+            else if (Utils.isMDA()) {
+                int age = Years.yearsBetween(new DateTime(birthDate.getTime()), DateTime.now()).getYears();
+                if (age < Constants.MDA_MIN_AGE)
+                    taskUtils.generateMDADispenseTask(applicationContext, baseEntityId, structureId);
+            }
             appExecutors.mainThread().execute(() -> {
                 presenter.onTasksGenerated();
             });

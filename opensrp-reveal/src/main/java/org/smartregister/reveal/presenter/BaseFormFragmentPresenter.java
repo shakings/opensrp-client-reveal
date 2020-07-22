@@ -42,6 +42,7 @@ import static org.smartregister.reveal.util.Constants.DateFormat.EVENT_DATE_FORM
 import static org.smartregister.reveal.util.Constants.Intervention.BEDNET_DISTRIBUTION;
 import static org.smartregister.reveal.util.Constants.Intervention.BLOOD_SCREENING;
 import static org.smartregister.reveal.util.Constants.Intervention.CASE_CONFIRMATION;
+import static org.smartregister.reveal.util.Constants.Intervention.DRUG_RECON;
 import static org.smartregister.reveal.util.Constants.Intervention.IRS;
 import static org.smartregister.reveal.util.Constants.Intervention.LARVAL_DIPPING;
 import static org.smartregister.reveal.util.Constants.Intervention.MDA_ADHERENCE;
@@ -107,7 +108,7 @@ public class BaseFormFragmentPresenter extends BaseLocationListener implements B
 
     @Override
     public void onLocationValidated() {
-        if (!Intervention.REGISTER_FAMILY.equals(getTaskDetails().getTaskCode())) {
+        if (!Intervention.REGISTER_FAMILY.equals(getTaskDetails().getTaskCode()) || DRUG_RECON.equals(getTaskDetails().getTaskCode())) {
             String formName = getView().getJsonFormUtils().getFormName(null, taskDetails.getTaskCode());
             if (StringUtils.isBlank(formName)) {
                 getView().displayError(R.string.opening_form_title, R.string.form_not_found);
@@ -212,7 +213,7 @@ public class BaseFormFragmentPresenter extends BaseLocationListener implements B
         this.structure = structure;
         this.taskDetails = details;
         if (IRS.equals(details.getTaskCode()) || MOSQUITO_COLLECTION.equals(details.getTaskCode()) ||
-                LARVAL_DIPPING.equals(details.getTaskCode()) || REGISTER_FAMILY.equals(details.getTaskCode()) ||
+                LARVAL_DIPPING.equals(details.getTaskCode())  || REGISTER_FAMILY.equals(details.getTaskCode()) ||
                 BEDNET_DISTRIBUTION.equals(details.getTaskCode()) || CASE_CONFIRMATION.equals(details.getTaskCode()) ||
                 BLOOD_SCREENING.equals(details.getTaskCode())) {
             if (validateFarStructures()) {

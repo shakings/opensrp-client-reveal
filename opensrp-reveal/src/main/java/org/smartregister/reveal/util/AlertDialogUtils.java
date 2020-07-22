@@ -24,6 +24,16 @@ public class AlertDialogUtils {
         return new AlertDialog.Builder(context).setMessage(message).setTitle(R.string.fetch_structures_title).setPositiveButton(R.string.ok, null).show();
     }
 
+    public static AlertDialog displayElgNotificationWithCallback(Context context, int title, int message, int positiveBtnTitle, DialogInterface.OnClickListener onClickListener, Object... formatArgs) {
+        AlertDialog alert;
+        if (formatArgs.length == 0)
+            alert = new AlertDialog.Builder(context).setMessage(message).setTitle(title).setPositiveButton(positiveBtnTitle, onClickListener).show();
+        else
+            alert = new AlertDialog.Builder(context).setMessage(context.getString(message, formatArgs)).setTitle(title).setPositiveButton(positiveBtnTitle, onClickListener).show();
+
+        return alert;
+    }
+
     public static AlertDialog displayNotificationWithCallback(Context context, int title, int message, int positiveBtnTitle, int negativeBtnTitle, DialogInterface.OnClickListener onClickListener, Object... formatArgs) {
         AlertDialog alert;
 

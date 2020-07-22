@@ -33,6 +33,7 @@ import timber.log.Timber;
 
 import static org.smartregister.domain.Task.INACTIVE_TASK_STATUS;
 import static org.smartregister.domain.Task.TaskStatus.COMPLETED;
+import static org.smartregister.family.util.DBConstants.KEY.DOB;
 import static org.smartregister.family.util.DBConstants.KEY.FIRST_NAME;
 import static org.smartregister.family.util.DBConstants.KEY.RELATIONAL_ID;
 import static org.smartregister.repository.EventClientRepository.Table.event;
@@ -67,6 +68,7 @@ import static org.smartregister.reveal.util.Constants.Intervention.BCC;
 import static org.smartregister.reveal.util.Constants.Intervention.BEDNET_DISTRIBUTION;
 import static org.smartregister.reveal.util.Constants.Intervention.CASE_CONFIRMATION;
 import static org.smartregister.reveal.util.Constants.Properties.FAMILY_MEMBER_NAMES;
+import static org.smartregister.reveal.util.FamilyConstants.DatabaseKeys.AGE;
 import static org.smartregister.reveal.util.FamilyConstants.DatabaseKeys.HOUSE_NUMBER;
 import static org.smartregister.reveal.util.FamilyConstants.TABLE_NAME.FAMILY;
 import static org.smartregister.reveal.util.FamilyConstants.TABLE_NAME.FAMILY_MEMBER;
@@ -159,6 +161,11 @@ public class TaskRegisterFragmentInteractor extends BaseInteractor implements Ta
                 TASK_TABLE, GROUPID, PLAN_ID, STATUS,
                 TextUtils.join(",", Collections.nCopies(INACTIVE_TASK_STATUS.length, "?")),
                 CODE);
+    }
+
+    private String dobCalc() {
+        return String.format("select %s from %s where %s < 4",
+                DOB, FAMILY_MEMBER, BASE_ENTITY_ID);
     }
 
 

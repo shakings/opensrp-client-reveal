@@ -177,7 +177,7 @@
     <string name="edit_member_form_title">Edit Family Member</string>
 
     <string name="view_tasks">View \nTasks</string>
-    <string name="tasks_complete">Tasks Complete</string>
+    <string name="tasks_complete">All Tasks Complete</string>
     <string name="opensrp_url" translatable="false">@string/opensrp_base_url</string>
 
     <string name="classification_details">Classification Details</string>
@@ -253,6 +253,9 @@
     <string name="dispense_mda">Dispense MDA</string>
     <string name="adhere_mda">Adhere MDA</string>
 
+    <string name="child_smc">Child SMC</string>
+    <string name="spaq_redose">SPAQ Redose</string>
+
     <string name="irs_verification">IRS Verification</string>
     <string name="not_true_structure">Not True Structure</string>
     <string name="structure_ineligible">Structure Ineligible</string>
@@ -324,8 +327,9 @@
     <string name="blood_screening">Blood Screening</string>
     <string name="case_confirmation">Case Confirmation</string>
     <string name="paot">PAOT</string>
-    <string name="mda_dispense">MDA Dispense</string>
-    <string name="mda_adherence">MDA Adherence</string>
+    <string name="mda_dispense">SMC SPAQ Redose</string>
+    <string name="mda_adherence">Child SMC</string>
+    <string name="drug_recon">Drug Recon</string>
 
 
     <!-- form -->
@@ -352,4 +356,26 @@
     <string name="not_tested">Not Tested</string>
     <string name="yes">Yes</string>
     <string name="progressBarLabel">Syncing %s : %d%% </string>
+
+    <string name="smc_label">SMC</string>
+    <string name="eligibility_compound">Eligibility Compound</string>
+    <string name="eligibility_compound_yes">Proceed</string>
+    <string name="elgibility_compound_no">Cancel</string>
+    <string name="eligibility_compound_return">Return</string>
+    <string name="daily_summary_morning">Enter HF-level Drug Morning Form</string>
+    <string name="daily_summary_evening">Enter HF-level Drug Evening Form</string>
+    <string name="hfw_level_referral">Enter HFW-Referral Form</string>
+    <string name="eligibility_compound_reg">PROCEED</string>
+    <string name="drug_reconciliation">Drug Reconciliation</string>
+    <string name="drug_recon_complete">Drug Recon Complete</string>
+    <string name="smc_complete">SMC Complete</string>
+    <string name="redose_complete">Redose Complete</string>
+    <string name="mda_dispense_incomplete">SMC Incomplete</string>
+    <string name="mda_dispense_ineligible">Ineligible</string>
+    <string name="family_registered">Family \n Registered</string>
+    <string name="non_received">Non Received</string>
+    <string name="task_incomplete">Tasks Incomplete</string>
+    <string name="child_registered">Eligible Child \n Registered</string>
+    <string name="smc_incomplete">SMC \n Incomplete</string>
+    <string name="no_drugs_received">Incomplete</string>
 </resources>

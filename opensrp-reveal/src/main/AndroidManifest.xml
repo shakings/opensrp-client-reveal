@@ -105,9 +105,15 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 
+
         <activity
             android:name="org.smartregister.view.activity.DynamicJsonFormActivity"
             android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+
+        <activity android:name=".view.EligibilityCompoundActivity"
+            android:launchMode="singleTask"
+            android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait" />
 
         <service android:name=".sync.LocationTaskIntentService" />

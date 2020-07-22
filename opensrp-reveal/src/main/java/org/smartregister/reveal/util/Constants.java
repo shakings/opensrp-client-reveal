@@ -21,6 +21,8 @@ public interface Constants {
 
     String REGISTER_STRUCTURE_EVENT = "Register_Structure";
 
+    String REGISTER_ELIGIBILITY_COMPOUND_EVENT = "Register_eligibility_compound";
+
     String MOSQUITO_COLLECTION_EVENT = "mosquito_collection";
 
     String LARVAL_DIPPING_EVENT = "larval_dipping";
@@ -61,6 +63,8 @@ public interface Constants {
     String COPYDBNAME = "reveal";
 
     String DG_ID_PLACEHOLDER = "DIGITAL_GLOBE_ID";
+
+    int MDA_MIN_AGE = 5;
 
     interface CONFIGURATION {
         String LOGIN = "login";
@@ -124,6 +128,8 @@ public interface Constants {
         String PROVINCE = "Province";
         String REGION = "Region";
         String DISTRICT = "District";
+        String STATE = "State";
+        String LGA = "Lga";
         String SUB_DISTRICT = "Sub-district";
         String HEALTH_CENTER = "Rural Health Centre";
         String CANTON = "Canton";
@@ -176,13 +182,17 @@ public interface Constants {
 
         String REGISTER_FAMILY = "RACD Register Family";
 
+        String ELIGIBILITY_COMPOUND = "Eligibility Compound";
+
         String FI = "FI";
 
         String PAOT = "PAOT";
 
-        String MDA_DISPENSE = "MDA Dispense";
+        String MDA_DISPENSE = "SMC Child Dispense";
 
-        String MDA_ADHERENCE = "MDA Adherence";
+        String MDA_ADHERENCE = "SMC SPAQ Redose";
+
+        String DRUG_RECON = "SMC Drug Reconciliation";
 
         String MDA = "MDA";
 
@@ -196,7 +206,7 @@ public interface Constants {
                 LARVAL_DIPPING, BCC, BEDNET_DISTRIBUTION, BLOOD_SCREENING, CASE_CONFIRMATION,
                 REGISTER_FAMILY, PAOT);
 
-        List<String> MDA_INTERVENTIONS = Arrays.asList(REGISTER_FAMILY, MDA_ADHERENCE, MDA_DISPENSE);
+        List<String> MDA_INTERVENTIONS = Arrays.asList(REGISTER_FAMILY, DRUG_RECON, BEDNET_DISTRIBUTION, ELIGIBILITY_COMPOUND, MDA_ADHERENCE, MDA_DISPENSE);
 
         List<String> TASK_RESET_INTERVENTIONS = Arrays.asList(MOSQUITO_COLLECTION,
                 LARVAL_DIPPING, BCC, CASE_CONFIRMATION,
@@ -218,6 +228,8 @@ public interface Constants {
         String MDA_ADHERENCE = "mda_adherence";
 
         String IRS_VERIFICATION = "irs_verification";
+
+        String DRUG_RECON = "drug_recon";
     }
 
     interface Tables {
@@ -237,10 +249,15 @@ public interface Constants {
         String SPRAYED = "Sprayed";
         String NOT_SPRAYABLE = "Not Sprayable";
         String COMPLETE = "Complete";
+        String NIGERIA_COMPLETE = "Complete";
+        String SMC_COMPLETE = "Smc Complete";
         String INCOMPLETE = "Incomplete";
         String NOT_ELIGIBLE = "Not Eligible";
         String IN_PROGRESS = "In Progress";
-
+        String REDOSE_COMPLETE = "Redose Complete";
+        String DRUG_RECON_COMPLETE = "Drug Recon Complete";
+        String SMC_DISPENSE_INCOMPLETE = "Smc Incomplete";
+//        String SMC_DISPENSE_INELIGIBLE = "Ineligible";
 
         //MDA status
         String FULLY_RECEIVED = "Fully Received";
@@ -261,13 +278,13 @@ public interface Constants {
         List<String> FI_BUSINESS_STATUS = Arrays.asList(NOT_VISITED, FAMILY_REGISTERED, BEDNET_DISTRIBUTED,
                 BLOOD_SCREENING_COMPLETE, COMPLETE, NOT_ELIGIBLE);
 
-        List<String> MDA_BUSINESS_STATUS = Arrays.asList(NOT_VISITED, FULLY_RECEIVED, NONE_RECEIVED,
-                ADHERENCE_VISIT_DONE, PARTIALLY_RECEIVED, COMPLETE, NOT_ELIGIBLE);
+        List<String> MDA_BUSINESS_STATUS = Arrays.asList(NOT_VISITED, NIGERIA_COMPLETE, FULLY_RECEIVED, NONE_RECEIVED,
+                ADHERENCE_VISIT_DONE, PARTIALLY_RECEIVED, COMPLETE, REDOSE_COMPLETE, SMC_DISPENSE_INCOMPLETE, DRUG_RECON_COMPLETE, SMC_COMPLETE, NOT_ELIGIBLE);
     }
 
     interface BusinessStatusWrapper {
 
-        List<String> SPRAYED = Arrays.asList(BusinessStatus.SPRAYED, BusinessStatus.COMPLETE, BusinessStatus.PARTIALLY_SPRAYED);
+        List<String> SPRAYED = Arrays.asList(BusinessStatus.SPRAYED, BusinessStatus.COMPLETE, BusinessStatus.SMC_COMPLETE, BusinessStatus.PARTIALLY_SPRAYED);
         List<String> NOT_SPRAYED = Arrays.asList(BusinessStatus.NOT_SPRAYED, BusinessStatus.IN_PROGRESS, BusinessStatus.INCOMPLETE);
         List<String> NOT_ELIGIBLE = Arrays.asList(BusinessStatus.NOT_SPRAYABLE, BusinessStatus.NOT_ELIGIBLE);
         List<String> NOT_VISITED = Arrays.asList(BusinessStatus.NOT_VISITED);
@@ -290,6 +307,8 @@ public interface Constants {
         String TRAP_SET_DATE = "trap_start";
 
         String TRAP_FOLLOW_UP_DATE = "trap_end";
+
+        public static final String PERFORM_FORM_TRANSLATION = "perform_form_translation";
 
         String BUSINESS_STATUS = "business_status";
 
@@ -371,6 +390,18 @@ public interface Constants {
 
         String JSON_FORM_FOLDER = "json.form/";
 
+        /**
+         * NIGERIA
+         *
+         */
+        String NIGERIA_ELIGIBILITY_COMPOUND = "json.form/nigeria_eligibility_compound.json";
+
+        String NIGERIA_CHILD_SMC_FORM = "json.form/nigeria_child_smc_form.json";
+
+        String NIGERIA_SECOND_DOSE_OF_SPAQ = "json.form/nigeria_second_dose_of_spaq.json";
+
+        String NIGERIA_STRUCTURE_LEVEL_DRUG_RECON = "json.form/nigeria_structure_level_drug.json";
+
 
         String OPERATIONAL_AREA_TAG = "operational_area";
 
@@ -400,6 +431,8 @@ public interface Constants {
 
         String SELECTED_OPERATIONAL_AREA_NAME = "selectedOpAreaName";
 
+        String SELECTED_COMPOUND_ELIGIBILITY_NAME = "selectedCompoundName";
+
         String NAMIBIA_ADD_STRUCTURE_FORM = "json.form/namibia_add_structure.json";
 
         String HOUSEHOLD_ACCESSIBLE = "householdAccessible";
@@ -412,6 +445,16 @@ public interface Constants {
         /**
          * Non-Task Related Forms
          */
+
+        /**
+         * NIGERIA
+         */
+        String DAILY_SUMMARY_MORNING = "json.form/nigeria_daily_summary_morning.json";
+
+        String DAILY_SUMMARY_EVENING = "json.form/nigeria_daily_summary_evening.json";
+
+        String HFW_LEVEL_REFERRAL = "json.form/nigeria_hfw_level_referral.json";
+
         String DAILY_SUMMARY_ZAMBIA = "json.form/zambia_daily_summary.json";
 
         String TEAM_LEADER_DOS_ZAMBIA = "json.form/zambia_team_leader_dos.json";
@@ -471,6 +514,7 @@ public interface Constants {
         String BOTSWANA_EC_CLIENT_FIELDS = "ec_client_fields_botswana.json";
         String ZAMBIA_EC_CLIENT_FIELDS = "ec_client_fields_zambia.json";
         String REFAPP_EC_CLIENT_FIELDS = "ec_client_fields_refapp.json";
+        String NIGERIA_EC_CLIENT_FIELDS = "ec_client_fields.json";
     }
 
 

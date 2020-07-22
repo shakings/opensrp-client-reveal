@@ -327,7 +327,7 @@ public class ListTasksActivity extends BaseMapActivity implements ListTaskContra
 
                         RevealMapHelper.addBaseLayers(kujakuMapView, style, ListTasksActivity.this);
 
-                        if (getBuildCountry() != Country.ZAMBIA) {
+                        if (getBuildCountry() != Country.ZAMBIA || getBuildCountry() != Country.NIGERIA) {
                             layerSwitcherFab.setVisibility(View.GONE);
                         }
 
@@ -394,7 +394,7 @@ public class ListTasksActivity extends BaseMapActivity implements ListTaskContra
 
     public void positionMyLocationAndLayerSwitcher() {
         FrameLayout.LayoutParams myLocationButtonParams = (FrameLayout.LayoutParams) myLocationButton.getLayoutParams();
-        if (getBuildCountry() != Country.ZAMBIA) {
+        if (getBuildCountry() != Country.ZAMBIA || getBuildCountry() != Country.NIGERIA) {
             positionMyLocationAndLayerSwitcher(myLocationButtonParams, myLocationButtonParams.topMargin);
         } else {
             int progressHeight = getResources().getDimensionPixelSize(R.dimen.progress_height);
@@ -554,6 +554,21 @@ public class ListTasksActivity extends BaseMapActivity implements ListTaskContra
             intent.putExtra(Properties.STRUCTURE_NAME, feature.getStringProperty(Properties.STRUCTURE_NAME));
         startActivity(intent);
 
+    }
+
+    @Override
+    public void eligibilityCompound() {
+        clearSelectedFeature();
+        Intent intent = new Intent(this, EligibilityCompoundActivity.class);
+        intent.putExtra(START_REGISTRATION, true);
+        Feature feature = listTaskPresenter.getSelectedFeature();
+        intent.putExtra(Properties.LOCATION_UUID, feature.id());
+        intent.putExtra(Properties.TASK_IDENTIFIER, feature.getStringProperty(Properties.TASK_IDENTIFIER));
+        intent.putExtra(Properties.TASK_BUSINESS_STATUS, feature.getStringProperty(Properties.TASK_BUSINESS_STATUS));
+        intent.putExtra(Properties.TASK_STATUS, feature.getStringProperty(Properties.TASK_STATUS));
+        if (feature.hasProperty(Properties.STRUCTURE_NAME))
+            intent.putExtra(Properties.STRUCTURE_NAME, feature.getStringProperty(Properties.STRUCTURE_NAME));
+        startActivity(intent);
     }
 
     @Override
