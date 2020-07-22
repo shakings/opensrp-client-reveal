@@ -17,7 +17,7 @@
     <color name="unsprayable">#000000</color>
     <color name="sprayed">#6CBF0F</color>
     <color name="unsprayed">#EE0427</color>
-    <color name="partially_sprayed">#ED8231</color>
+    <color name="partially_sprayed">#6CBF0F</color>
 
     <color name="toolbar_background">#007CD7</color>
     <color name="sort_bar_grey">#E5E5E5</color>
@@ -48,6 +48,8 @@
     <color name="task_filter_gray">#8B8B8B</color>
 
     <color name="distance_scale_text">@color/white</color>
+    <color name="background_alert_red">#FFBDBD</color>
+    <color name="background_alert_green">#B3EDC3</color>
 
 
 </resources>

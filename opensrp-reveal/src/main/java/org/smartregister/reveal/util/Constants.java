@@ -154,6 +154,7 @@ public interface Constants {
         String FORM_VERSION = "form_version";
         String TASK_CODE_LIST = "task_code_list";
         String FAMILY_MEMBER_NAMES = "family_member_names";
+        String PLAN_IDENTIFIER = "planIdentifier";
     }
 
 
@@ -236,6 +237,10 @@ public interface Constants {
         String LARVAL_DIPPINGS_TABLE = "larval_dippings";
         String PAOT_TABLE = "potential_area_of_transmission";
         String IRS_VERIFICATION_TABLE = "irs_verification";
+        String CLIENT_TABLE = "client";
+        String EVENT_TABLE = "event";
+        String TASK_TABLE = "task";
+        String STRUCTURE_TABLE = "structure";
     }
 
     interface BusinessStatus {
@@ -383,6 +388,8 @@ public interface Constants {
 
         String REFAPP_CASE_CONFIRMATION_FORM = "json.form/refapp_case_confirmation.json";
 
+        String JSON_FORM_FOLDER = "json.form/";
+
         /**
          * NIGERIA
          *
@@ -394,6 +401,7 @@ public interface Constants {
         String NIGERIA_SECOND_DOSE_OF_SPAQ = "json.form/nigeria_second_dose_of_spaq.json";
 
         String NIGERIA_STRUCTURE_LEVEL_DRUG_RECON = "json.form/nigeria_structure_level_drug.json";
+
 
         String OPERATIONAL_AREA_TAG = "operational_area";
 
@@ -619,6 +627,10 @@ public interface Constants {
 
         String SYNC_STATUS = "syncStatus";
 
+        String TASK_SYNC_STATUS = "sync_Status";
+
+        String STRUCTURE_SYNC_STATUS = "sync_Status";
+
         String VALIDATION_STATUS = "validationStatus";
 
         String AUTHORED_ON = "authored_on";
@@ -639,13 +651,6 @@ public interface Constants {
 
         String PERSON_TESTED = "person_tested";
 
-    }
-
-    interface PlanDefinitionStatus {
-        String DRAFT = "draft";
-        String ACTIVE = "active";
-        String COMPLETE = "complete";
-        String RETIRED = "retired";
     }
 
     interface UseContextCode {

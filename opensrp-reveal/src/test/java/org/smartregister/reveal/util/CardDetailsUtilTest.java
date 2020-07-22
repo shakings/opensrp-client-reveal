@@ -2,7 +2,7 @@ package org.smartregister.reveal.util;
 
 import android.app.Activity;
 import android.content.res.Resources;
-import android.support.v7.widget.CardView;
+import androidx.cardview.widget.CardView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ScrollView;
@@ -100,8 +100,8 @@ public class CardDetailsUtilTest extends BaseUnitTest {
     public void testFormatCardDetailsPartiallySprayedShouldSetCorrectStatusAndColor() {
         CardDetails cardDetails = new CardDetails(PARTIALLY_SPRAYED);
         formatCardDetails(cardDetails);
-        assertEquals(cardDetails.getStatusColor().intValue(), R.color.partially_sprayed);
-        assertEquals(cardDetails.getStatusMessage(), R.string.partially_sprayed);
+        assertEquals(cardDetails.getStatusColor().intValue(), R.color.sprayed);
+        assertEquals(cardDetails.getStatusMessage(), R.string.details_sprayed);
     }
 
     @Test

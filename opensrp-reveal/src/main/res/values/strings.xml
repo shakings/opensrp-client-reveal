@@ -73,6 +73,7 @@
     <string name="reveal_icon">Reveal Icon</string>
 
     <string name="attribution_text">Powered by OpenSRP \nBuilt on mSpray and DiSARM</string>
+    <string name="thailand_attribution_text">Powered by Reveal</string>
 
     <string name="request_password_title">You are not near the structure</string>
     <string name="enter_admin_password"> Input admin password</string>
@@ -354,6 +355,8 @@
     <string name="tested">Tested</string>
     <string name="not_tested">Not Tested</string>
     <string name="yes">Yes</string>
+    <string name="progressBarLabel">Syncing %s : %d%% </string>
+
     <string name="smc_label">SMC</string>
     <string name="eligibility_compound">Eligibility Compound</string>
     <string name="eligibility_compound_yes">Proceed</string>

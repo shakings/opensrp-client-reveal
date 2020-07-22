@@ -1,8 +1,8 @@
 package org.smartregister.reveal.contract;
 
 import android.app.Activity;
-import android.support.annotation.StringRes;
-import android.support.v4.util.Pair;
+import androidx.annotation.StringRes;
+import androidx.core.util.Pair;
 
 import org.smartregister.domain.PlanDefinition;
 
@@ -58,6 +58,10 @@ public interface BaseDrawerContract {
         void onResume();
 
         void openOfflineMapsView();
+
+        void checkSynced();
+
+        void toggleProgressBarView(boolean syncing);
     }
 
     interface Presenter {
@@ -87,6 +91,8 @@ public interface BaseDrawerContract {
         boolean isPlanAndOperationalAreaSelected();
 
         void onPlanValidated(boolean isValid);
+
+        void updateSyncStatusDisplay(boolean synced);
     }
 
     interface Interactor {
@@ -94,5 +100,7 @@ public interface BaseDrawerContract {
         void fetchPlans(String jurisdictionName);
 
         void validateCurrentPlan(String selectedOperationalArea, String currentPlanId);
+
+        void checkSynced();
     }
 }

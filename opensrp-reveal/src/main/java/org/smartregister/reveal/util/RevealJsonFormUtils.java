@@ -3,10 +3,12 @@ package org.smartregister.reveal.util;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v4.util.Pair;
+
+import androidx.core.util.Pair;
 
 import com.mapbox.geojson.Feature;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
+import com.vijay.jsonwizard.utils.FormUtils;
 
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
@@ -14,9 +16,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.smartregister.commonregistry.CommonPersonObject;
+import org.smartregister.domain.Event;
 import org.smartregister.domain.Location;
-import org.smartregister.domain.db.Event;
-import org.smartregister.domain.db.Obs;
+import org.smartregister.domain.Obs;
 import org.smartregister.family.util.DBConstants;
 import org.smartregister.reveal.BuildConfig;
 import org.smartregister.reveal.activity.RevealJsonFormActivity;
@@ -27,7 +29,6 @@ import org.smartregister.reveal.util.Constants.CONFIGURATION;
 import org.smartregister.reveal.util.Constants.Intervention;
 import org.smartregister.reveal.util.Constants.JsonForm;
 import org.smartregister.reveal.util.Constants.Properties;
-import org.smartregister.util.AssetHandler;
 import org.smartregister.util.JsonFormUtils;
 
 import java.util.Arrays;
@@ -46,6 +47,7 @@ import static com.vijay.jsonwizard.constants.JsonFormConstants.KEYS;
 import static com.vijay.jsonwizard.constants.JsonFormConstants.TYPE;
 import static com.vijay.jsonwizard.constants.JsonFormConstants.VALUE;
 import static com.vijay.jsonwizard.constants.JsonFormConstants.VALUES;
+import static org.smartregister.AllConstants.JSON_FILE_EXTENSION;
 import static org.smartregister.AllConstants.OPTIONS;
 import static org.smartregister.AllConstants.TEXT;
 import static org.smartregister.reveal.util.Constants.BEDNET_DISTRIBUTION_EVENT;
@@ -56,6 +58,7 @@ import static org.smartregister.reveal.util.Constants.ENTITY_ID;
 import static org.smartregister.reveal.util.Constants.EventType.CASE_CONFIRMATION_EVENT;
 import static org.smartregister.reveal.util.Constants.EventType.IRS_VERIFICATION;
 import static org.smartregister.reveal.util.Constants.JSON_FORM_PARAM_JSON;
+import static org.smartregister.reveal.util.Constants.JsonForm.JSON_FORM_FOLDER;
 import static org.smartregister.reveal.util.Constants.LARVAL_DIPPING_EVENT;
 import static org.smartregister.reveal.util.Constants.MOSQUITO_COLLECTION_EVENT;
 import static org.smartregister.reveal.util.Constants.REGISTER_STRUCTURE_EVENT;
@@ -148,22 +151,34 @@ public class RevealJsonFormUtils {
     }
 
     public String getFormString(Context context, String formName, String structureType) {
-        String formString = AssetHandler.readFileFromAssetsFolder(formName, context);
-        if ((JsonForm.SPRAY_FORM.equals(formName) || JsonForm.SPRAY_FORM_BOTSWANA.equals(formName)
-                || JsonForm.SPRAY_FORM_NAMIBIA.equals(formName))) {
-            String structType = structureType;
-            if (StringUtils.isBlank(structureType)) {
-                structType = Constants.StructureType.NON_RESIDENTIAL;
+        String formString = null;
+        try {
+            FormUtils formUtils = new FormUtils();
+            String formattedFormName = formName.replace(JSON_FORM_FOLDER, "").replace(JSON_FILE_EXTENSION, "");
+            JSONObject formStringObj = formUtils.getFormJsonFromRepositoryOrAssets(context, formattedFormName);
+            if (formStringObj == null) {
+                return null;
             }
-            formString = formString.replace(JsonForm.STRUCTURE_PROPERTIES_TYPE, structType);
+            formString = formStringObj.toString();
+            if ((JsonForm.SPRAY_FORM.equals(formName) || JsonForm.SPRAY_FORM_BOTSWANA.equals(formName)
+                    || JsonForm.SPRAY_FORM_NAMIBIA.equals(formName))) {
+                String structType = structureType;
+                if (StringUtils.isBlank(structureType)) {
+                    structType = Constants.StructureType.NON_RESIDENTIAL;
+                }
+                formString = formString.replace(JsonForm.STRUCTURE_PROPERTIES_TYPE, structType);
+            }
+
+        } catch (Exception e) {
+            Timber.e(e);
         }
         return formString;
     }
 
 
     public JSONObject populateFormDetails(String formString, String entityId, String structureId, String taskIdentifier,
-                                           String taskBusinessStatus, String taskStatus, String structureUUID,
-                                           Integer structureVersion) throws JSONException {
+                                          String taskBusinessStatus, String taskStatus, String structureUUID,
+                                          Integer structureVersion) throws JSONException {
 
         JSONObject formJson = new JSONObject(formString);
         formJson.put(ENTITY_ID, entityId);
@@ -176,6 +191,8 @@ public class RevealJsonFormUtils {
         formData.put(Properties.LOCATION_VERSION, structureVersion);
         formData.put(Properties.APP_VERSION_NAME, BuildConfig.VERSION_NAME);
         formData.put(Properties.FORM_VERSION, formJson.optString("form_version"));
+        String planIdentifier = PreferencesUtil.getInstance().getCurrentPlanId();
+        formData.put(Properties.PLAN_IDENTIFIER, planIdentifier);
         formJson.put(DETAILS, formData);
         return formJson;
     }
@@ -440,8 +457,8 @@ public class RevealJsonFormUtils {
         return null;
     }
 
-    public static org.smartregister.clientandeventmodel.Event createTaskEvent(String baseEntityId, String locationId, Map<String, String> details, String  eventType, String entityType) {
-        org.smartregister.clientandeventmodel.Event taskEvent = (org.smartregister.clientandeventmodel.Event) new org.smartregister.clientandeventmodel.Event().withBaseEntityId(baseEntityId).withEventDate(new Date()). withEventType(eventType)
+    public static org.smartregister.clientandeventmodel.Event createTaskEvent(String baseEntityId, String locationId, Map<String, String> details, String eventType, String entityType) {
+        org.smartregister.clientandeventmodel.Event taskEvent = (org.smartregister.clientandeventmodel.Event) new org.smartregister.clientandeventmodel.Event().withBaseEntityId(baseEntityId).withEventDate(new Date()).withEventType(eventType)
                 .withLocationId(locationId).withEntityType(entityType).withFormSubmissionId(UUID.randomUUID().toString()).withDateCreated(new Date());
         return taskEvent;
     }

@@ -4,15 +4,16 @@ import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.support.annotation.NonNull;
-import android.support.constraint.ConstraintLayout;
-import android.support.design.widget.NavigationView;
-import android.support.v4.util.Pair;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
+import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import com.google.android.material.navigation.NavigationView;
+import androidx.core.util.Pair;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +27,7 @@ import org.smartregister.reveal.BuildConfig;
 import org.smartregister.reveal.R;
 import org.smartregister.reveal.application.RevealApplication;
 import org.smartregister.reveal.contract.BaseDrawerContract;
+import org.smartregister.reveal.interactor.BaseDrawerInteractor;
 import org.smartregister.reveal.presenter.BaseDrawerPresenter;
 import org.smartregister.reveal.util.AlertDialogUtils;
 import org.smartregister.reveal.util.Constants.Tags;
@@ -62,9 +64,12 @@ public class DrawerMenuView implements View.OnClickListener, BaseDrawerContract.
 
     private BaseDrawerContract.DrawerActivity activity;
 
+    private BaseDrawerContract.Interactor interactor;
+
     public DrawerMenuView(BaseDrawerContract.DrawerActivity activity) {
         this.activity = activity;
         presenter = new BaseDrawerPresenter(this, activity);
+        interactor = new BaseDrawerInteractor(presenter);
     }
 
     @Override
@@ -121,9 +126,12 @@ public class DrawerMenuView implements View.OnClickListener, BaseDrawerContract.
             Timber.e(e);
         }
 
-        String buildDate = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-                .format(new Date(BuildConfig.BUILD_TIMESTAMP));
-        ((TextView) headerView.findViewById(R.id.application_updated)).setText(getContext().getString(R.string.app_updated, buildDate));
+
+        if (BuildConfig.BUILD_COUNTRY != Country.THAILAND && BuildConfig.BUILD_COUNTRY != Country.THAILAND_EN) {
+            String buildDate = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+                    .format(new Date(BuildConfig.BUILD_TIMESTAMP));
+            ((TextView) headerView.findViewById(R.id.application_updated)).setText(getContext().getString(R.string.app_updated, buildDate));
+        }
 
         planTextView = headerView.findViewById(R.id.plan_selector);
         operationalAreaTextView = headerView.findViewById(R.id.operational_area_selector);
@@ -172,6 +180,8 @@ public class DrawerMenuView implements View.OnClickListener, BaseDrawerContract.
                 return false;
             }
         });
+        //Check sync status and Update UI to show sync status
+        checkSynced();
     }
 
     @Override
@@ -311,6 +321,7 @@ public class DrawerMenuView implements View.OnClickListener, BaseDrawerContract.
         else if (v.getId() == R.id.btn_navMenu_offline_maps)
             presenter.onShowOfflineMaps();
         else if (v.getId() == R.id.sync_button) {
+            toggleProgressBarView(true);
             org.smartregister.reveal.util.Utils.startImmediateSync();
             closeDrawerLayout();
         }
@@ -333,6 +344,32 @@ public class DrawerMenuView implements View.OnClickListener, BaseDrawerContract.
     public void openOfflineMapsView() {
         Intent intent = new Intent(getContext(), OfflineMapsActivity.class);
         getContext().startActivity(intent);
+    }
+
+    @Override
+    public void checkSynced() {
+        interactor.checkSynced();
+    }
+
+    @Override
+    public void toggleProgressBarView(boolean syncing) {
+        ProgressBar progressBar = this.activity.getActivity().findViewById(R.id.sync_progress_bar);
+        TextView progressLabel = this.activity.getActivity().findViewById(R.id.sync_progress_bar_label);
+        TextView syncButton = this.activity.getActivity().findViewById(R.id.sync_button);
+        TextView syncBadge = this.activity.getActivity().findViewById(R.id.sync_label);
+
+        if (syncing) {
+            progressBar.setVisibility(View.VISIBLE);
+            progressLabel.setVisibility(View.VISIBLE);
+            syncButton.setVisibility(View.INVISIBLE);
+            syncBadge.setVisibility(View.INVISIBLE);
+        }
+        else {
+            progressBar.setVisibility(View.INVISIBLE);
+            progressLabel.setVisibility(View.INVISIBLE);
+            syncButton.setVisibility(View.VISIBLE);
+            syncBadge.setVisibility(View.VISIBLE);
+        }
     }
 
 
