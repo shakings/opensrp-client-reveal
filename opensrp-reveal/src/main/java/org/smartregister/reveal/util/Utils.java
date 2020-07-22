@@ -65,6 +65,7 @@ import static org.smartregister.reveal.util.Constants.Intervention.LARVAL_DIPPIN
 import static org.smartregister.reveal.util.Constants.Intervention.MDA;
 import static org.smartregister.reveal.util.Constants.Intervention.MOSQUITO_COLLECTION;
 import static org.smartregister.reveal.util.Constants.Intervention.PAOT;
+import static org.smartregister.reveal.util.Constants.Tags.LGA;
 
 public class Utils {
 
@@ -81,6 +82,7 @@ public class Utils {
         ALLOWED_LEVELS.add(Tags.CANTON);
         ALLOWED_LEVELS.add(Tags.VILLAGE);
         ALLOWED_LEVELS.add(REVEAL_PROJECT);
+        ALLOWED_LEVELS.add(LGA);
     }
 
     public static void saveLanguage(String language) {
