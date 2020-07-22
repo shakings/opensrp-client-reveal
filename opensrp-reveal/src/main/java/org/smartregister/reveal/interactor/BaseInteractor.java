@@ -1,6 +1,7 @@
 package org.smartregister.reveal.interactor;
 
 import android.content.Context;
+
 import androidx.annotation.VisibleForTesting;
 
 import com.google.gson.Gson;
@@ -316,59 +317,61 @@ public class BaseInteractor implements BaseContract.BaseInteractor {
                     if (StructureType.RESIDENTIAL.equals(structureType) && Utils.isFocusInvestigationOrMDA()) {
                         task = taskUtils.generateRegisterFamilyTask(applicationContext, structure.getId());
                     } else {
-                        if (StructureType.RESIDENTIAL.equals(structureType)) {
-                            task = taskUtils.generateTask(applicationContext, structure.getId(), structure.getId(),
-                                    BusinessStatus.NOT_VISITED, Intervention.IRS, R.string.irs_task_description);
-                            break;
-                        case StructureType.MOSQUITO_COLLECTION_POINT:
-                            task = taskUtils.generateTask(applicationContext, structure.getId(), structure.getId(),
-                                    BusinessStatus.NOT_VISITED, Intervention.MOSQUITO_COLLECTION, R.string.mosquito_collection_task_description);
-                            break;
-                        case StructureType.LARVAL_BREEDING_SITE:
-                            task = taskUtils.generateTask(applicationContext, structure.getId(), structure.getId(),
-                                    BusinessStatus.NOT_VISITED, Intervention.LARVAL_DIPPING, R.string.larval_dipping_task_description);
-                            break;
-                        case StructureType.POTENTIAL_AREA_OF_TRANSMISSION:
-                            task = taskUtils.generateTask(applicationContext, structure.getId(), structure.getId(),
-                                    BusinessStatus.NOT_VISITED, PAOT, R.string.poat_task_description);
-                            break;
-                    }
-                }
-                clientProcessor.processClient(Collections.singletonList(new EventClient(event, null)), true);
-                Task finalTask = task;
-                appExecutors.mainThread().execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        Map<String, String> taskProperties = new HashMap<>();
-                        if (finalTask != null) {
-
-                            taskProperties.put(Properties.TASK_IDENTIFIER, finalTask.getIdentifier());
-                            taskProperties.put(Properties.TASK_BUSINESS_STATUS, finalTask.getBusinessStatus());
-                            taskProperties.put(Properties.TASK_STATUS, finalTask.getStatus().name());
-                            taskProperties.put(Properties.TASK_CODE, finalTask.getCode());
+                        switch (structureType) {
+                            case StructureType.RESIDENTIAL:
+                                task = taskUtils.generateTask(applicationContext, structure.getId(), structure.getId(),
+                                        BusinessStatus.NOT_VISITED, Intervention.IRS, R.string.irs_task_description);
+                                break;
+                            case StructureType.MOSQUITO_COLLECTION_POINT:
+                                task = taskUtils.generateTask(applicationContext, structure.getId(), structure.getId(),
+                                        BusinessStatus.NOT_VISITED, Intervention.MOSQUITO_COLLECTION, R.string.mosquito_collection_task_description);
+                                break;
+                            case StructureType.LARVAL_BREEDING_SITE:
+                                task = taskUtils.generateTask(applicationContext, structure.getId(), structure.getId(),
+                                        BusinessStatus.NOT_VISITED, Intervention.LARVAL_DIPPING, R.string.larval_dipping_task_description);
+                                break;
+                            case StructureType.POTENTIAL_AREA_OF_TRANSMISSION:
+                                task = taskUtils.generateTask(applicationContext, structure.getId(), structure.getId(),
+                                        BusinessStatus.NOT_VISITED, PAOT, R.string.poat_task_description);
+                                break;
                         }
-                        taskProperties.put(Properties.LOCATION_UUID, structure.getProperties().getUid());
-                        taskProperties.put(Properties.LOCATION_VERSION, structure.getProperties().getVersion() + "");
-                        taskProperties.put(Properties.LOCATION_TYPE, structure.getProperties().getType());
-                        structure.getProperties().setCustomProperties(taskProperties);
+                    }
+                    clientProcessor.processClient(Collections.singletonList(new EventClient(event, null)), true);
+                    Task finalTask = task;
+                    appExecutors.mainThread().execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            Map<String, String> taskProperties = new HashMap<>();
+                            if (finalTask != null) {
+
+                                taskProperties.put(Properties.TASK_IDENTIFIER, finalTask.getIdentifier());
+                                taskProperties.put(Properties.TASK_BUSINESS_STATUS, finalTask.getBusinessStatus());
+                                taskProperties.put(Properties.TASK_STATUS, finalTask.getStatus().name());
+                                taskProperties.put(Properties.TASK_CODE, finalTask.getCode());
+                            }
+                            taskProperties.put(Properties.LOCATION_UUID, structure.getProperties().getUid());
+                            taskProperties.put(Properties.LOCATION_VERSION, structure.getProperties().getVersion() + "");
+                            taskProperties.put(Properties.LOCATION_TYPE, structure.getProperties().getType());
+                            structure.getProperties().setCustomProperties(taskProperties);
 
 
-                        Obs myLocationActiveObs = event.findObs(null, false, LOCATION_COMPONENT_ACTIVE);
+                            Obs myLocationActiveObs = event.findObs(null, false, LOCATION_COMPONENT_ACTIVE);
                             boolean myLocationActive = myLocationActiveObs != null && Boolean.valueOf(myLocationActiveObs.getValue().toString());
                             revealApplication.setMyLocationComponentEnabled(myLocationActive);
 
-                        Obs zoomObs = event.findObs(null, false, GeoWidgetFactory.ZOOM_LEVEL);
-                        double zoomLevel = Double.parseDouble(zoomObs.getValue().toString());
+                            Obs zoomObs = event.findObs(null, false, GeoWidgetFactory.ZOOM_LEVEL);
+                            double zoomLevel = Double.parseDouble(zoomObs.getValue().toString());
 
-                        presenterCallBack.onStructureAdded(Feature.fromJson(gson.toJson(structure)), featureCoordinates, zoomLevel);
-                    }
-                });
-            } catch (JSONException e) {
-                Timber.e(e, "Error saving new Structure");
-                presenterCallBack.onFormSaveFailure(REGISTER_STRUCTURE_EVENT);
+                            presenterCallBack.onStructureAdded(Feature.fromJson(gson.toJson(structure)), featureCoordinates, zoomLevel);
+                        }
+                    });
+                } catch (JSONException e) {
+                    Timber.e(e, "Error saving new Structure");
+                    presenterCallBack.onFormSaveFailure(REGISTER_STRUCTURE_EVENT);
+                }
             }
-        };
 
+        };
         appExecutors.diskIO().execute(runnable);
     }
 

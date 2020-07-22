@@ -58,11 +58,6 @@ public class CardDetailsUtil {
             case BusinessStatus.REDOSE_COMPLETE:
             case BusinessStatus.DRUG_RECON_COMPLETE:
             case BusinessStatus.FULLY_RECEIVED:
-            case PARTIALLY_SPRAYED:
-                cardDetails.setStatusColor(R.color.sprayed);
-                cardDetails.setStatusMessage(R.string.details_sprayed);
-                cardDetails.setReason(null);
-                break;
             case BusinessStatus.NOT_SPRAYABLE:
             case BusinessStatus.NOT_ELIGIBLE:
                 cardDetails.setStatusColor(R.color.unsprayable);
@@ -73,6 +68,7 @@ public class CardDetailsUtil {
             case PARTIALLY_SPRAYED:
                 cardDetails.setStatusColor(R.color.partially_sprayed);
                 cardDetails.setStatusMessage(R.string.partially_sprayed);
+                cardDetails.setReason(null);
                 break;
             default:
                 Timber.w("business status not defined :%s", cardDetails.getStatus());

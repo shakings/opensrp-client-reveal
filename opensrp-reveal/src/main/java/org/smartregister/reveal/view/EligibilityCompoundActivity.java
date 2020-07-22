@@ -1,35 +1,25 @@
 package org.smartregister.reveal.view;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
-import android.support.v7.widget.Toolbar;
+
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.mapbox.geojson.Feature;
-import com.vijay.jsonwizard.activities.JsonFormActivity;
 import com.vijay.jsonwizard.activities.JsonWizardFormActivity;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 import com.vijay.jsonwizard.domain.Form;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.smartregister.family.adapter.ViewPagerAdapter;
 import org.smartregister.reveal.R;
-import org.smartregister.reveal.contract.OtherFormsContract;
 import org.smartregister.reveal.presenter.ListTaskPresenter;
-import org.smartregister.reveal.presenter.OtherFormsPresenter;
 import org.smartregister.reveal.util.Constants;
-import org.smartregister.reveal.util.RevealJsonFormUtils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -39,8 +29,6 @@ import java.nio.charset.StandardCharsets;
 
 import timber.log.Timber;
 
-import static org.smartregister.reveal.util.Constants.JSON_FORM_PARAM_JSON;
-import static org.smartregister.reveal.util.Constants.RequestCode.REQUEST_CODE_GET_JSON;
 import static org.smartregister.reveal.util.FamilyConstants.Intent.START_REGISTRATION;
 
 public class EligibilityCompoundActivity extends AppCompatActivity implements View.OnClickListener {
