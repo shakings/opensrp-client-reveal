@@ -58,9 +58,14 @@
         "type": "edit_text",
         "hint": "First name of child",
         "text_size": "8sp",
+        "edit_type": "name",
         "v_required": {
           "value": "true",
           "err": "Required field"
+        },
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Please enter a valid name, not a number"
         }
       },
       {
@@ -71,9 +76,14 @@
         "type": "edit_text",
         "hint": "Surname of child",
         "text_size": "8sp",
+        "edit_type": "name",
         "v_required": {
           "value": "true",
           "err": "Required field"
+        },
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Please enter a valid surname, not a number"
         }
       },
       {
@@ -259,6 +269,11 @@
         "openmrs_entity_id": "",
         "type": "edit_text",
         "hint": "Other Reason - specify",
+        "edit_type": "name",
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Please enter a valid reason, not a number"
+        },
         "relevance": {
           "step1:referralReason": {
             "type": "string",
@@ -675,9 +690,14 @@
         "type": "edit_text",
         "hint": "Outcome:",
         "text_size": "8sp",
+        "edit_type": "name",
         "v_required": {
           "value": "true",
           "err": "Required field"
+        },
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Please enter a valid outcome, not a number"
         },
         "relevance": {
           "step1:isChildSideEffects": {
@@ -694,9 +714,14 @@
         "type": "edit_text",
         "hint": "Name of In-charge",
         "text_size": "8sp",
+        "edit_type": "name",
         "v_required": {
           "value": "true",
           "err": "Required field"
+        },
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Please enter a valid name, not a number"
         }
       }
     ]

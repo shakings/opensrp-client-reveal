@@ -29,7 +29,7 @@ These instructions will get you a copy of the project up and running on your loc
 -   Family profile for managing families and family members
 -   Task register for displaying Available tasks for a given location in a given plan.
 -   Map for displaying operational areas and structures within it
--   Support for FI (focus investigation), MDA (Mass drug adminstartion) and IRS (Indoor Residue Spray) plans
+-   Support for FI (focus investigation), MDA (Mass drug administration) and IRS (Indoor Residue Spray) plans
 -   Task based color coding for both map view and task register
 -   Downloading of offline maps
 -   P2P sync

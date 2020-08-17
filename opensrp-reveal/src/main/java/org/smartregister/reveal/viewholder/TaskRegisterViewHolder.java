@@ -108,7 +108,7 @@ public class TaskRegisterViewHolder extends RecyclerView.ViewHolder {
 
         } else if (cardDetails != null && cardDetails.getStatusColor() != null) {
             actionView.setBackground(context.getResources().getDrawable(R.drawable.not_visited_bg));
-            actionView.setTextColor(context.getResources().getColor(R.color.text_black));
+            actionView.setTextColor(context.getResources().getColor(R.color.black));
         } else {
             actionView.setBackground(context.getResources().getDrawable(R.drawable.no_task_complete_bg));
             actionView.setTextColor(context.getResources().getColor(R.color.text_black));
@@ -185,7 +185,7 @@ public class TaskRegisterViewHolder extends RecyclerView.ViewHolder {
             if (familyRegTaskMissingOrFamilyRegComplete && task.isMdaAdhered()) {
                 actionBg = context.getResources().getDrawable(R.drawable.mda_dispensed_bg);
                 actionText = context.getText(R.string.tasks_complete).toString();
-            } else if (familyRegTaskMissingOrFamilyRegComplete && task.isFullyReceived()) {
+            } else if (familyRegTaskMissingOrFamilyRegComplete && task.isPartiallyReceived()) {
                 actionBg = context.getResources().getDrawable(R.drawable.mda_partially_received_bg);
                 actionText = context.getText(R.string.smc_complete).toString();
             } else if (familyRegTaskMissingOrFamilyRegComplete && task.isNoneReceived()) {
@@ -196,7 +196,7 @@ public class TaskRegisterViewHolder extends RecyclerView.ViewHolder {
             } else if (familyRegTaskMissingOrFamilyRegComplete) {
                 actionBg = context.getResources().getDrawable(R.drawable.family_registered_bg);
                 actionText = context.getText(R.string.child_registered).toString();
-            } else {
+            } else if (!task.isFamilyRegTaskExists()){
                 actionBg = context.getResources().getDrawable(R.drawable.no_task_complete_bg);
                 actionText = context.getText(R.string.no_drugs_received).toString();
             }

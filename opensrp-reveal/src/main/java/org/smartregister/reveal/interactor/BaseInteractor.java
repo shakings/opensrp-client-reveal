@@ -231,7 +231,8 @@ public class BaseInteractor implements BaseContract.BaseInteractor {
             } else if (encounterType.equals(EventType.MDA_ADHERENCE)) {
                 interventionType = Intervention.MDA_ADHERENCE;
             } else if (encounterType.equals(EventType.DRUG_RECON)) {
-                interventionType = Intervention.DRUG_RECON;
+                //interventionType = Intervention.DRUG_RECON;
+                interventionType = Intervention.MDA_ADHERENCE;
             } else if (encounterType.equals(EventType.IRS_VERIFICATION)) {
                 interventionType = Intervention.IRS_VERIFICATION;
             }

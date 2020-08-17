@@ -80,6 +80,10 @@
         "v_required": {
           "value": "true",
           "err": "Please enter first name"
+        },
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Please enter a valid name, not a number"
         }
       },
       {
@@ -110,6 +114,10 @@
         "v_required": {
           "value": "true",
           "err": "Please enter the surname"
+        },
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Please enter a valid surname, not a number"
         },
         "relevance": {
           "rules-engine": {

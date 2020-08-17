@@ -185,6 +185,14 @@
           "value": true,
           "err": "This field is required"
         },
+        "v_min": {
+          "value": "1",
+          "err": "Number must be equal or greater than 1"
+        },
+        "v_max": {
+          "value": "50",
+          "err": "Number must be equal or less than 50"
+        },
         "relevance": {
           "step1:compoundPart": {
             "type": "string",
@@ -275,6 +283,10 @@
           "value": true,
           "err": "Required field"
         },
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Please enter a valid reason, not a number"
+        },
         "relevance": {
           "step1:reasonsEligibility": {
             "type": "string",
@@ -364,6 +376,10 @@
         "v_required": {
           "value": "true",
           "err": "Please enter surname of head of structure"
+        },
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Please enter a valid surname, not a number"
         }
       }
     ]
@@ -397,6 +413,10 @@
         "v_required": {
           "value": "true",
           "err": "Please enter first name"
+        },
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Please enter a valid name, not a number"
         }
       },
       {
@@ -427,6 +447,10 @@
         "v_required": {
           "value": "true",
           "err": "Please enter the surname"
+        },
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Please enter a valid surname, not a number"
         },
         "relevance": {
           "rules-engine": {
@@ -535,6 +559,21 @@
         "v_required": {
           "value": true,
           "err": "Please enter the age"
+        }
+      },
+      {
+        "key": "business_status",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "hidden",
+        "value": "Complete",
+        "calculation": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "nigeria-family-register-calculation.yml"
+            }
+          }
         }
       }
     ]

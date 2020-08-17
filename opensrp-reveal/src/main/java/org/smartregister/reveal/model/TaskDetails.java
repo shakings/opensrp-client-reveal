@@ -250,16 +250,15 @@ public class TaskDetails extends BaseTaskDetails implements Comparable<TaskDetai
 
         boolean bloodScreeningExists = false;
         boolean caseConfirmed = false;
-        for (int i = 0; i < groupedTaskCodeStatusArray.length; i++) {
-            String[] taskCodeStatusArray = groupedTaskCodeStatusArray[i].split(HYPHEN);
+        for (String s : groupedTaskCodeStatusArray) {
+            String[] taskCodeStatusArray = s.split(HYPHEN);
 
-            if (taskCodeStatusArray == null || taskCodeStatusArray.length != 2) {
+            if (taskCodeStatusArray.length != 2) {
                 continue;
             }
 
             switch (taskCodeStatusArray[0]) {
                 case REGISTER_FAMILY:
-                case DRUG_RECON:
                     setFamilyRegTaskExists(true);
                     this.familyRegistered = COMPLETE.equals(taskCodeStatusArray[1]);
                     break;
@@ -279,22 +278,22 @@ public class TaskDetails extends BaseTaskDetails implements Comparable<TaskDetai
                     if (!this.mdaAdhered) {
                         this.mdaAdhered = INCOMPLETE.equals(taskCodeStatusArray[1]);
                     } else {
-                        this.mdaAdhered = COMPLETE.equals(taskCodeStatusArray[1]);
+//                        this.mdaAdhered = COMPLETE.equals(taskCodeStatusArray[1]);
+                        this.mdaAdhered = SMC_COMPLETE.equals(taskCodeStatusArray[1]);
                     }
-
                     break;
-//                case DRUG_RECON:
-//                    switch (taskCodeStatusArray[1]) {
-//                        case FULLY_RECEIVED:
-//                            mdaStatusMap.put(FULLY_RECEIVED, mdaStatusMap.get(FULLY_RECEIVED));
-//                            break;
-//                        case NONE_RECEIVED:
-//                            mdaStatusMap.put(NONE_RECEIVED, mdaStatusMap.get(NONE_RECEIVED));
-//                            break;
-//                        case NOT_ELIGIBLE:
-//                            mdaStatusMap.put(NOT_ELIGIBLE, mdaStatusMap.get(NOT_ELIGIBLE));
-//                            break;
-//                    }
+                case DRUG_RECON:
+                    switch (taskCodeStatusArray[1]) {
+                        case FULLY_RECEIVED:
+                            mdaStatusMap.put(FULLY_RECEIVED, mdaStatusMap.get(FULLY_RECEIVED));
+                            break;
+                        case NONE_RECEIVED:
+                            mdaStatusMap.put(NONE_RECEIVED, mdaStatusMap.get(NONE_RECEIVED));
+                            break;
+                        case NOT_ELIGIBLE:
+                            mdaStatusMap.put(NOT_ELIGIBLE, mdaStatusMap.get(NOT_ELIGIBLE));
+                            break;
+                    }
                 case MDA_DISPENSE:
                     mdaStatusMap.put(MDA_DISPENSE_TASK_COUNT, mdaStatusMap.get(MDA_DISPENSE_TASK_COUNT) + 1);
                     switch (taskCodeStatusArray[1]) {
