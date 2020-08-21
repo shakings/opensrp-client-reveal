@@ -206,8 +206,8 @@
     <string name="not_sprayed">Not Sprayed</string>
     <string name="sprayed">Sprayed</string>
     <string name="not_sprayable">Not Sprayable</string>
-    <string name="complete"> Family Registration\nComplete</string>
-    <string name="incomplete">Incomplete</string>
+    <string name="complete">Complete</string>
+    <string name="incomplete"> Tasks\nIncomplete</string>
     <string name="in_progress">In Progress</string>
     <string name="not_eligible">Not Eligible</string>
     <string name="plans_download_on_progress_title">Download in Progress</string>
@@ -327,8 +327,8 @@
     <string name="blood_screening">Blood Screening</string>
     <string name="case_confirmation">Case Confirmation</string>
     <string name="paot">PAOT</string>
-    <string name="mda_dispense">SMC SPAQ Redose</string>
-    <string name="mda_adherence">Child SMC</string>
+    <string name="mda_adherence">SMC SPAQ Redose</string>
+    <string name="mda_dispense">Child SMC</string>
     <string name="drug_recon">Drug Recon</string>
 
 

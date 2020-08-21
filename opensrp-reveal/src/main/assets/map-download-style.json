@@ -90,7 +90,8 @@
           [
             "Sprayed",
             "Complete",
-            "Fully Received"
+            "Fully Received",
+            "Partially Sprayed"
           ],
           "hsl(89, 52%, 48%)",
           [
@@ -101,10 +102,13 @@
           [
             "Family Registered"
           ],
+          "hsl(0, 0%, 78%)",
+          [
+            "Child Registered"
+          ],
           "hsl(335, 100%, 79%)",
           [
-            "Bednet Distributed",
-            "Adherence Visit Done"
+            "Bednet Distributed"
           ],
           "hsl(199, 68%, 55%)",
           [
@@ -112,8 +116,8 @@
           ],
           "hsl(262, 100%, 68%)",
           [
-            "Partially Sprayed",
-            "Partially Received"
+            "Partially Received",
+            "Adherence Visit Done"
           ],
           "hsl(26, 84%, 56%)",
           "hsl(0, 0%, 78%)"
@@ -191,7 +195,8 @@
           [
             "Sprayed",
             "Complete",
-            "Fully Received"
+            "Fully Received",
+            "Partially Sprayed"
           ],
           "hsl(89, 52%, 48%)",
           [
@@ -202,10 +207,13 @@
           [
             "Family Registered"
           ],
+          "hsl(0°, 0%, 78%)",
+          [
+            "Child Registered"
+          ],
           "hsl(335, 100%, 79%)",
           [
-            "Bednet Distributed",
-            "Adherence Visit Done"
+            "Bednet Distributed"
           ],
           "hsl(199, 68%, 55%)",
           [
@@ -213,8 +221,8 @@
           ],
           "hsl(262, 100%, 68%)",
           [
-            "Partially Sprayed",
-            "Partially Received"
+            "Partially Received",
+            "Adherence Visit Done"
           ],
           "hsl(26, 84%, 56%)",
           "hsl(0, 0%, 78%)"

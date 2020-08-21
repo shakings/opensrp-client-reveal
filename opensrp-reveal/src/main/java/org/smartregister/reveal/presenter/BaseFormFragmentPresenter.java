@@ -108,7 +108,7 @@ public class BaseFormFragmentPresenter extends BaseLocationListener implements B
 
     @Override
     public void onLocationValidated() {
-        if (!Intervention.REGISTER_FAMILY.equals(getTaskDetails().getTaskCode()) || DRUG_RECON.equals(getTaskDetails().getTaskCode())) {
+        if (!Intervention.REGISTER_FAMILY.equals(getTaskDetails().getTaskCode())) {
             String formName = getView().getJsonFormUtils().getFormName(null, taskDetails.getTaskCode());
             if (StringUtils.isBlank(formName)) {
                 getView().displayError(R.string.opening_form_title, R.string.form_not_found);
@@ -122,7 +122,7 @@ public class BaseFormFragmentPresenter extends BaseLocationListener implements B
                     return;
                 } else if (IRS.equals(taskDetails.getTaskCode()) && NAMIBIA.equals(BuildConfig.BUILD_COUNTRY)) {
                     interactor.findSprayDetails(IRS, structure.getId(), formJSON);
-                } else if (MDA_DISPENSE.equals(taskDetails.getTaskCode()) || MDA_ADHERENCE.equals(taskDetails.getTaskCode())) {
+                } else if (MDA_DISPENSE.equals(taskDetails.getTaskCode()) || MDA_ADHERENCE.equals(taskDetails.getTaskCode()) || DRUG_RECON.equals(taskDetails.getTaskCode())) {
                     jsonFormUtils.populateServerOptions(RevealApplication.getInstance().getServerConfigs(), formJSON, Constants.CONFIGURATION.MDA_CATCHMENT_AREAS, JsonForm.CATCHMENT_AREA, prefsUtil.getCurrentDistrict());
                     getView().startForm(formJSON);
                 } else {

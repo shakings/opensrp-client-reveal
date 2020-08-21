@@ -80,12 +80,14 @@ import static org.smartregister.reveal.util.Constants.DatabaseKeys.STRUCTURES_TA
 import static org.smartregister.reveal.util.Constants.DatabaseKeys.STRUCTURE_ID;
 import static org.smartregister.reveal.util.Constants.DatabaseKeys.TASK_TABLE;
 import static org.smartregister.reveal.util.Constants.EventType.CASE_CONFIRMATION_EVENT;
+import static org.smartregister.reveal.util.Constants.EventType.DRUG_RECON;
 import static org.smartregister.reveal.util.Constants.Intervention.BCC;
 import static org.smartregister.reveal.util.Constants.Intervention.BEDNET_DISTRIBUTION;
 import static org.smartregister.reveal.util.Constants.Intervention.BLOOD_SCREENING;
 import static org.smartregister.reveal.util.Constants.Intervention.CASE_CONFIRMATION;
 import static org.smartregister.reveal.util.Constants.Intervention.IRS;
 import static org.smartregister.reveal.util.Constants.Intervention.LARVAL_DIPPING;
+import static org.smartregister.reveal.util.Constants.Intervention.MDA_ADHERENCE;
 import static org.smartregister.reveal.util.Constants.Intervention.MOSQUITO_COLLECTION;
 import static org.smartregister.reveal.util.Constants.Intervention.PAOT;
 import static org.smartregister.reveal.util.Constants.JsonForm.ENCOUNTER_TYPE;
@@ -170,16 +172,15 @@ public class BaseInteractor implements BaseContract.BaseInteractor {
                 case REGISTER_STRUCTURE_EVENT:
                     saveRegisterStructureForm(jsonForm);
                     break;
-                case EventType.DRUG_RECON:
-                    saveMemberForm(jsonForm, encounterType, BLOOD_SCREENING);
-                    break;
                 case EventType.MDA_DISPENSE:
                     taskUtils.generateMDAAdherenceTask(RevealApplication.getInstance().getApplicationContext(),
                             getString(jsonForm, ENTITY_ID), getJSONObject(jsonForm, DETAILS).getString(Properties.LOCATION_ID));
                     taskUtils.generateMDAStructureDrug(RevealApplication.getInstance().getApplicationContext(),
                             getJSONObject(jsonForm, DETAILS).getString(Properties.LOCATION_ID), getJSONObject(jsonForm, DETAILS).getString(Properties.LOCATION_ID));
-                case BLOOD_SCREENING_EVENT:
+                    break;
+                case DRUG_RECON:
                 case EventType.MDA_ADHERENCE:
+                case BLOOD_SCREENING_EVENT:
                     saveMemberForm(jsonForm, encounterType, BLOOD_SCREENING);
                     break;
                 case CASE_CONFIRMATION_EVENT:
@@ -232,7 +233,7 @@ public class BaseInteractor implements BaseContract.BaseInteractor {
                 interventionType = Intervention.MDA_ADHERENCE;
             } else if (encounterType.equals(EventType.DRUG_RECON)) {
                 //interventionType = Intervention.DRUG_RECON;
-                interventionType = Intervention.MDA_ADHERENCE;
+                interventionType = Intervention.DRUG_RECON;
             } else if (encounterType.equals(EventType.IRS_VERIFICATION)) {
                 interventionType = Intervention.IRS_VERIFICATION;
             }

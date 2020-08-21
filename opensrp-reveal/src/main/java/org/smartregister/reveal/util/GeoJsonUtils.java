@@ -20,7 +20,8 @@ import static org.smartregister.reveal.util.Constants.BusinessStatus.BLOOD_SCREE
 import static org.smartregister.reveal.util.Constants.BusinessStatus.COMPLETE;
 import static org.smartregister.reveal.util.Constants.BusinessStatus.FAMILY_REGISTERED;
 import static org.smartregister.reveal.util.Constants.BusinessStatus.FULLY_RECEIVED;
-import static org.smartregister.reveal.util.Constants.BusinessStatus.NONE_RECEIVED;
+import static org.smartregister.reveal.util.Constants.BusinessStatus.INCOMPLETE;
+import static org.smartregister.reveal.util.Constants.BusinessStatus.INELIGIBLE;
 import static org.smartregister.reveal.util.Constants.BusinessStatus.NOT_ELIGIBLE;
 import static org.smartregister.reveal.util.Constants.BusinessStatus.NOT_VISITED;
 import static org.smartregister.reveal.util.Constants.BusinessStatus.PARTIALLY_RECEIVED;
@@ -60,10 +61,10 @@ public class GeoJsonUtils {
             StringBuilder interventionList = new StringBuilder();
 
             Map<String, Integer> mdaStatusMap = new HashMap<>();
-            mdaStatusMap.put(FULLY_RECEIVED, 0);
-            mdaStatusMap.put(NONE_RECEIVED, 0);
-            mdaStatusMap.put(NOT_ELIGIBLE, 0);
-            mdaStatusMap.put(SMC_DISPENSE_INCOMPLETE,0);
+            mdaStatusMap.put(COMPLETE, 0);
+            mdaStatusMap.put(INCOMPLETE, 0);
+            mdaStatusMap.put(INELIGIBLE, 0);
+//            mdaStatusMap.put(SMC_DISPENSE_INCOMPLETE,0);
             mdaStatusMap.put(MDA_DISPENSE_TASK_COUNT, 0);
             StateWrapper state = new StateWrapper();
             if (taskSet == null)
@@ -110,13 +111,11 @@ public class GeoJsonUtils {
             switch (task.getCode()) {
                 case REGISTER_FAMILY:
                     state.familyRegTaskExists = true;
-                    state.familyRegistered = COMPLETE.equals(task.getBusinessStatus());
+                    state.familyRegistered = FAMILY_REGISTERED.equals(task.getBusinessStatus());
+//                    state.familyRegistered = COMPLETE.equals(task.getBusinessStatus());
                     state.ineligibleForFamReg = NOT_ELIGIBLE.equals((task.getBusinessStatus()));
-                    state.partiallyReceived = NONE_RECEIVED.equals((task.getBusinessStatus()));
-                    state.nonReceived = NONE_RECEIVED.equals((task.getBusinessStatus()));
                     break;
                 case BEDNET_DISTRIBUTION:
-                    state.mdaAdhered = COMPLETE.equals(task.getBusinessStatus()) || NOT_ELIGIBLE.equals(task.getBusinessStatus());
                     state.bednetDistributed = COMPLETE.equals(task.getBusinessStatus()) || NOT_ELIGIBLE.equals(task.getBusinessStatus());
                     break;
                 case BLOOD_SCREENING:
@@ -130,7 +129,7 @@ public class GeoJsonUtils {
                     break;
                 case MDA_ADHERENCE:
                 case DRUG_RECON:
-                    state.mdaAdhered = COMPLETE.equals(task.getBusinessStatus()) || NOT_ELIGIBLE.equals(task.getBusinessStatus());
+                    state.mdaAdhered = COMPLETE.equals(task.getBusinessStatus()) || INCOMPLETE.equals(task.getBusinessStatus());
                     break;
                 case MDA_DISPENSE:
                     populateMDAStatus(task, mdaStatusMap);
@@ -149,14 +148,14 @@ public class GeoJsonUtils {
             return;
         }
         switch (task.getBusinessStatus()) {
-            case FULLY_RECEIVED:
-                mdaStatusMap.put(FULLY_RECEIVED, mdaStatusMap.get(FULLY_RECEIVED) + 1);
+            case COMPLETE:
+                mdaStatusMap.put(COMPLETE, mdaStatusMap.get(COMPLETE) + 1);
                 break;
-            case NONE_RECEIVED:
-                mdaStatusMap.put(NONE_RECEIVED, mdaStatusMap.get(NONE_RECEIVED) + 1);
+            case INCOMPLETE:
+                mdaStatusMap.put(INCOMPLETE, mdaStatusMap.get(INCOMPLETE) + 1);
                 break;
-            case NOT_ELIGIBLE:
-                mdaStatusMap.put(NOT_ELIGIBLE, mdaStatusMap.get(NOT_ELIGIBLE) + 1);
+            case INELIGIBLE:
+                mdaStatusMap.put(INELIGIBLE, mdaStatusMap.get(INELIGIBLE) + 1);
                 break;
         }
     }
@@ -189,22 +188,22 @@ public class GeoJsonUtils {
             } else if (Utils.isMDA()) {
 
 
-                state.fullyReceived = (mdaStatusMap.get(FULLY_RECEIVED).equals(mdaStatusMap.get(MDA_DISPENSE_TASK_COUNT)));
-                state.nonReceived = (mdaStatusMap.get(NONE_RECEIVED).equals(mdaStatusMap.get(MDA_DISPENSE_TASK_COUNT)));
-                state.nonEligible = (mdaStatusMap.get(NOT_ELIGIBLE).equals(mdaStatusMap.get(MDA_DISPENSE_TASK_COUNT)));
-                state.partiallyReceived = (!state.fullyReceived && (mdaStatusMap.get(FULLY_RECEIVED) > 0));
+                state.fullyReceived = (mdaStatusMap.get(COMPLETE).equals(mdaStatusMap.get(MDA_DISPENSE_TASK_COUNT)));
+                state.nonReceived = (mdaStatusMap.get(INCOMPLETE).equals(mdaStatusMap.get(MDA_DISPENSE_TASK_COUNT)));
+                state.nonEligible = (mdaStatusMap.get(INELIGIBLE).equals(mdaStatusMap.get(MDA_DISPENSE_TASK_COUNT)));
+                state.partiallyReceived = (!state.fullyReceived && (mdaStatusMap.get(COMPLETE) > 0));
 
                 if (familyRegTaskMissingOrFamilyRegComplete) {
                     if (state.mdaAdhered) {
                         taskProperties.put(TASK_BUSINESS_STATUS, ADHERENCE_VISIT_DONE);
                     } else if (state.fullyReceived) {
-                        taskProperties.put(TASK_BUSINESS_STATUS, FULLY_RECEIVED);
+                        taskProperties.put(TASK_BUSINESS_STATUS, COMPLETE);
                     } else if (state.partiallyReceived) {
                         taskProperties.put(TASK_BUSINESS_STATUS, PARTIALLY_RECEIVED);
                     } else if (state.nonReceived) {
-                        taskProperties.put(TASK_BUSINESS_STATUS, NONE_RECEIVED);
+                        taskProperties.put(TASK_BUSINESS_STATUS, INCOMPLETE);
                     } else if (state.nonEligible) {
-                        taskProperties.put(TASK_BUSINESS_STATUS, NOT_ELIGIBLE);
+                        taskProperties.put(TASK_BUSINESS_STATUS, INELIGIBLE);
                     } else {
                         taskProperties.put(TASK_BUSINESS_STATUS, FAMILY_REGISTERED);
                     }

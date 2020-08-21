@@ -124,6 +124,4 @@ public class BaseFormFragmentInteractor implements BaseFormFragmentContract.Inte
             });
         }
     }
-
-
 }

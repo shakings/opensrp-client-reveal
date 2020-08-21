@@ -309,62 +309,6 @@
         "openmrs_entity_id": ""
       },
       {
-        "key": "numberOfIndividuals",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "",
-        "type": "edit_text",
-        "edit_type": "number",
-        "hint": "How many individuals live in this structure?",
-        "is_mandatory": true,
-        "v_required": {
-          "value": true,
-          "err": "This field is mandatory"
-        },
-        "v_numeric_integer": {
-          "value": "true",
-          "err": "This field must be a whole number"
-        },
-        "v_numeric": {
-          "value": "true",
-          "err": "Please enter number of individuals"
-        },
-        "v_min": {
-          "value": "0",
-          "err": "Number must be equal or greater than 0"
-        }
-      },
-      {
-        "key": "individualsUnderEleven",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "",
-        "type": "edit_text",
-        "edit_type": "number",
-        "hint": "How many individuals are under 11 years?",
-        "is_mandatory": true,
-        "v_required": {
-          "value": true,
-          "err": "This field is mandatory"
-        },
-        "v_numeric_integer": {
-          "value": "true",
-          "err": "Must be a whole number"
-        },
-        "v_numeric": {
-          "value": "true",
-          "err": "Please enter number of individuals under 11 years"
-        },
-        "v_min": {
-          "value": "0",
-          "err": "Number must be equal or greater than 0"
-        },
-        "v_relative_max": {
-          "value": "numberOfIndividuals",
-          "err": "Must be less than or equal to number of individuals living in household"
-        }
-      },
-      {
         "key": "fam_name",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person",
@@ -475,28 +419,6 @@
         }
       },
       {
-        "key": "sex",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "person",
-        "openmrs_entity_id": "gender",
-        "type": "native_radio",
-        "label": "Sex",
-        "options": [
-          {
-            "key": "Male",
-            "text": "Male"
-          },
-          {
-            "key": "Female",
-            "text": "Female"
-          }
-        ],
-        "v_required": {
-          "value": "true",
-          "err": "Please enter the sex"
-        }
-      },
-      {
         "key": "dob",
         "openmrs_entity_parent": "",
         "openmrs_entity": "person",
@@ -549,16 +471,16 @@
           "value": "true",
           "err": "Please enter a number"
         },
+        "v_required": {
+          "value": true,
+          "err": "Please enter the age"
+        },
         "relevance": {
           "rules-engine": {
             "ex-rules": {
               "rules-file": "nigeria-family-register-relevance.yml"
             }
           }
-        },
-        "v_required": {
-          "value": true,
-          "err": "Please enter the age"
         }
       },
       {
@@ -567,7 +489,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "",
         "type": "hidden",
-        "value": "Complete",
+        "value": "Family Registered",
         "calculation": {
           "rules-engine": {
             "ex-rules": {

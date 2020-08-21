@@ -441,7 +441,6 @@ public class ListTaskPresenter implements ListTaskContract.Presenter, PasswordRe
         familyCardDetails.setDateCreated(formatDate(originalDate));
     }
 
-
     public void startForm(Feature feature, CardDetails cardDetails, String interventionType) {
         String formName = jsonFormUtils.getFormName(null, interventionType);
         String sprayStatus = cardDetails == null ? null : cardDetails.getStatus();
@@ -472,6 +471,9 @@ public class ListTaskPresenter implements ListTaskContract.Presenter, PasswordRe
         } else if (JsonForm.SPRAY_FORM_REFAPP.equals(formName)) {
             jsonFormUtils.populateServerOptions(RevealApplication.getInstance().getServerConfigs(), formJson, CONFIGURATION.DATA_COLLECTORS, JsonForm.DATA_COLLECTOR, prefsUtil.getCurrentDistrict());
         }
+//        else if (JsonForm.NIGERIA_SECOND_DOSE_OF_SPAQ.equals(formName)) {
+//            jsonFormUtils.populateServerOptions(RevealApplication.getInstance().getServerConfigs(), formJson, CONFIGURATION.HEALTH_FACILITIES, JsonForm.HFC_SEEK, prefsUtil.getCurrentDistrict());
+//        }
         listTaskView.startJsonForm(formJson);
     }
 

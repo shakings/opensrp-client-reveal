@@ -7,6 +7,7 @@ import net.sqlcipher.Cursor;
 import net.sqlcipher.database.SQLiteDatabase;
 
 import org.joda.time.DateTime;
+import org.json.JSONObject;
 import org.smartregister.clientandeventmodel.Event;
 import org.smartregister.domain.Action;
 import org.smartregister.domain.PlanDefinition;
@@ -120,12 +121,16 @@ public class TaskUtils {
 
     }
 
+    // Child SMC Form
     public void generateMDADispenseTask(Context context, String entityId, String structureId) {
         generateTask(context, entityId, structureId, BusinessStatus.NOT_VISITED, Intervention.MDA_DISPENSE,
                 R.string.mda_dispense_desciption);
     }
 
+    // SPAQ Redose
     public void generateMDAAdherenceTask(Context context, String entityId, String structureId) {
+//        Set<Task> tasks = taskRepository.getTasksByEntityAndCode(prefsUtil.getCurrentPlanId(),
+//                Utils.getOperationalAreaLocation(prefsUtil.getCurrentOperationalArea()).getId(), entityId, Intervention.MDA_ADHERENCE);
         generateTask(context, entityId, structureId, BusinessStatus.NOT_VISITED, Intervention.MDA_ADHERENCE,
                 R.string.mda_adherence_desciption);
     }

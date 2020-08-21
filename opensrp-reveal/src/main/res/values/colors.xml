@@ -30,13 +30,12 @@
     <color name="structure_tasks_complete">#68BB0C</color>
 
     <color name="blood_screening_complete">#995EFF</color>
-    <color name="bednet_distributed">#3DA9DA</color>
+    <color name="bednet_distributed">#ED8231</color>
     <color name="family_registered">#FF96C2</color>
 
     <color name="outside_area_mask">#313131</color>
 
     <color name="transluscent_white">#80FFFFFF</color>
-<!--    <color name="mda_adhered">#3DA9DA</color>-->
     <color name="mda_adhered">#ED8231</color>
     <color name="mda_dispensed">#6CBF0F</color>
     <color name="mda_partially_received">#ED8231</color>

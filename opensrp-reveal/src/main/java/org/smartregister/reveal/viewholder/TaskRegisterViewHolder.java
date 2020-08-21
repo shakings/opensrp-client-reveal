@@ -98,6 +98,7 @@ public class TaskRegisterViewHolder extends RecyclerView.ViewHolder {
 
 
                     Pair<Drawable, String > actionViewPair = getActionDrawable(task);
+//                    actionView.setBackground(context.getResources().getDrawable(R.drawable.no_task_complete_bg));
                     actionView.setTextColor(context.getResources().getColor(R.color.text_black));
                     actionView.setBackground(actionViewPair.first);
                     actionView.setText(actionViewPair.second);
@@ -107,7 +108,7 @@ public class TaskRegisterViewHolder extends RecyclerView.ViewHolder {
             }
 
         } else if (cardDetails != null && cardDetails.getStatusColor() != null) {
-            actionView.setBackground(context.getResources().getDrawable(R.drawable.not_visited_bg));
+            actionView.setBackground(context.getResources().getDrawable(R.drawable.task_action_bg));
             actionView.setTextColor(context.getResources().getColor(R.color.black));
         } else {
             actionView.setBackground(context.getResources().getDrawable(R.drawable.no_task_complete_bg));
@@ -153,8 +154,10 @@ public class TaskRegisterViewHolder extends RecyclerView.ViewHolder {
         } else if (Utils.isMDA()){
             if (BuildConfig.BUILD_COUNTRY == Country.NIGERIA) {
                 actionView.setBackground(context.getResources().getDrawable(R.drawable.tasks_complete_bg));
+                actionView.setText(R.string.tasks_complete);
             } else {
-                actionView.setBackground(context.getResources().getDrawable(R.drawable.mda_adhered_bg));
+                actionView.setBackground(context.getResources().getDrawable(R.drawable.mda_partially_received_bg));
+                actionView.setText(R.string.task_incomplete);
             }
         }
         actionView.setTextColor(context.getResources().getColor(R.color.text_black));
@@ -185,6 +188,8 @@ public class TaskRegisterViewHolder extends RecyclerView.ViewHolder {
             if (familyRegTaskMissingOrFamilyRegComplete && task.isMdaAdhered()) {
                 actionBg = context.getResources().getDrawable(R.drawable.mda_dispensed_bg);
                 actionText = context.getText(R.string.tasks_complete).toString();
+            } else if (familyRegTaskMissingOrFamilyRegComplete && task.isFullyReceived()) {
+                actionBg = context.getResources().getDrawable(R.drawable.mda_dispensed_bg);
             } else if (familyRegTaskMissingOrFamilyRegComplete && task.isPartiallyReceived()) {
                 actionBg = context.getResources().getDrawable(R.drawable.mda_partially_received_bg);
                 actionText = context.getText(R.string.smc_complete).toString();
@@ -193,12 +198,12 @@ public class TaskRegisterViewHolder extends RecyclerView.ViewHolder {
                 actionText = context.getText(R.string.non_received).toString();
             } else if (familyRegTaskMissingOrFamilyRegComplete && task.isNotEligible()) {
                 actionBg = context.getResources().getDrawable(R.drawable.mda_not_eligible_bg);
-            } else if (familyRegTaskMissingOrFamilyRegComplete) {
+            } else if (familyRegTaskMissingOrFamilyRegComplete && !task.isMdaAdhered()) {
                 actionBg = context.getResources().getDrawable(R.drawable.family_registered_bg);
                 actionText = context.getText(R.string.child_registered).toString();
-            } else if (!task.isFamilyRegTaskExists()){
-                actionBg = context.getResources().getDrawable(R.drawable.no_task_complete_bg);
-                actionText = context.getText(R.string.no_drugs_received).toString();
+            } else {
+                actionBg = context.getResources().getDrawable(R.drawable.family_registered_bg);
+                actionText = context.getText(R.string.child_registered).toString();
             }
         }
 

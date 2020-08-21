@@ -45,27 +45,33 @@ public class CardDetailsUtil {
         // extract status color
         String status = cardDetails.getStatus();
         switch (status) {
+            case BusinessStatus.CHILD_REGISTERED:
+                cardDetails.setStatusColor(R.color.family_registered);
             case BusinessStatus.NOT_SPRAYED:
-            case BusinessStatus.INCOMPLETE:
             case BusinessStatus.IN_PROGRESS:
-            case BusinessStatus.NONE_RECEIVED:
+            case BusinessStatus.INELIGIBLE:
                 cardDetails.setStatusColor(R.color.unsprayed);
                 cardDetails.setStatusMessage(R.string.details_not_sprayed);
                 break;
             case BusinessStatus.SPRAYED:
-            case BusinessStatus.COMPLETE:
+            case BusinessStatus.FAMILY_REGISTERED:
                 cardDetails.setStatusColor(R.color.dark_grey);
-            case BusinessStatus.REDOSE_COMPLETE:
-            case BusinessStatus.DRUG_RECON_COMPLETE:
-            case BusinessStatus.FULLY_RECEIVED:
             case BusinessStatus.NOT_SPRAYABLE:
             case BusinessStatus.NOT_ELIGIBLE:
                 cardDetails.setStatusColor(R.color.unsprayable);
                 cardDetails.setStatusMessage(R.string.details_not_sprayable);
                 cardDetails.setReason(null);
                 break;
+                // New business status
             case BusinessStatus.SMC_COMPLETE:
+            case BusinessStatus.REDOSE_COMPLETE:
+            case BusinessStatus.FULLY_RECEIVED:
+            case BusinessStatus.INCOMPLETE:
+                cardDetails.setStatusColor(R.color.mda_partially_received);
+            case BusinessStatus.DRUG_RECON_COMPLETE:
+            case BusinessStatus.COMPLETE:
             case PARTIALLY_SPRAYED:
+//            case BusinessStatus.FULLY_RECEIVED:
                 cardDetails.setStatusColor(R.color.partially_sprayed);
                 cardDetails.setStatusMessage(R.string.partially_sprayed);
                 cardDetails.setReason(null);

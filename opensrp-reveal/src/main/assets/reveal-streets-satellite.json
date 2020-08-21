@@ -86,10 +86,13 @@
           [
             "Family Registered"
           ],
+          "hsl(0, 0%, 78%)",
+          [
+            "Child Registered"
+          ],
           "hsl(335, 100%, 79%)",
           [
-            "Bednet Distributed",
-            "Adherence Visit Done"
+            "Bednet Distributed"
           ],
           "hsl(199, 68%, 55%)",
           [
@@ -97,7 +100,8 @@
           ],
           "hsl(262, 100%, 68%)",
           [
-            "Partially Received"
+            "Partially Received",
+            "Adherence Visit Done"
           ],
           "hsl(26, 84%, 56%)",
           "hsl(0, 0%, 78%)"
@@ -187,10 +191,13 @@
           [
             "Family Registered"
           ],
+          "hsl(0°, 0%, 78%)",
+          [
+            "Child Registered"
+          ],
           "hsl(335, 100%, 79%)",
           [
-            "Bednet Distributed",
-            "Adherence Visit Done"
+            "Bednet Distributed"
           ],
           "hsl(199, 68%, 55%)",
           [
@@ -198,7 +205,8 @@
           ],
           "hsl(262, 100%, 68%)",
           [
-            "Partially Received"
+            "Partially Received",
+            "Adherence Visit Done"
           ],
           "hsl(26, 84%, 56%)",
           "hsl(0, 0%, 78%)"

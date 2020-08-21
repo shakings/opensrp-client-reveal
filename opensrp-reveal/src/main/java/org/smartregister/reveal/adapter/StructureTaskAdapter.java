@@ -34,6 +34,7 @@ public class StructureTaskAdapter extends RecyclerView.Adapter<StructureTaskView
     private List<StructureTaskDetails> taskDetailsList = new ArrayList<>();
     private View.OnClickListener onClickListener;
 
+
     public StructureTaskAdapter(View.OnClickListener onClickListener) {
         this.onClickListener = onClickListener;
     }
@@ -67,9 +68,6 @@ public class StructureTaskAdapter extends RecyclerView.Adapter<StructureTaskView
             } else if (Intervention.REGISTER_FAMILY.equals(taskDetails.getTaskCode())) {
                 action = context.getString(R.string.register_family);
                 name = context.getString(R.string.add_fam);
-            } else if (Intervention.BEDNET_DISTRIBUTION.equals(taskDetails.getTaskCode())) {
-                action = context.getString(R.string.drug_recon);
-                name = context.getString(R.string.drug_reconciliation);
             } else if (Intervention.MDA_ADHERENCE.equals(taskDetails.getTaskCode())) {
                 if (BuildConfig.BUILD_COUNTRY == Country.NIGERIA) {
                     action = context.getString(R.string.spaq_redose);
@@ -94,7 +92,10 @@ public class StructureTaskAdapter extends RecyclerView.Adapter<StructureTaskView
         }
 
         if (Intervention.MDA_DISPENSE.equals(taskDetails.getTaskCode()) ||
-                Intervention.MDA_ADHERENCE.equals(taskDetails.getTaskCode())
+                Intervention.MDA_ADHERENCE.equals(taskDetails.getTaskCode()) ||
+
+                // New
+                Intervention.DRUG_RECON.equals(taskDetails.getTaskCode())
         ) {
             viewHolder.setTaskName(taskDetails.getTaskName(), taskDetails.getTaskCode());
         } else {
