@@ -42,17 +42,10 @@ public class RevealSyncConfiguration extends SyncConfiguration {
 
     @Override
     public String getSyncFilterValue() {
-        if (BuildConfig.BUILD_COUNTRY == Country.ZAMBIA || BuildConfig.BUILD_COUNTRY == Country.NIGERIA) {
-            if (sharedPreferences == null) {
-                sharedPreferences = RevealApplication.getInstance().getContext().userService().getAllSharedPreferences();
-            }
-            return sharedPreferences.fetchDefaultTeamId(sharedPreferences.fetchRegisteredANM());
-        } else {
-            if (locationRepository == null) {
-                locationRepository = RevealApplication.getInstance().getLocationRepository();
-            }
-            return TextUtils.join(",", locationRepository.getAllLocationIds());
+        if (locationRepository == null) {
+            locationRepository = RevealApplication.getInstance().getLocationRepository();
         }
+        return TextUtils.join(",", locationRepository.getAllLocationIds());
 
     }
 
