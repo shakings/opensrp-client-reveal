@@ -109,7 +109,7 @@ public class FamilyProfilePresenter extends BaseFamilyProfilePresenter implement
     public void onRegistrationSaved(boolean editMode, boolean isSaved, FamilyEventClient eventClient) {
         if (!editMode && isSaved && Utils.isFocusInvestigationOrMDA()) {
             getInteractor().generateTasks(getView().getApplicationContext(),
-                    eventClient, structureId);
+                    eventClient.getEvent().getBaseEntityId(), structureId, eventClient.getClient().getBirthdate());
             return;
         } else if (editMode && isSaved) {
             for (Obs obs : eventClient.getEvent().getObs()) {
