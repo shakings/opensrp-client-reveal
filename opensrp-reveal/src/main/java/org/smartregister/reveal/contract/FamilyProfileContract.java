@@ -7,7 +7,6 @@ import androidx.annotation.NonNull;
 import org.smartregister.clientandeventmodel.Client;
 import org.smartregister.clientandeventmodel.Event;
 import org.smartregister.domain.Task;
-import org.smartregister.family.domain.FamilyEventClient;
 
 import java.util.Date;
 
@@ -31,12 +30,11 @@ public interface FamilyProfileContract extends org.smartregister.family.contract
 
     interface Interactor extends org.smartregister.family.contract.FamilyProfileContract.Interactor {
 
-        void generateTasks(Context applicationContext, FamilyEventClient familyEventClient, String structureId);
+        void generateTasks(Context applicationContext, String baseEntityId, String structureId, Date birthDate);
 
         void updateFamilyMemberName(@NonNull Client family, Event event, @NonNull String oldFamilyName);
 
         void archiveFamily(String familyBaseEntityId, String structureId);
-
     }
 
     interface Presenter extends org.smartregister.family.contract.FamilyProfileContract.Presenter {
