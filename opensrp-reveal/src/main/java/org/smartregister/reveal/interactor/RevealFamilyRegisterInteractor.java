@@ -60,7 +60,7 @@ public class RevealFamilyRegisterInteractor extends org.smartregister.family.int
                     else if (Utils.isMDA()) {
                         DateTime birthDate = new DateTime(eventClient.getClient().getBirthdate().getTime());
                         int age = Years.yearsBetween(birthDate, DateTime.now()).getYears();
-                        if (age < Constants.MDA_MIN_AGE)
+                        if (age <= Constants.MDA_MIN_AGE)
                             taskUtils.generateMDADispenseTask(context, entityId, structureId);
                     }
                 }

@@ -394,7 +394,6 @@ public interface Constants {
 
         /**
          * NIGERIA
-         *
          */
         String NIGERIA_ELIGIBILITY_COMPOUND = "json.form/nigeria_eligibility_compound.json";
 
@@ -496,7 +495,7 @@ public interface Constants {
 
         String CATCHMENT_AREA = "catchment_area";
 
-
+        String ADMINISTERED_SPAQ = "administeredSpaq";
     }
 
     interface DateFormat {
