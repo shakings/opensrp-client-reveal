@@ -1,6 +1,7 @@
 package org.smartregister.reveal.interactor;
 
 import android.content.Context;
+
 import androidx.annotation.NonNull;
 
 import net.sqlcipher.database.SQLiteDatabase;
@@ -12,10 +13,12 @@ import org.json.JSONObject;
 import org.smartregister.CoreLibrary;
 import org.smartregister.clientandeventmodel.Client;
 import org.smartregister.clientandeventmodel.Event;
+import org.smartregister.clientandeventmodel.Obs;
 import org.smartregister.commonregistry.CommonPersonObject;
 import org.smartregister.commonregistry.CommonRepository;
 import org.smartregister.domain.Task;
 import org.smartregister.domain.db.EventClient;
+import org.smartregister.family.domain.FamilyEventClient;
 import org.smartregister.family.domain.FamilyMetadata;
 import org.smartregister.family.interactor.FamilyProfileInteractor;
 import org.smartregister.family.util.DBConstants.KEY;
@@ -79,14 +82,23 @@ public class RevealFamilyProfileInteractor extends FamilyProfileInteractor imple
     }
 
     @Override
-    public void generateTasks(Context applicationContext, String baseEntityId, String structureId, Date birthDate) {
+    public void generateTasks(Context applicationContext, FamilyEventClient eventClient, String structureId) {
         appExecutors.diskIO().execute(() -> {
             if (Utils.isFocusInvestigation())
-                taskUtils.generateBloodScreeningTask(applicationContext, baseEntityId, structureId);
+                taskUtils.generateBloodScreeningTask(applicationContext, eventClient.getEvent().getBaseEntityId(), structureId);
             else if (Utils.isMDA()) {
-                int age = Years.yearsBetween(new DateTime(birthDate.getTime()), DateTime.now()).getYears();
-                if (age < Constants.MDA_MIN_AGE)
-                    taskUtils.generateMDADispenseTask(applicationContext, baseEntityId, structureId);
+                int age = Years.yearsBetween(new DateTime(eventClient.getClient().getBirthdate().getTime()), DateTime.now()).getYears();
+                boolean isValid = false;
+                for (Obs obs : eventClient.getEvent().getObs()) {
+                    if (obs.getFieldCode().equalsIgnoreCase("administeredSpaq")) {
+                        if (obs.getValue().toString().equalsIgnoreCase("Yes"))
+                            isValid = true;
+                        break;
+                    }
+                }
+                if (age <= Constants.MDA_MIN_AGE && isValid) {
+                    taskUtils.generateMDADispenseTask(applicationContext, eventClient.getEvent().getBaseEntityId(), structureId);
+                }
             }
             appExecutors.mainThread().execute(() -> {
                 presenter.onTasksGenerated();
