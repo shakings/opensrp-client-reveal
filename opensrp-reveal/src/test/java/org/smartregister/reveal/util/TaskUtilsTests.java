@@ -25,6 +25,7 @@ import org.smartregister.reveal.BuildConfig;
 import org.smartregister.reveal.R;
 import org.smartregister.reveal.model.TaskDetails;
 import org.smartregister.util.Cache;
+import org.smartregister.util.JsonFormUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -236,7 +237,7 @@ public class TaskUtilsTests extends BaseUnitTest {
 
         taskUtils = spy(taskUtils);
 
-        taskUtils.generateMDAAdherenceTask(context, expectedEntityId, expectedStructureId);
+        taskUtils.generateMDAAdherenceTask(context, expectedEntityId, expectedStructureId, JsonFormUtils.getFieldValue(json, Constants.JsonForm.ADMINISTERED_SPAQ));
 
         verify(taskUtils).generateTask(eq(context), stringArgumentCaptor.capture(), stringArgumentCaptor.capture(),
                 stringArgumentCaptor.capture(), stringArgumentCaptor.capture(), integerArgumentCaptor.capture());
