@@ -1,7 +1,7 @@
 package org.smartregister.reveal.model;
 
 import android.location.Location;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import org.apache.commons.lang3.StringUtils;
 import org.smartregister.AllConstants;
@@ -19,7 +19,7 @@ import static org.smartregister.reveal.util.Constants.BusinessStatus.COMPLETE;
 import static org.smartregister.reveal.util.Constants.BusinessStatus.FAMILY_REGISTERED;
 import static org.smartregister.reveal.util.Constants.BusinessStatus.FULLY_RECEIVED;
 import static org.smartregister.reveal.util.Constants.BusinessStatus.INCOMPLETE;
-import static org.smartregister.reveal.util.Constants.BusinessStatus.NONE_RECEIVED;
+import static org.smartregister.reveal.util.Constants.BusinessStatus.INELIGIBLE;
 import static org.smartregister.reveal.util.Constants.BusinessStatus.NOT_ELIGIBLE;
 import static org.smartregister.reveal.util.Constants.BusinessStatus.NOT_VISITED;
 import static org.smartregister.reveal.util.Constants.BusinessStatus.PARTIALLY_RECEIVED;
@@ -227,6 +227,7 @@ public class TaskDetails extends BaseTaskDetails implements Comparable<TaskDetai
         return notEligible;
     }
 
+
     public void setNotEligible(boolean notEligible) {
         this.notEligible = notEligible;
     }
@@ -243,9 +244,9 @@ public class TaskDetails extends BaseTaskDetails implements Comparable<TaskDetai
         String MDA_DISPENSE_TASK_COUNT = "mda_dispense_task_count";
 
         Map<String, Integer> mdaStatusMap = new HashMap<>();
-        mdaStatusMap.put(FULLY_RECEIVED, 0);
-        mdaStatusMap.put(NONE_RECEIVED, 0);
-        mdaStatusMap.put(NOT_ELIGIBLE, 0);
+        mdaStatusMap.put(COMPLETE, 0);
+        mdaStatusMap.put(INCOMPLETE, 0);
+        mdaStatusMap.put(INELIGIBLE, 0);
         mdaStatusMap.put(MDA_DISPENSE_TASK_COUNT, 0);
 
         boolean bloodScreeningExists = false;
@@ -259,9 +260,8 @@ public class TaskDetails extends BaseTaskDetails implements Comparable<TaskDetai
 
             switch (taskCodeStatusArray[0]) {
                 case REGISTER_FAMILY:
-                case DRUG_RECON:
                     setFamilyRegTaskExists(true);
-                    this.familyRegistered = COMPLETE.equals(taskCodeStatusArray[1]);
+                    this.familyRegistered = FAMILY_REGISTERED.equals(taskCodeStatusArray[1]);
                     break;
                 case BEDNET_DISTRIBUTION:
                     this.bednetDistributed = COMPLETE.equals(taskCodeStatusArray[1]);
@@ -276,36 +276,32 @@ public class TaskDetails extends BaseTaskDetails implements Comparable<TaskDetai
                     caseConfirmed = COMPLETE.equals(taskCodeStatusArray[1]);
                     break;
                 case MDA_ADHERENCE:
-                    if (!this.mdaAdhered) {
-                        this.mdaAdhered = INCOMPLETE.equals(taskCodeStatusArray[1]);
-                    } else {
-                        this.mdaAdhered = COMPLETE.equals(taskCodeStatusArray[1]);
-                    }
-
+                    this.mdaAdhered = INCOMPLETE.equals((taskCodeStatusArray[1]));
                     break;
-//                case DRUG_RECON:
-//                    switch (taskCodeStatusArray[1]) {
-//                        case FULLY_RECEIVED:
-//                            mdaStatusMap.put(FULLY_RECEIVED, mdaStatusMap.get(FULLY_RECEIVED));
-//                            break;
-//                        case NONE_RECEIVED:
-//                            mdaStatusMap.put(NONE_RECEIVED, mdaStatusMap.get(NONE_RECEIVED));
-//                            break;
-//                        case NOT_ELIGIBLE:
-//                            mdaStatusMap.put(NOT_ELIGIBLE, mdaStatusMap.get(NOT_ELIGIBLE));
-//                            break;
-//                    }
+                case DRUG_RECON:
+                    mdaStatusMap.put(MDA_DISPENSE_TASK_COUNT, mdaStatusMap.get(MDA_DISPENSE_TASK_COUNT) + 1);
+                    switch (taskCodeStatusArray[1]) {
+                        case COMPLETE:
+                            mdaStatusMap.put(COMPLETE, mdaStatusMap.get(COMPLETE) + 1);
+                            break;
+                        case INCOMPLETE:
+                            mdaStatusMap.put(INCOMPLETE, mdaStatusMap.get(INCOMPLETE) + 1);
+                            break;
+                        case INELIGIBLE:
+                            mdaStatusMap.put(INELIGIBLE, mdaStatusMap.get(INELIGIBLE) + 1);
+                            break;
+                    }
                 case MDA_DISPENSE:
                     mdaStatusMap.put(MDA_DISPENSE_TASK_COUNT, mdaStatusMap.get(MDA_DISPENSE_TASK_COUNT) + 1);
                     switch (taskCodeStatusArray[1]) {
-                        case FULLY_RECEIVED:
-                            mdaStatusMap.put(FULLY_RECEIVED, mdaStatusMap.get(FULLY_RECEIVED) + 1);
+                        case COMPLETE:
+                            mdaStatusMap.put(COMPLETE, mdaStatusMap.get(COMPLETE) + 1);
                             break;
-                        case NONE_RECEIVED:
-                            mdaStatusMap.put(NONE_RECEIVED, mdaStatusMap.get(NONE_RECEIVED) + 1);
+                        case INCOMPLETE:
+                            mdaStatusMap.put(INCOMPLETE, mdaStatusMap.get(INCOMPLETE) + 1);
                             break;
-                        case NOT_ELIGIBLE:
-                            mdaStatusMap.put(NOT_ELIGIBLE, mdaStatusMap.get(NOT_ELIGIBLE) + 1);
+                        case INELIGIBLE:
+                            mdaStatusMap.put(INELIGIBLE, mdaStatusMap.get(INELIGIBLE) + 1);
                             break;
                     }
                 default:
@@ -317,10 +313,10 @@ public class TaskDetails extends BaseTaskDetails implements Comparable<TaskDetai
             setBloodScreeningDone(true);
         }
 
-        setFullyReceived(mdaStatusMap.get(FULLY_RECEIVED) == mdaStatusMap.get(MDA_DISPENSE_TASK_COUNT));
-        setNoneReceived(mdaStatusMap.get(NONE_RECEIVED) == mdaStatusMap.get(MDA_DISPENSE_TASK_COUNT));
-        setNotEligible(mdaStatusMap.get(NOT_ELIGIBLE) == mdaStatusMap.get(MDA_DISPENSE_TASK_COUNT));
-        setPartiallyReceived(!isFullyReceived() && (mdaStatusMap.get(FULLY_RECEIVED) > 0));
+        setFullyReceived(mdaStatusMap.get(COMPLETE) == mdaStatusMap.get(MDA_DISPENSE_TASK_COUNT));
+        setNoneReceived(mdaStatusMap.get(INCOMPLETE) == mdaStatusMap.get(MDA_DISPENSE_TASK_COUNT));
+        setNotEligible(mdaStatusMap.get(INELIGIBLE) == mdaStatusMap.get(MDA_DISPENSE_TASK_COUNT));
+        setPartiallyReceived(!isFullyReceived() && (mdaStatusMap.get(COMPLETE) > 0));
 
         setAggregateBusinessStatus(calculateAggregateBusinessStatus());
     }
@@ -345,9 +341,9 @@ public class TaskDetails extends BaseTaskDetails implements Comparable<TaskDetai
             } else if (isFamilyRegisteredOrNoTaskExists() && isFullyReceived()) {
                 return FULLY_RECEIVED;
             } else if (isFamilyRegisteredOrNoTaskExists() && isPartiallyReceived()) {
-                return PARTIALLY_RECEIVED;
+                return INCOMPLETE;
             } else if (isFamilyRegisteredOrNoTaskExists() && isNoneReceived()) {
-                return NONE_RECEIVED;
+                return INCOMPLETE;
             } else if (isFamilyRegisteredOrNoTaskExists()) {
                 return FAMILY_REGISTERED;
             }

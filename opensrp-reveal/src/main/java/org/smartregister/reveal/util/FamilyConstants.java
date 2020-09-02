@@ -10,7 +10,6 @@ public interface FamilyConstants {
         String FAMILY_REGISTER = "family_register";
         String FAMILY_MEMBER_REGISTER = "family_member_register";
         String UNIQUE_ID_KEY = "opensrp_id";
-
     }
 
     interface EventType {

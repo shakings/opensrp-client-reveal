@@ -4,4 +4,4 @@ description: Business status calculation
 priority: 1
 condition: "true"
 actions:
-  - "calculation = ('1'.equals(step1_currently_present)  &&  'Yes'.equals(step1_administeredSpaq)) ? 'Complete' : ('1'.equals(step1_currently_present)  &&  'No'.equals(step1_administeredSpaq)) ? 'Incomplete' : 'Smc Complete'"
+  - "calculation = ('1'.equals(step1_currently_present)  &&  'Yes'.equals(step1_administeredSpaq)) ? 'Complete' : ('1'.equals(step1_currently_present)  &&  'No'.equals(step1_administeredSpaq)) ? 'Incomplete' : 'Ineligible'"

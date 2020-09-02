@@ -4,9 +4,9 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Build;
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
-import android.support.annotation.StringRes;
-import android.support.v4.util.Pair;
+import androidx.annotation.NonNull;
+import androidx.annotation.StringRes;
+import androidx.core.util.Pair;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
@@ -28,6 +28,7 @@ import org.smartregister.clientandeventmodel.Client;
 import org.smartregister.clientandeventmodel.Event;
 import org.smartregister.domain.Location;
 import org.smartregister.domain.tag.FormTag;
+import org.smartregister.job.DocumentConfigurationServiceJob;
 import org.smartregister.job.PullUniqueIdsServiceJob;
 import org.smartregister.repository.AllSharedPreferences;
 import org.smartregister.reveal.BuildConfig;
@@ -64,6 +65,7 @@ import static org.smartregister.reveal.util.Constants.Intervention.LARVAL_DIPPIN
 import static org.smartregister.reveal.util.Constants.Intervention.MDA;
 import static org.smartregister.reveal.util.Constants.Intervention.MOSQUITO_COLLECTION;
 import static org.smartregister.reveal.util.Constants.Intervention.PAOT;
+import static org.smartregister.reveal.util.Constants.Tags.LGA;
 
 public class Utils {
 
@@ -80,6 +82,7 @@ public class Utils {
         ALLOWED_LEVELS.add(Tags.CANTON);
         ALLOWED_LEVELS.add(Tags.VILLAGE);
         ALLOWED_LEVELS.add(REVEAL_PROJECT);
+        ALLOWED_LEVELS.add(LGA);
     }
 
     public static void saveLanguage(String language) {
@@ -119,6 +122,7 @@ public class Utils {
     public static void startImmediateSync() {
         LocationTaskServiceJob.scheduleJobImmediately(LocationTaskServiceJob.TAG);
         PullUniqueIdsServiceJob.scheduleJobImmediately(PullUniqueIdsServiceJob.TAG);
+        DocumentConfigurationServiceJob.scheduleJobImmediately(DocumentConfigurationServiceJob.TAG);
     }
 
 

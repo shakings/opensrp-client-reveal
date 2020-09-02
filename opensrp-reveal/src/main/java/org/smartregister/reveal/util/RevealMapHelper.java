@@ -4,7 +4,9 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Location;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
+
+import android.os.Build;
 import android.widget.ImageButton;
 
 import com.mapbox.geojson.Feature;
@@ -197,7 +199,9 @@ public class RevealMapHelper {
                     JSONObject feature = new JSONObject(indexCase.toJson());
                     JSONObject geometry = new JSONObject();
                     geometry.put("type", "Point");
-                    geometry.put("coordinates", new JSONArray(new Double[]{indexCaseLocation.getLongitude(), indexCaseLocation.getLatitude()}));
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                        geometry.put("coordinates", new JSONArray(new Double[]{indexCaseLocation.getLongitude(), indexCaseLocation.getLatitude()}));
+                    }
                     feature.put("geometry", geometry);
                     circleFeature = createCircleFeature(new LatLng(indexCaseLocation.getLatitude(), indexCaseLocation.getLongitude()), radius, DEFAULT_GEO_JSON_CIRCLE_SIDES);
                     indexCaseSource.setGeoJson(circleFeature);

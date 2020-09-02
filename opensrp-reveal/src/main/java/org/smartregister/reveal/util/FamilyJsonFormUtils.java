@@ -1,7 +1,7 @@
 package org.smartregister.reveal.util;
 
 import android.content.Context;
-import android.support.annotation.StringRes;
+import androidx.annotation.StringRes;
 import android.util.Log;
 
 import org.apache.commons.lang3.StringUtils;
@@ -15,6 +15,7 @@ import org.smartregister.family.util.Constants.JSON_FORM_KEY;
 import org.smartregister.family.util.JsonFormUtils;
 import org.smartregister.family.util.Utils;
 import org.smartregister.location.helper.LocationHelper;
+import org.smartregister.reveal.BuildConfig;
 import org.smartregister.reveal.application.RevealApplication;
 import org.smartregister.reveal.util.FamilyConstants.DatabaseKeys;
 import org.smartregister.reveal.util.FamilyConstants.FormKeys;
@@ -24,6 +25,7 @@ import org.smartregister.view.LocationPickerView;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 
 import timber.log.Timber;
@@ -93,8 +95,10 @@ public class FamilyJsonFormUtils extends JsonFormUtils {
                 form.put(CURRENT_OPENSRP_ID, Utils.getValue(client.getColumnmaps(), UNIQUE_ID, false));
 
                 //inject opensrp id into the form
-                JSONObject stepOne = form.getJSONObject(STEP1);
-                JSONArray jsonArray = stepOne.getJSONArray(FIELDS);
+//                JSONObject stepOne = form.getJSONObject(STEP1);
+
+                JSONObject stepTwo = form.getJSONObject(STEP2);
+                JSONArray jsonArray = stepTwo.getJSONArray(FIELDS);
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject jsonObject = jsonArray.getJSONObject(i);
 
@@ -154,13 +158,13 @@ public class FamilyJsonFormUtils extends JsonFormUtils {
                 form.put(CURRENT_OPENSRP_ID, Utils.getValue(client.getColumnmaps(), UNIQUE_ID, false));
 
                 //inject opensrp id into the form
-                JSONObject stepOne = form.getJSONObject(STEP1);
+//                JSONObject stepOne = form.getJSONObject(STEP1);
+
+                JSONObject stepTwo = form.getJSONObject(STEP2);
+                stepTwo.put(Constants.JsonForm.TITLE, context.getString(formTitle));
 
 
-                stepOne.put(Constants.JsonForm.TITLE, context.getString(formTitle));
-
-
-                JSONArray jsonArray = stepOne.getJSONArray(FIELDS);
+                JSONArray jsonArray = stepTwo.getJSONArray(FIELDS);
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject jsonObject = jsonArray.getJSONObject(i);
 
@@ -268,13 +272,13 @@ public class FamilyJsonFormUtils extends JsonFormUtils {
             sameAsFamName = getFieldJSONObject(jsonArray, FormKeys.SAME_AS_FAM_NAME);
             lookupField = getFieldJSONObject(jsonArray, FormKeys.SURNAME);
         }
-        JSONObject sameOptions = sameAsFamName.getJSONArray(JSON_FORM_KEY.OPTIONS).getJSONObject(0);
+        JSONObject sameOptions = Objects.requireNonNull(sameAsFamName).getJSONArray(JSON_FORM_KEY.OPTIONS).getJSONObject(0);
         if (familyName.equals(lookupName)) {
             sameOptions.put(VALUE, true);
-            lookupField.put(VALUE, "");
+            Objects.requireNonNull(lookupField).put(VALUE, "");
         } else {
             sameOptions.put(VALUE, false);
-            lookupField.put(VALUE, lookupName);
+            Objects.requireNonNull(lookupField).put(VALUE, lookupName);
         }
     }
 

@@ -1,13 +1,14 @@
 package org.smartregister.reveal.application;
 
 import android.content.Intent;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.core.CrashlyticsCore;
 import com.evernote.android.job.JobManager;
 import com.mapbox.geojson.FeatureCollection;
 import com.mapbox.mapboxsdk.Mapbox;
+import com.vijay.jsonwizard.NativeFormLibrary;
 import com.vijay.jsonwizard.activities.JsonWizardFormActivity;
 
 import org.apache.commons.lang3.StringUtils;
@@ -57,8 +58,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import io.fabric.sdk.android.Fabric;
-import io.ona.kujaku.data.realm.RealmDatabase;
 import io.ona.kujaku.KujakuLibrary;
+import io.ona.kujaku.data.realm.RealmDatabase;
 import timber.log.Timber;
 
 import static org.smartregister.reveal.util.Constants.CONFIGURATION.GLOBAL_CONFIGS;
@@ -76,7 +77,7 @@ import static org.smartregister.reveal.util.FamilyConstants.TABLE_NAME;
 public class RevealApplication extends DrishtiApplication implements TimeChangedBroadcastReceiver.OnTimeChangedListener {
 
     private JsonSpecHelper jsonSpecHelper;
-    private String password;
+    private char[] password;
 
     private PlanDefinitionSearchRepository planDefinitionSearchRepository;
 
@@ -95,6 +96,8 @@ public class RevealApplication extends DrishtiApplication implements TimeChanged
     private FamilyMetadata metadata;
 
     private RealmDatabase realmDatabase;
+
+    private boolean synced;
 
     public static synchronized RevealApplication getInstance() {
         return (RevealApplication) mInstance;
@@ -148,6 +151,7 @@ public class RevealApplication extends DrishtiApplication implements TimeChanged
         } else {
             LangUtils.saveLanguage(getApplicationContext(), "en");
         }
+        NativeFormLibrary.getInstance().setClientFormDao(CoreLibrary.getInstance().context().getClientFormRepository());
 
     }
 
@@ -156,9 +160,10 @@ public class RevealApplication extends DrishtiApplication implements TimeChanged
      */
     private void forceRemoteLoginForInConsistentUsername() {
         AllSharedPreferences allSharedPreferences = context.allSharedPreferences();
-        if (StringUtils.isNotBlank(allSharedPreferences.fetchRegisteredANM()) && StringUtils.isBlank(allSharedPreferences.fetchDefaultTeamId(allSharedPreferences.fetchRegisteredANM()))) {
+        String provider = allSharedPreferences.fetchRegisteredANM();
+        if (StringUtils.isNotBlank(provider) && StringUtils.isBlank(allSharedPreferences.fetchDefaultTeamId(allSharedPreferences.fetchRegisteredANM()))) {
             allSharedPreferences.updateANMUserName(null);
-            allSharedPreferences.saveForceRemoteLogin(true);
+            allSharedPreferences.saveForceRemoteLogin(true, provider);
         }
     }
 
@@ -175,7 +180,7 @@ public class RevealApplication extends DrishtiApplication implements TimeChanged
         return repository;
     }
 
-    public String getPassword() {
+    public char[] getPassword() {
         if (password == null) {
             String username = getContext().allSharedPreferences().fetchRegisteredANM();
             password = getContext().userService().getGroupId(username);
@@ -218,13 +223,13 @@ public class RevealApplication extends DrishtiApplication implements TimeChanged
 
     @Override
     public void onTimeChanged() {
-        context.userService().forceRemoteLogin();
+        context.userService().forceRemoteLogin(context.allSharedPreferences().fetchRegisteredANM());
         logoutCurrentUser();
     }
 
     @Override
     public void onTimeZoneChanged() {
-        context.userService().forceRemoteLogin();
+        context.userService().forceRemoteLogin(context.allSharedPreferences().fetchRegisteredANM());
         logoutCurrentUser();
     }
 
@@ -399,5 +404,13 @@ public class RevealApplication extends DrishtiApplication implements TimeChanged
 
     public void setFeatureCollection(FeatureCollection featureCollection) {
         this.featureCollection = featureCollection;
+    }
+
+    public boolean getSynced() {
+        return synced;
+    }
+
+    public void setSynced(boolean synced) {
+        this.synced = synced;
     }
 }

@@ -1,13 +1,20 @@
 package org.smartregister.reveal.presenter;
 
-import android.support.v4.util.Pair;
-import android.text.TextUtils;
+import androidx.core.content.ContextCompat;
+import androidx.core.util.Pair;
+import android.app.Activity;
 
+import android.text.TextUtils;
+import android.view.View;
+import android.widget.TextView;
+
+import com.google.android.material.navigation.NavigationView;
 import com.google.gson.reflect.TypeToken;
 
 import org.apache.commons.lang3.StringUtils;
 import org.smartregister.AllConstants;
 import org.smartregister.domain.PlanDefinition;
+import org.smartregister.domain.PlanDefinition.PlanStatus;
 import org.smartregister.domain.form.FormLocation;
 import org.smartregister.location.helper.LocationHelper;
 import org.smartregister.reveal.BuildConfig;
@@ -28,7 +35,6 @@ import java.util.Set;
 import timber.log.Timber;
 
 import static org.smartregister.AllConstants.OPERATIONAL_AREAS;
-import static org.smartregister.reveal.util.Constants.PlanDefinitionStatus.ACTIVE;
 import static org.smartregister.reveal.util.Constants.Tags.CANTON;
 import static org.smartregister.reveal.util.Constants.Tags.COUNTRY;
 import static org.smartregister.reveal.util.Constants.Tags.DISTRICT;
@@ -58,8 +64,13 @@ public class BaseDrawerPresenter implements BaseDrawerContract.Presenter {
 
     private BaseDrawerContract.Interactor interactor;
 
+    private static TextView syncLabel;
+    private static TextView syncBadge;
+
 
     private boolean viewInitialized = false;
+
+    private RevealApplication revealApplication;
 
     public BaseDrawerPresenter(BaseDrawerContract.View view, BaseDrawerContract.DrawerActivity drawerActivity) {
         this.view = view;
@@ -67,6 +78,7 @@ public class BaseDrawerPresenter implements BaseDrawerContract.Presenter {
         this.prefsUtil = PreferencesUtil.getInstance();
         this.locationHelper = LocationHelper.getInstance();
         interactor = new BaseDrawerInteractor(this);
+        revealApplication = RevealApplication.getInstance();
     }
 
 
@@ -110,7 +122,7 @@ public class BaseDrawerPresenter implements BaseDrawerContract.Presenter {
         List<String> ids = new ArrayList<>();
         List<FormLocation> formLocations = new ArrayList<>();
         for (PlanDefinition planDefinition : planDefinitions) {
-            if (!planDefinition.getStatus().equals(ACTIVE)) {
+            if (!planDefinition.getStatus().equals(PlanStatus.ACTIVE)) {
                 continue;
             }
             ids.add(planDefinition.getIdentifier());
@@ -150,14 +162,14 @@ public class BaseDrawerPresenter implements BaseDrawerContract.Presenter {
     public void onShowOperationalAreaSelector() {
         Pair<String, ArrayList<String>> locationHierarchy = extractLocationHierarchy();
         if (locationHierarchy == null) {//try to evict location hierachy in cache
-            RevealApplication.getInstance().getContext().anmLocationController().evict();
+            revealApplication.getContext().anmLocationController().evict();
             locationHierarchy = extractLocationHierarchy();
         }
         if (locationHierarchy != null) {
             view.showOperationalAreaSelector(extractLocationHierarchy());
         } else {
             view.displayNotification(R.string.error_fetching_location_hierarchy_title, R.string.error_fetching_location_hierarchy);
-            RevealApplication.getInstance().getContext().userService().forceRemoteLogin();
+            revealApplication.getContext().userService().forceRemoteLogin(revealApplication.getContext().allSharedPreferences().fetchRegisteredANM());
         }
 
     }
@@ -325,6 +337,7 @@ public class BaseDrawerPresenter implements BaseDrawerContract.Presenter {
             initializeDrawerLayout();
             viewInitialized = true;
         }
+        updateSyncStatusDisplay(revealApplication.getSynced());
     }
 
 
@@ -341,6 +354,7 @@ public class BaseDrawerPresenter implements BaseDrawerContract.Presenter {
     public void onShowOfflineMaps() {
         getView().openOfflineMapsView();
     }
+
     private void validateSelectedPlan(String operationalArea) {
         if (!prefsUtil.getCurrentPlanId().isEmpty()) {
             interactor.validateCurrentPlan(operationalArea, prefsUtil.getCurrentPlanId());
@@ -354,6 +368,34 @@ public class BaseDrawerPresenter implements BaseDrawerContract.Presenter {
             prefsUtil.setCurrentPlan("");
             view.setPlan("");
             view.lockNavigationDrawerForSelection();
+        }
+    }
+
+    /**
+     * Updates the Hamburger menu of the navigation drawer to display the sync status of the application
+     * Updates also the Text view next to the sync button with the sync status of the application
+     *
+     * @param synced Sync status of the application
+     */
+    @Override
+    public void updateSyncStatusDisplay(boolean synced) {
+        Activity activity = view.getContext();
+        NavigationView navigationView = activity.findViewById(R.id.nav_view);
+        View headerView = navigationView.getHeaderView(0);
+        syncLabel = headerView.findViewById(R.id.sync_label);
+        syncBadge = activity.findViewById(R.id.sync_badge);
+        if (syncBadge != null && syncLabel != null) {
+            if (synced) {
+                syncBadge.setBackground(ContextCompat.getDrawable(activity, R.drawable.badge_green_oval));
+                syncLabel.setText("Device data synced");
+                syncLabel.setTextColor(ContextCompat.getColor(activity, R.color.alert_complete_green));
+                syncLabel.setBackground(ContextCompat.getDrawable(activity, R.drawable.rounded_border_alert_green));
+            } else {
+                syncBadge.setBackground(ContextCompat.getDrawable(activity, R.drawable.badge_oval));
+                syncLabel.setText("Device data not synced");
+                syncLabel.setTextColor(ContextCompat.getColor(activity, R.color.alert_urgent_red));
+                syncLabel.setBackground(ContextCompat.getDrawable(activity, R.drawable.rounded_border_alert_red));
+            }
         }
     }
 

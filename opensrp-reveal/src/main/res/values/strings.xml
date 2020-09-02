@@ -73,6 +73,7 @@
     <string name="reveal_icon">Reveal Icon</string>
 
     <string name="attribution_text">Powered by OpenSRP \nBuilt on mSpray and DiSARM</string>
+    <string name="thailand_attribution_text">Powered by Reveal</string>
 
     <string name="request_password_title">You are not near the structure</string>
     <string name="enter_admin_password"> Input admin password</string>
@@ -206,7 +207,7 @@
     <string name="sprayed">Sprayed</string>
     <string name="not_sprayable">Not Sprayable</string>
     <string name="complete">Complete</string>
-    <string name="incomplete">Incomplete</string>
+    <string name="incomplete"> Tasks\nIncomplete</string>
     <string name="in_progress">In Progress</string>
     <string name="not_eligible">Not Eligible</string>
     <string name="plans_download_on_progress_title">Download in Progress</string>
@@ -326,8 +327,8 @@
     <string name="blood_screening">Blood Screening</string>
     <string name="case_confirmation">Case Confirmation</string>
     <string name="paot">PAOT</string>
-    <string name="mda_dispense">SMC SPAQ Redose</string>
-    <string name="mda_adherence">Child SMC</string>
+    <string name="mda_adherence">SMC SPAQ Redose</string>
+    <string name="mda_dispense">Child SMC</string>
     <string name="drug_recon">Drug Recon</string>
 
 
@@ -354,6 +355,8 @@
     <string name="tested">Tested</string>
     <string name="not_tested">Not Tested</string>
     <string name="yes">Yes</string>
+    <string name="progressBarLabel">Syncing %s : %d%% </string>
+
     <string name="smc_label">SMC</string>
     <string name="eligibility_compound">Eligibility Compound</string>
     <string name="eligibility_compound_yes">Proceed</string>

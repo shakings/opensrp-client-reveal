@@ -6,8 +6,8 @@ import android.content.Intent;
 import android.graphics.PointF;
 import android.graphics.RectF;
 import android.location.Location;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AlertDialog;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 
 import com.google.gson.JsonElement;
 import com.mapbox.geojson.Feature;
@@ -292,7 +292,9 @@ public class ListTaskPresenter implements ListTaskContract.Presenter, PasswordRe
         if (!feature.hasProperty(TASK_IDENTIFIER)) {
             listTaskView.displayNotification(listTaskView.getContext().getString(R.string.task_not_found, prefsUtil.getCurrentOperationalArea()));
         } else if (isLongclick) {
+            if (BuildConfig.BUILD_COUNTRY != Country.THAILAND && BuildConfig.BUILD_COUNTRY != Country.THAILAND_EN) {
             onFeatureSelectedByLongClick(feature);
+            }
         } else {
             onFeatureSelectedByNormalClick(feature);
         }
@@ -302,7 +304,7 @@ public class ListTaskPresenter implements ListTaskContract.Presenter, PasswordRe
         String businessStatus = getPropertyValue(feature, FEATURE_SELECT_TASK_BUSINESS_STATUS);
         String code = getPropertyValue(feature, TASK_CODE);
         selectedFeatureInterventionType = code;
-        if ((IRS.equals(code) || MOSQUITO_COLLECTION.equals(code) || LARVAL_DIPPING.equals(code) || PAOT.equals(code) || IRS_VERIFICATION.equals(code))
+        if ((IRS.equals(code) || MOSQUITO_COLLECTION.equals(code) || LARVAL_DIPPING.equals(code) || PAOT.equals(code) || IRS_VERIFICATION.equals(code) || REGISTER_FAMILY.equals(code))
                 && (NOT_VISITED.equals(businessStatus) || businessStatus == null)) {
             if (validateFarStructures()) {
                 validateUserLocation();
@@ -318,8 +320,6 @@ public class ListTaskPresenter implements ListTaskContract.Presenter, PasswordRe
                 && (INCOMPLETE.equals(businessStatus) || IN_PROGRESS.equals(businessStatus)
                 || NOT_ELIGIBLE.equals(businessStatus) || COMPLETE.equals(businessStatus))) {
             listTaskInteractor.fetchInterventionDetails(code, feature.id(), false);
-        } else if (REGISTER_FAMILY.equals(code) && NOT_VISITED.equals(businessStatus)) {
-            displayMarkStructureIneligibleDialog();
         } else if (REGISTER_FAMILY.equals(code) && NOT_ELIGIBLE.equals(businessStatus)) {
             listTaskInteractor.fetchInterventionDetails(code, feature.id(), false);
         } else if (PAOT.equals(code)) {
@@ -441,7 +441,6 @@ public class ListTaskPresenter implements ListTaskContract.Presenter, PasswordRe
         familyCardDetails.setDateCreated(formatDate(originalDate));
     }
 
-
     public void startForm(Feature feature, CardDetails cardDetails, String interventionType) {
         String formName = jsonFormUtils.getFormName(null, interventionType);
         String sprayStatus = cardDetails == null ? null : cardDetails.getStatus();
@@ -472,6 +471,9 @@ public class ListTaskPresenter implements ListTaskContract.Presenter, PasswordRe
         } else if (JsonForm.SPRAY_FORM_REFAPP.equals(formName)) {
             jsonFormUtils.populateServerOptions(RevealApplication.getInstance().getServerConfigs(), formJson, CONFIGURATION.DATA_COLLECTORS, JsonForm.DATA_COLLECTOR, prefsUtil.getCurrentDistrict());
         }
+//        else if (JsonForm.NIGERIA_SECOND_DOSE_OF_SPAQ.equals(formName)) {
+//            jsonFormUtils.populateServerOptions(RevealApplication.getInstance().getServerConfigs(), formJson, CONFIGURATION.HEALTH_FACILITIES, JsonForm.HFC_SEEK, prefsUtil.getCurrentDistrict());
+//        }
         listTaskView.startJsonForm(formJson);
     }
 

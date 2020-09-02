@@ -1,7 +1,7 @@
 package org.smartregister.reveal.interactor;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import net.sqlcipher.database.SQLiteDatabase;
 
@@ -85,7 +85,7 @@ public class RevealFamilyProfileInteractor extends FamilyProfileInteractor imple
                 taskUtils.generateBloodScreeningTask(applicationContext, baseEntityId, structureId);
             else if (Utils.isMDA()) {
                 int age = Years.yearsBetween(new DateTime(birthDate.getTime()), DateTime.now()).getYears();
-                if (age < Constants.MDA_MIN_AGE)
+                if (age <= Constants.MDA_MIN_AGE)
                     taskUtils.generateMDADispenseTask(applicationContext, baseEntityId, structureId);
             }
             appExecutors.mainThread().execute(() -> {

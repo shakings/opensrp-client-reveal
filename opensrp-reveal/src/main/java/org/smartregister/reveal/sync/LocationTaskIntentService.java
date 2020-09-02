@@ -2,8 +2,8 @@ package org.smartregister.reveal.sync;
 
 import android.app.IntentService;
 import android.content.Intent;
-import android.support.annotation.Nullable;
-import android.support.v4.content.LocalBroadcastManager;
+import androidx.annotation.Nullable;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import org.smartregister.domain.FetchStatus;
 import org.smartregister.domain.Location;
@@ -30,6 +30,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import timber.log.Timber;
+
 import static org.smartregister.reveal.util.Constants.Action.STRUCTURE_TASK_SYNCED;
 import static org.smartregister.reveal.util.FamilyConstants.TABLE_NAME.FAMILY_MEMBER;
 
@@ -50,7 +52,11 @@ public class LocationTaskIntentService extends IntentService {
             return;
         }
         if (!syncUtils.verifyAuthorization()) {
-            syncUtils.logoutUser();
+            try {
+                syncUtils.logoutUser();
+            } catch (Exception e) {
+                Timber.e(e);
+            }
             return;
 
         }

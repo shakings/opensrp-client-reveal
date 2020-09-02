@@ -1,7 +1,8 @@
 package org.smartregister.reveal.util;
 
 import android.content.Context;
-import android.support.annotation.StringRes;
+
+import androidx.annotation.StringRes;
 
 import net.sqlcipher.Cursor;
 import net.sqlcipher.database.SQLiteDatabase;
@@ -29,14 +30,10 @@ import java.util.UUID;
 import timber.log.Timber;
 
 import static org.smartregister.domain.Task.TaskStatus.READY;
-import static org.smartregister.family.util.DBConstants.KEY.DOB;
-import static org.smartregister.reveal.util.Constants.DatabaseKeys.BASE_ENTITY_ID;
 import static org.smartregister.reveal.util.Constants.DatabaseKeys.CODE;
 import static org.smartregister.reveal.util.Constants.DatabaseKeys.FOR;
 import static org.smartregister.reveal.util.Constants.DatabaseKeys.STATUS;
 import static org.smartregister.reveal.util.Constants.DatabaseKeys.TASK_TABLE;
-import static org.smartregister.reveal.util.FamilyConstants.DatabaseKeys.AGE;
-import static org.smartregister.reveal.util.FamilyConstants.TABLE_NAME.FAMILY_MEMBER;
 
 /**
  * Created by samuelgithengi on 4/14/19.
@@ -53,6 +50,8 @@ public class TaskUtils {
 
     private static TaskUtils instance;
 
+    private RevealApplication revealApplication;
+
     public static TaskUtils getInstance() {
         if (instance == null) {
             instance = new TaskUtils();
@@ -65,6 +64,7 @@ public class TaskUtils {
         sharedPreferences = RevealApplication.getInstance().getContext().allSharedPreferences();
         prefsUtil = PreferencesUtil.getInstance();
         planRepository = RevealApplication.getInstance().getPlanDefinitionRepository();
+        revealApplication = RevealApplication.getInstance();
     }
 
     public void generateBloodScreeningTask(Context context, String entityId, String structureId) {
@@ -106,6 +106,7 @@ public class TaskUtils {
         task.setOwner(sharedPreferences.fetchRegisteredANM());
         task.setSyncStatus(BaseRepository.TYPE_Created);
         taskRepository.addOrUpdate(task);
+        revealApplication.setSynced(false);
         return task;
     }
 
@@ -116,14 +117,19 @@ public class TaskUtils {
 
     }
 
+    // Child SMC Form
     public void generateMDADispenseTask(Context context, String entityId, String structureId) {
         generateTask(context, entityId, structureId, BusinessStatus.NOT_VISITED, Intervention.MDA_DISPENSE,
                 R.string.mda_dispense_desciption);
     }
 
-    public void generateMDAAdherenceTask(Context context, String entityId, String structureId) {
-        generateTask(context, entityId, structureId, BusinessStatus.NOT_VISITED, Intervention.MDA_ADHERENCE,
-                R.string.mda_adherence_desciption);
+    // SPAQ Redose
+    public void generateMDAAdherenceTask(Context context, String entityId, String structureId, String admininistedSpaq) {
+//        Set<Task> tasks = taskRepository.getTasksByEntityAndCode(prefsUtil.getCurrentPlanId(),
+//                Utils.getOperationalAreaLocation(prefsUtil.getCurrentOperationalArea()).getId(), entityId, Intervention.MDA_ADHERENCE);
+        if ("Yes".equalsIgnoreCase(admininistedSpaq))
+            generateTask(context, entityId, structureId, BusinessStatus.NOT_VISITED, Intervention.MDA_ADHERENCE,
+                    R.string.mda_adherence_desciption);
     }
 
     public void generateMDAStructureDrug(Context context, String entityId, String structureId) {
@@ -131,7 +137,7 @@ public class TaskUtils {
                 Utils.getOperationalAreaLocation(prefsUtil.getCurrentOperationalArea()).getId(), entityId, Intervention.DRUG_RECON);
         if (tasks == null || tasks.isEmpty()) {
             generateTask(context, entityId, structureId, BusinessStatus.NOT_VISITED, Intervention.DRUG_RECON,
-                    R.string.drug_recon);   
+                    R.string.drug_recon);
         }
     }
 
@@ -176,8 +182,9 @@ public class TaskUtils {
             task.setLastModified(new DateTime());
             task.setSyncStatus(BaseRepository.TYPE_Unsynced);
             taskRepository.addOrUpdate(task);
+            revealApplication.setSynced(false);
 
-            RevealApplication.getInstance().setRefreshMapOnEventSaved(true);
+            revealApplication.setRefreshMapOnEventSaved(true);
 
             taskResetSuccessful = true;
         } catch (Exception e) {
